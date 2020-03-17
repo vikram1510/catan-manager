@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import Auth from '../lib/auth'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({history}) => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('aaaaa');
+    history.push('/game')
+  }
 
 
 
 return(
 <div>
-  Hello, Welcome to Catan!
+  Hello, Wselcome to Catan!
 
   Enter name to login:
+  <form onSubmit={handleSubmit}>
   <input value={"Name"}></input>
-  <Link to='/game'>Click to go to game</Link>
+  <button >Click to go to game</button>
+  </form>
 </div>
 )
 }
