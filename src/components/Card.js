@@ -18,7 +18,7 @@ border-radius: 3px;
 background-color: red;
 color: white;
 padding:10px;
-width:100px
+width:100px;
 `
 
 export default Card
