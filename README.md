@@ -1,1 +1,1 @@
-# catan-manager
+# catan-fe-manager
