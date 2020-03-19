@@ -3,6 +3,8 @@ import Card from '../components/Card';
 import Auth from '../lib/auth'
 import axios from 'axios'
 
+import AmountSetter from '../components/AmountSetter'
+
 const Game = (playerName) => {
 
 const [game, setGame] = useState(null)
@@ -18,6 +20,7 @@ if (!game) {
 return(
 <div>
   <Card name="aa"/>
+  <AmountSetter />
 </div>
 )
 }
