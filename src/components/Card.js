@@ -3,8 +3,6 @@ import styled from 'styled-components'
 
 const Card = ({name, amount}) => {
 
-
-
   return(
     <CardWrapper>
       {name} {amount}

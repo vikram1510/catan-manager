@@ -1,12 +1,13 @@
 import React from 'react';
-import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
+import styled from 'styled-components'
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import Game from './pages/Game'
 import Login from './pages/Login'
 
 function App() {
 
   return (
-    <div className="App">
+    <AppScreen className="App">
       <header className="App-header">
       <BrowserRouter>
       <Switch>
@@ -15,8 +16,14 @@ function App() {
         </Switch>
       </BrowserRouter>  
       </header>
-    </div>
+    </AppScreen>
   );
 }
+
+const AppScreen = styled.div`
+width:100vw;
+height:100vh;
+/* background-color:red; */
+`
 
 export default App;

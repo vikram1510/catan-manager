@@ -10,11 +10,16 @@ const Game = (playerName) => {
 const [game, setGame] = useState(null)
 
 if (!game) {
-  axios.get('http://api-catan.herokuapp.com/players').then((response) => {
+  axios.get('http://localhost:3030/players').then((response) => {
     setGame(response.data)
     console.log('response', response);
   })
-} 
+}
+
+if (game?.length < 2) {
+  axios.post('http://localhost:3030/players/', {name: 'noob'}).then((_) => {
+  console.log('added noob')})
+}
 
 
 return(
