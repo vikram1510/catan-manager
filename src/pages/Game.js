@@ -4,6 +4,7 @@ import Auth from '../lib/auth'
 import axios from 'axios'
 
 import AmountSetter from '../components/AmountSetter'
+import PlayerCard from '../components/PlayerCard'
 
 const Game = (playerName) => {
 
@@ -23,9 +24,11 @@ if (game?.length < 2) {
 
 
 return(
-<div>
+<div style={{width:'90%', margin:'auto'}}>
   <Card name="aa"/>
-  <AmountSetter />
+  <div style={{height:'10px '}}></div>
+  {/* <AmountSetter /> */}
+  <PlayerCard/>
 </div>
 )
 }

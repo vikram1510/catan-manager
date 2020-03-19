@@ -14,7 +14,7 @@ const Login = ({history}) => {
 
 return(
 <div>
-  Hello, Wselcome to Catan!
+  Hello, Welcome to Catan!
 
   Enter name to login:
   <form onSubmit={handleSubmit}>

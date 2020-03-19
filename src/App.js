@@ -8,14 +8,12 @@ function App() {
 
   return (
     <AppScreen className="App">
-      <header className="App-header">
       <BrowserRouter>
       <Switch>
         <Route exact path='/' component={Login}/>
         <Route exact path='/game' component={Game}/>
         </Switch>
       </BrowserRouter>  
-      </header>
     </AppScreen>
   );
 }
@@ -23,7 +21,8 @@ function App() {
 const AppScreen = styled.div`
 width:100vw;
 height:100vh;
-/* background-color:red; */
+background-color:#f0f0f0;
+font-family: 'Baloo 2'
 `
 
 export default App;
