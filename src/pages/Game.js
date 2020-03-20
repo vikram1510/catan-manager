@@ -27,7 +27,7 @@ return(
 <div style={{width:'90%', margin:'auto'}}>
   <Card name="aa"/>
   <div style={{height:'10px '}}></div>
-  {/* <AmountSetter /> */}
+  <AmountSetter />
   <PlayerCard/>
 </div>
 )

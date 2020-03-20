@@ -1,19 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
-import assets from '../lib/assets'
+import ResourceSetter from './ResourceSetter'
+import { resourceArray } from '../lib/config'
 
 const AmountSetter = () => {
 
+  const [amounts, setAmounts] = useState({brick: 0, grain: 0, wood: 0, sheep: 0, rock: 0})
+
+  const changeResourceAmount = (resourceName, by) => {
+    setAmounts({ ...amounts, [resourceName]: amounts[resourceName] + by })
+  }
+
   return (
-    <>
-    <h1>AmountSetter</h1>
-    <img src={assets.brick} alt='brick'></img>
-    <img src={assets.wood} alt='wood'></img>
-    <img src={assets.sheep} alt='sheep'></img>
-    <img src={assets.rock} alt='rock'></img>
-    <img src={assets.grain} alt='grain'></img>
-    </>
+    <WrapperDiv className="amount-setter-wrapper">
+      {resourceArray.map(resource => (
+        <ResourceSetter
+          resourceName={resource}
+          amount={amounts[resource]}
+          changeResourceAmount={changeResourceAmount}
+        />
+      ))
+      }
+    </WrapperDiv>
   )
 }
+
+const WrapperDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`
 
 export default AmountSetter
