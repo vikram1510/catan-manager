@@ -2,36 +2,33 @@ import React from 'react'
 import styled from 'styled-components'
 
 import assets from '../lib/assets'
+import { resourceArray } from '../lib/config'
 
-const PlayerCard = ({playerData}) => {
+const PlayerCard = ({player}) => {
 
   return (
     <PlayerCardWrapper>
-      {playerData?.name ?? 'Aamir Khan'}
+        <PlayerDot></PlayerDot> {player?.name ?? 'Aamir Khan'}
       <Wrapper>
-        {['brick','wood','grain','sheep','rock'].map(
-          resource => 
-        <Resource>
+        {resourceArray.map((resource, key) => 
+        <Resource key={key}>
             <img src={assets[resource]} alt={resource}></img>
-            <div>{playerData?.[resource] ?? '?'}</div>
+            <div>{player?.[resource] ?? '?'}</div> {/* TODO make this a component with custom styling */}
         </Resource>
         )}
       </Wrapper>
-
-
-
     </PlayerCardWrapper>
   )
 
 }
 
 const PlayerCardWrapper = styled.div`
-padding:10px;
+padding: 0px 10px 4px;
 border-radius: 5px;
 font-weight: 800;
-font-size: 1.1rem;
+font-size: 1rem;
 border: 1px solid grey;
-background-color: white
+background-color: white;
 `
 
 const Wrapper = styled.div`
@@ -40,18 +37,26 @@ display: flex;
 
 const Resource = styled.div`
 height: 25%;
-margin:auto;
-padding: 5px;
+/* margin: auto; */
+padding: 0px 10px;
 
-div {
-  text-align:center;
-}
+  div {
+    text-align:center;
+  }
 
-img {
-  height: auto;
-  width: 100%;
-}
+  img {
+    height: auto;
+    width: 100%;
+  }
 `
 
+const PlayerDot = styled.span`
+  height: 10px;
+  width: 10px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+
+`
 
 export default PlayerCard

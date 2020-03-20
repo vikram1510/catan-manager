@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
+import styled from 'styled-components'
 import Auth from '../lib/auth'
-import axios from 'axios'
+import api from '../lib/api'
 
 const Login = ({history}) => {
 
+  const [playerName, setPlayerName] = useState(undefined)
+  const [showError, setShowError] = useState(undefined)
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('aaaaa');
-    history.push('/game')
+    api.getPlayerByName(playerName)
+    .then(playerId => {
+      if (playerId) {
+        Auth.setToken(playerId)
+        history.push('/game') 
+      }
+      else {
+        setShowError(`The name ${playerName} does not exist`)
+    }
+    }
+      )
   }
 
-
+  const createPlayerAndJoin = () => {
+    api.createPlayer(playerName)
+    .then(playerId => {
+      Auth.setToken(playerId)
+      history.push('/game')
+    }
+    )
+  }
 
 return(
 <div>
@@ -18,11 +38,16 @@ return(
 
   Enter name to login:
   <form onSubmit={handleSubmit}>
-  <input value={"Name"}></input>
-  <button >Click to go to game</button>
+  <input placeholder={'Enter Name'} value={playerName} maxlength="35" onChange={e => setPlayerName(e.target.value)}></input>
+  <button>Join game</button>
+  {showError && <ErrorMessage style={{color:'red'}}>{showError}</ErrorMessage>}
   </form>
+  <button onClick={() => createPlayerAndJoin()}>Create player and Join</button>
 </div>
 )
 }
+
+const ErrorMessage = styled.div`
+font-size:0.8rem`
 
 export default Login

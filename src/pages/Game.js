@@ -1,36 +1,49 @@
 import React, { useState } from 'react';
+import styled from 'styled-components'
 import Card from '../components/Card';
 import Auth from '../lib/auth'
-import axios from 'axios'
 
-import AmountSetter from '../components/AmountSetter'
+
+// import AmountSetter from '../components/AmountSetter'
 import PlayerCard from '../components/PlayerCard'
+import api from '../lib/api';
 
-const Game = (playerName) => {
+const Game = () => {
 
-const [game, setGame] = useState(null)
+const [players, setPlayers] = useState(null)
+const [playerName, setPlayerName] = useState(undefined) 
 
-if (!game) {
-  axios.get('http://localhost:3030/players').then((response) => {
-    setGame(response.data)
-    console.log('response', response);
-  })
+const playerId = Auth.getToken()
+if (playerId) {
+  api.getPlayerByID(playerId)
+  .then((player) => setPlayerName(player.name)) 
 }
 
-if (game?.length < 2) {
-  axios.post('http://localhost:3030/players/', {name: 'noob'}).then((_) => {
-  console.log('added noob')})
+ 
+if (!players) {
+  api.getAllPlayers()
+  .then((players) => setPlayers(players))
 }
 
 
-return(
+return (
+  players &&
 <div style={{width:'90%', margin:'auto'}}>
-  <Card name="aa"/>
+  <Card name={playerName ? playerName : 'no name'}/>
   <div style={{height:'10px '}}></div>
-  {/* <AmountSetter /> */}
-  <PlayerCard/>
+  {
+  players.map((player, key) =>
+    (player.name !== playerName) ?
+    <PlayerCardWrapper key={key} >
+    <PlayerCard  player={player}/>
+    </PlayerCardWrapper> : undefined)  
+  }
 </div>
 )
 }
 
+
+const PlayerCardWrapper = styled.div `
+margin-bottom: 10px;
+`
 export default Game
