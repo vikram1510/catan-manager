@@ -11,9 +11,9 @@ const Login = ({history}) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     api.getPlayerByName(playerName)
-    .then(playerId => {
-      if (playerId) {
-        Auth.setToken(playerId)
+    .then(player => {
+      if (player) {
+        Auth.setToken(player._id)
         history.push('/game') 
       }
       else {

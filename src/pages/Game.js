@@ -16,7 +16,8 @@ const [playerName, setPlayerName] = useState(undefined)
 const playerId = Auth.getToken()
 if (playerId) {
   api.getPlayerByID(playerId)
-  .then((player) => setPlayerName(player.name)) 
+  .then((player) => 
+ { setPlayerName(player.name)}) 
 }
 
  
@@ -24,6 +25,9 @@ if (!players) {
   api.getAllPlayers()
   .then((players) => setPlayers(players))
 }
+
+
+
 
 
 return (

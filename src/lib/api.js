@@ -19,7 +19,7 @@ const getPlayerByName = (name) => {
 
   const response =  instance
   .get('/players?name=' + name)
-  .then(res => res.data[0]?._id ?? undefined )
+  .then(res => res.data[0] ?? undefined )
   .catch(err => console.log('Error in getting player by name ' + name, err.response.data))
 
   return response
@@ -30,8 +30,13 @@ const getPlayerByID = (id) => {
 
   const response =  instance
   .get('/players/' + id)
-  .then(res => res.data)
-  .catch(err => console.log('Error in getting player by id ' + id, err.response.data))
+  .then(res => {
+    if (res.data) {
+      return res.data
+    }
+    console.log('Player with id: ' + id + ' does not exist')
+  })
+  .catch(err => console.log('Error in getting player by id ' + id, err))
   
   return response
 }
