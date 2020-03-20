@@ -38,7 +38,7 @@ return(
 
   Enter name to login:
   <form onSubmit={handleSubmit}>
-  <input placeholder={'Enter Name'} value={playerName} maxlength="35" onChange={e => setPlayerName(e.target.value)}></input>
+  <input placeholder={'Enter Name'} value={playerName} maxLength="35" onChange={e => setPlayerName(e.target.value)}></input>
   <button>Join game</button>
   {showError && <ErrorMessage style={{color:'red'}}>{showError}</ErrorMessage>}
   </form>

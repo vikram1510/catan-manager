@@ -34,7 +34,7 @@ const renderBuyCard = (items, setShowCard) => (
   <>
   <CollapsedCardWrapper onClick={() => setShowCard(false)}>
 <span>{''}</span>
-  <i style={{margin:'right'}}class="fas fa-chevron-up"></i>
+  <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
   </CollapsedCardWrapper>
   {items.map(item =>
       <>
@@ -57,7 +57,7 @@ const renderBuyCard = (items, setShowCard) => (
 const renderCollapsedCard = ({setShowCard}) => (
   <CollapsedCardWrapper onClick={() => setShowCard(true)}>
   <span style={{marginTop:'1px'}}>{'Buy Card'}</span>
-  <i style={{margin:'right'}}class="fas fa-chevron-down"></i>
+  <i style={{margin:'right'}} className="fas fa-chevron-down"></i>
   </CollapsedCardWrapper>
 ) 
 
