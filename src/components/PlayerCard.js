@@ -7,22 +7,22 @@ import { resourceArray } from '../lib/config'
 const PlayerCard = ({player}) => {
 
   return (
-    <PlayerCardWrapper>
+    <Wrapper>
         <PlayerDot></PlayerDot> {player?.name ?? 'Aamir Khan'}
-      <Wrapper>
+      <ResourceWraper>
         {resourceArray.map((resource, key) => 
         <Resource key={key}>
             <img src={assets[resource]} alt={resource}></img>
             <div>{player?.[resource] ?? '?'}</div> {/* TODO make this a component with custom styling */}
         </Resource>
         )}
-      </Wrapper>
-    </PlayerCardWrapper>
+      </ResourceWraper>
+    </Wrapper>
   )
 
 }
 
-const PlayerCardWrapper = styled.div`
+const Wrapper = styled.div`
 padding: 0px 10px 4px;
 border-radius: 5px;
 font-weight: 800;
@@ -31,7 +31,7 @@ border: 1px solid grey;
 background-color: white;
 `
 
-const Wrapper = styled.div`
+const ResourceWraper = styled.div`
 display: flex;
 `
 

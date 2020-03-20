@@ -1,50 +1,50 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
+
 import Card from '../components/Card';
-import Auth from '../lib/auth'
+import Dashboard from '../components/Dashboard';
+import PlayerCard from '../components/PlayerCard'
+
 
 
 // import AmountSetter from '../components/AmountSetter'
-import PlayerCard from '../components/PlayerCard'
+import Auth from '../lib/auth'
 import api from '../lib/api';
 
 const Game = () => {
 
 const [players, setPlayers] = useState(null)
-const [playerName, setPlayerName] = useState(undefined) 
+const [player, setPlayer] = useState(undefined) 
 
 const playerId = Auth.getToken()
 if (playerId) {
   api.getPlayerByID(playerId)
   .then((player) => 
- { setPlayerName(player.name)}) 
+ { setPlayer(player)}) 
+ api.getAllPlayers()
+ .then((players) => setPlayers(players))
 }
 
- 
-if (!players) {
-  api.getAllPlayers()
-  .then((players) => setPlayers(players))
-}
-
-
-
-
+if (!(players && player)) return null
 
 return (
-  players &&
-<div style={{width:'90%', margin:'auto'}}>
-  <Card name={playerName ? playerName : 'no name'}/>
-  <div style={{height:'10px '}}></div>
-  {
-  players.map((player, key) =>
-    (player.name !== playerName) ?
+  <Wrapper>
+  <Dashboard player={player}/>
+  {players.map((opp, key) =>
+    (opp.name !== player.name) ?
     <PlayerCardWrapper key={key} >
-    <PlayerCard  player={player}/>
-    </PlayerCardWrapper> : undefined)  
-  }
-</div>
+    <PlayerCard  player={opp}/>
+    </PlayerCardWrapper> : undefined)}
+</Wrapper>
 )
 }
+
+
+const Wrapper = styled.div`
+padding-top: 10px;
+width: 90%;
+margin: auto;
+`
 
 
 const PlayerCardWrapper = styled.div `
