@@ -5,6 +5,13 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 
 const ResourceSetter = ({ resourceName, amount, changeResourceAmount } ) => {
+
+  const decreaseAmount = () => {
+    if (amount >= 1) changeResourceAmount(resourceName, -1)
+  }
+
+
+
   return (
     
     <ResourceWrapper>
@@ -12,7 +19,7 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount } ) => {
         <div className="resource-image-wrapper"> 
           <img src={assets[resourceName]} alt={resourceName}></img>
         </div>
-        <i style={{color:'#d82828'}} className="fas fa-chevron-circle-down" onClick={() => changeResourceAmount(resourceName, -1)}></i>
+        <i style={{color:'#d82828'}} className="fas fa-chevron-circle-down" onClick={() => decreaseAmount()}></i>
         <p>{amount}</p>
     </ResourceWrapper>
   )

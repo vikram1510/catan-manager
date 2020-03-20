@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components'
 
-import Card from '../components/Card';
 import Dashboard from '../components/Dashboard';
 import PlayerCard from '../components/PlayerCard'
 
@@ -14,16 +13,24 @@ import api from '../lib/api';
 const Game = () => {
 
 const [players, setPlayers] = useState(null)
-const [player, setPlayer] = useState(undefined) 
+const [player, setPlayer] = useState(undefined)
 
-const playerId = Auth.getToken()
-if (playerId) {
-  api.getPlayerByID(playerId)
-  .then((player) => 
- { setPlayer(player)}) 
- api.getAllPlayers()
- .then((players) => setPlayers(players))
+const updatePlayers = async (playerId) => {
+  const players = await api.getAllPlayers()
+  setPlayers(players)
+
+  const player = players.find(player => player._id === playerId)
+  setPlayer(player)
 }
+
+
+useEffect(() => {
+  const playerId = Auth.getToken()
+  updatePlayers(playerId)
+  setInterval(async () => {
+    updatePlayers(playerId)
+  }, 3000)
+}, [])
 
 if (!(players && player)) return null
 
@@ -35,7 +42,7 @@ return (
     <PlayerCardWrapper key={key} >
     <PlayerCard  player={opp}/>
     </PlayerCardWrapper> : undefined)}
-</Wrapper>
+  </Wrapper>
 )
 }
 

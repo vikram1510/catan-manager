@@ -9,8 +9,11 @@ const AmountSetter = () => {
   const [amounts, setAmounts] = useState({brick: 0, grain: 0, wood: 0, sheep: 0, rock: 0})
 
   const changeResourceAmount = (resourceName, by) => {
-    setAmounts({ ...amounts, [resourceName]: amounts[resourceName] + by })
-  }
+
+    const currentAmount = amounts[resourceName]
+    setAmounts({ ...amounts, [resourceName]: currentAmount + by })
+
+  } 
 
   return (
     <WrapperDiv className="amount-setter-wrapper">
