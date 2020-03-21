@@ -1,2 +1,2 @@
 
-export const resourceArray = ['brick','wood','grain','sheep','rock']  
+export const resourceArray = ['brick','wood','sheep','grain','rock']  

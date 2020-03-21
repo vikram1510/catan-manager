@@ -1,18 +1,33 @@
-import React from 'react'
+import React, { useState} from 'react'
 import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
 import BuyCard from '../components/BuyCard'
+import api from '../lib/api'
 
-const Dashboard = ({player}) => {
+const Dashboard = ({player: initalPlayer}) => {
 
+const [player, setPlayer] = useState(initalPlayer);
+
+
+const setAmounts = async (listToBuy) => {
+
+  let newAmounts = {}
+  Object.entries(listToBuy).forEach(([resourceName, amount]) => {
+    newAmounts[resourceName] = player[resourceName] - amount
+  })
+
+  const newPlayer = await api.updatePlayer(player._id, newAmounts)  
+
+  setPlayer(newPlayer)
+} 
 
 return (
   <Wrapper>
     <div>{player.name}</div>
-    <AmountSetter>
+    <AmountSetter amounts={player} setAmounts={setAmounts}>
     </AmountSetter>
-    <BuyCard/>
+    <BuyCard amounts={player} setAmounts={setAmounts}/>
   </Wrapper>
 )
 

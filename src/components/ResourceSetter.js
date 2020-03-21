@@ -1,5 +1,4 @@
 import React from 'react'
-
 import styled from 'styled-components'
 
 import assets from '../lib/assets'
@@ -7,19 +6,19 @@ import assets from '../lib/assets'
 const ResourceSetter = ({ resourceName, amount, changeResourceAmount } ) => {
 
   const decreaseAmount = () => {
-    if (amount >= 1) changeResourceAmount(resourceName, -1)
+    if (amount >= 1) changeResourceAmount({[resourceName]: +1})
   }
 
 
 
   return (
     
-    <ResourceWrapper>
-        <i style={{color:'green'}} className="fas fa-chevron-circle-up" onClick={() => changeResourceAmount(resourceName, 1)}></i>
+    <ResourceWrapper amount={amount}>
+        <i className="fas fa-chevron-circle-up" onClick={() => changeResourceAmount({[resourceName]: -1})}></i>
         <div className="resource-image-wrapper"> 
           <img src={assets[resourceName]} alt={resourceName}></img>
         </div>
-        <i style={{color:'#d82828'}} className="fas fa-chevron-circle-down" onClick={() => decreaseAmount()}></i>
+        <i  className="fas fa-chevron-circle-down" onClick={() => decreaseAmount()}></i>
         <p>{amount}</p>
     </ResourceWrapper>
   )
@@ -34,6 +33,17 @@ const ResourceWrapper = styled.div`
   align-items: center;
   width: 16%;
   margin-right: 4%;
+
+  .fa-chevron-circle-up {
+    color:green;
+  }
+
+  .fa-chevron-circle-down {
+    color:#d82828;
+    opacity: ${(props) => {
+      console.log('aa',props);
+      return props.amount <= 1 ? '0%' : '100%'}}
+  }
 
   .resource-image-wrapper{
     width: 50px;

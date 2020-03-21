@@ -62,9 +62,9 @@ const deletePlayer = (id) => {
 
 const updatePlayer = (id, payload) => {
 
-  instance
-  .delete('/players/' + id, payload)
-  .then(_ => console.log('Successfully updated player: ' + id + ' with: ' + payload))
+  return instance
+  .put('/players/' + id, payload)
+  .then(res => res.data)
   .catch(err => console.log('Error in updating player: ' + id + ' with: ' + payload, err.response.data))
 }
 

@@ -3,55 +3,83 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 
 const items = [
-  { displayName: 'Road',
-    resources: ['brick','wood']
+  { itemName: 'Road',
+    resources: ['brick','wood'],
+    canBuy: undefined,
   },
-  { displayName: 'Settlement',
-    resources: ['brick','wood','sheep','grain']
+  { itemName: 'Settlement',
+    resources: ['brick','wood','sheep','grain'],
+    canBuy: undefined,
   },
-  { displayName: 'City',
-    resources: ['grain','grain','rock','rock','rock']
+  { itemName: 'City',
+    resources: ['grain','grain','rock','rock','rock'],
+    canBuy: undefined,
   },
-  { displayName: 'Development Card',
-    resources: ['rock','sheep','grain']
+  { itemName: 'Development Card',
+    resources: ['sheep','grain','rock'],
+    canBuy: undefined,
   }]
 
-
-const BuyCard = () => {
+const BuyCard = ({amounts, setAmounts}) => {
 
 const [showCard, setShowCard] = useState(false);
 
-  return (
+const calculateAmounts = (itemName) => {
 
+  const itemToBuy = items.find(item => item.itemName === itemName)
+  if (itemToBuy.canBuy) {
+    setAmounts(createResourceMap(itemToBuy.resources))
+  }
+  
+}
+
+items.forEach((item) => {
+  item.canBuy = canBuy(item.resources, amounts)
+})
+
+  return (
   <Wrapper>
-    {showCard ? renderBuyCard(items, setShowCard) : renderCollapsedCard({setShowCard})}
+    {showCard ? renderBuyCard(items, setShowCard, calculateAmounts) : renderCollapsedCard({setShowCard})}
   </Wrapper>)
 
 }
 
+const canBuy = (itemResources, playerAmounts) => {
 
-const renderBuyCard = (items, setShowCard) => (
+  const resourceMap = createResourceMap(itemResources)
+  return itemResources.every(resource => playerAmounts[resource] >= resourceMap[resource]);
+
+}
+
+
+const createResourceMap = (resources) => {
+  return resources.reduce((final, resource) => {
+    if (!(resource in final)) final[resource] = 0
+    final[resource]++
+    return final
+  }, {})
+}
+
+const renderBuyCard = (items, setShowCard, calculateAmounts, playerAmounts) => (
   <>
   <CollapsedCardWrapper onClick={() => setShowCard(false)}>
-<span>{''}</span>
+  <span>{''}</span>
   <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
   </CollapsedCardWrapper>
   {items.map(item =>
-      <>
-      {item.displayName}
-      <div style={{display:'flex', justifyContent:'space-between'}}>
-      <ResourceWraper>
-        {item.resources.map((resource, key) => 
-        <Resource key={key}>
-            <img src={assets[resource]} alt={resource}></img>
-        </Resource>
-        )}
-      </ResourceWraper>
-      <BuyButton>Buy</BuyButton>
-      </div>  
-      </>)}
-     
-      </>
+      <div key={item.itemName}><p>{item.itemName}</p>
+        <div style={{display:'flex', justifyContent:'space-between'}}>
+          <ResourceWraper>
+            {item.resources.map((resource, key) => 
+            <Resource key={key}>
+              <img src={assets[resource]} alt={resource}></img>
+            </Resource>)}
+          </ResourceWraper>
+        <BuyButton canBuy={item.canBuy} onClick={() => calculateAmounts(item.itemName)}>Buy</BuyButton>
+        </div>  
+      </div>)
+    }   
+  </>
 )
  
 const renderCollapsedCard = ({setShowCard}) => (
@@ -64,12 +92,13 @@ const renderCollapsedCard = ({setShowCard}) => (
 const BuyButton = styled.div`
   padding: 2px 4px;
   width: 30px;
-  background-color: #50b350;
+  background-color: ${props => props.canBuy ? '#50b350' : '#50b350'};
   border-radius: 3px;
   text-align: center;
   font-size: 0.8rem;
   margin: auto;
-  border: 1px solid green;
+  border: 1px solid ${props => props.canBuy ? '#50b350' : '#50b350'};
+  opacity: ${props => props.canBuy ? '100%' : '30%'};
   color: white;
 `
 

@@ -1,27 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import ResourceSetter from './ResourceSetter'
 import { resourceArray } from '../lib/config'
 
-const AmountSetter = () => {
-
-  const [amounts, setAmounts] = useState({brick: 0, grain: 0, wood: 0, sheep: 0, rock: 0})
-
-  const changeResourceAmount = (resourceName, by) => {
-
-    const currentAmount = amounts[resourceName]
-    setAmounts({ ...amounts, [resourceName]: currentAmount + by })
-
-  } 
+const AmountSetter = ({amounts, setAmounts}) => {
 
   return (
     <WrapperDiv className="amount-setter-wrapper">
       {resourceArray.map(resource => (
         <ResourceSetter
+          key={resource}
           resourceName={resource}
           amount={amounts[resource]}
-          changeResourceAmount={changeResourceAmount}
+          changeResourceAmount={setAmounts}
         />
       ))
       }

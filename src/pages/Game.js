@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+
 import styled from 'styled-components'
 
 import Dashboard from '../components/Dashboard';
@@ -10,7 +11,7 @@ import PlayerCard from '../components/PlayerCard'
 import Auth from '../lib/auth'
 import api from '../lib/api';
 
-const Game = () => {
+const Game = ({history}) => {
 
 const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
@@ -23,14 +24,17 @@ const updatePlayers = async (playerId) => {
   setPlayer(player)
 }
 
-
 useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
-  setInterval(async () => {
-    updatePlayers(playerId)
-  }, 3000)
+  const interval = setInterval(async () => updatePlayers(playerId), 3000)
+  return (() => clearInterval(interval))
 }, [])
+
+const openTrade = (id) => {
+  history.push('/trade?player=' + id)
+}
+
 
 if (!(players && player)) return null
 
@@ -39,7 +43,7 @@ return (
   <Dashboard player={player}/>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
-    <PlayerCardWrapper key={key} >
+    <PlayerCardWrapper onClick={() => openTrade(opp._id)} key={key} >
     <PlayerCard  player={opp}/>
     </PlayerCardWrapper> : undefined)}
   </Wrapper>
