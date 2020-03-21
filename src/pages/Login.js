@@ -8,6 +8,8 @@ const Login = ({history}) => {
   const [playerName, setPlayerName] = useState('')
   const [showError, setShowError] = useState(null)
 
+  if (Auth.isAuthenticated()) history.push('/game') 
+
   const handleSubmit = (e) => {
     e.preventDefault()
     api.getPlayerByName(playerName)

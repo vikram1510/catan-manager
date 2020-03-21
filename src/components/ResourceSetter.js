@@ -3,20 +3,56 @@ import styled from 'styled-components'
 
 import assets from '../lib/assets'
 
-const ResourceSetter = ({ resourceName, amount, changeResourceAmount } ) => {
+const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount } ) => {
 
-  const decreaseAmount = () => {
-    if (amount >= 1) changeResourceAmount({[resourceName]: amount - 1})
+  const checkAmountsAndChange = (by) => {
+
+    if (watchAmount === null) {
+      
+      if (by === -1) {
+
+        if (amount > 0) changeResourceAmount({[resourceName]: amount - 1})
+      
+      } else if ((by === 1)) {
+
+        changeResourceAmount({[resourceName]: amount + 1})
+      
+      }
+
+    } else {
+
+      if (watchAmount >= 0 && by === -1) {
+
+        if (amount > 0) changeResourceAmount({[resourceName]: amount - 1})
+
+      } else if (watchAmount > 0 && by === 1) {
+
+        changeResourceAmount({[resourceName]: amount + 1})
+
+      }
+
+
+    }
+
+    // if (watchAmount === null){
+    //   if (by < 0 && watchAmount > 0) {
+    //     decreaseAmount()
+    //   } else {
+    //     changeResourceAmount({[resourceName]: amount + 1})
+    //   }
+    // }
+
   }
+
 
   return (
     
-    <ResourceWrapper amount={amount}>
-        <i className="fas fa-chevron-circle-up" onClick={() => changeResourceAmount({[resourceName]: amount + 1})}></i>
+    <ResourceWrapper amount={amount} watchAmount={watchAmount}>
+        <i className="fas fa-chevron-circle-up" onClick={() => checkAmountsAndChange(1)}></i>
         <div className="resource-image-wrapper"> 
           <img src={assets[resourceName]} alt={resourceName}></img>
         </div>
-        <i  className="fas fa-chevron-circle-down" onClick={() => decreaseAmount()}></i>
+        <i  className="fas fa-chevron-circle-down" onClick={() => checkAmountsAndChange(-1)}></i>
         <p>{amount}</p>
     </ResourceWrapper>
   )
@@ -34,6 +70,7 @@ const ResourceWrapper = styled.div`
 
   .fa-chevron-circle-up {
     color:green;
+    opacity: ${({watchAmount}) => ((watchAmount !== null) && (watchAmount <= 0))  ? '30%' : '100%'}
   }
 
   .fa-chevron-circle-down {

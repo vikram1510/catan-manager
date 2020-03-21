@@ -44,9 +44,9 @@ const Trade = ({history}) => {
     }
   },[finalPlayer, finalTradePlayer, player, tradePlayer])
 
-  const performTrade = () => {
-    api.updatePlayer(finalPlayer._id, finalPlayer)
-    api.updatePlayer(finalTradePlayer._id, finalTradePlayer)
+  const performTrade = async () => {
+    await api.updatePlayer(finalPlayer._id, finalPlayer)
+    await api.updatePlayer(finalTradePlayer._id, finalTradePlayer)
     history.push('/game')
   }
 
@@ -71,7 +71,7 @@ const Trade = ({history}) => {
   return (
     <>
     <div>Haello {player.name} ,lets trade with player {tradePlayer.name}!</div>
-    <AmountSetter amounts={amounts} setAmounts={setAmounts}/>
+    <AmountSetter watchAmounts={finalPlayer} amounts={amounts} setAmounts={setAmounts}/>
     <PlayerCard  player={finalPlayer ?? player}/>
     <PlayerCard  player={finalTradePlayer ?? tradePlayer}/>
     <button onClick={performTrade}>Trade</button>
