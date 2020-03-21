@@ -34,6 +34,13 @@ const Login = ({history}) => {
     )
   }
 
+
+  const deletePlayer = async () => {
+    const playerAboutToBeGarbaged = await api.getPlayerByName(playerName)
+    await api.deletePlayer(playerAboutToBeGarbaged._id)
+    setShowError(`The player ${playerAboutToBeGarbaged.name} has been delted`)
+  }
+
 return(
 <div>
   Hello, Welcome to Catan!
@@ -44,7 +51,8 @@ return(
   <button>Join game</button>
   {showError && <ErrorMessage style={{color:'red'}}>{showError}</ErrorMessage>}
   </form>
-  <button onClick={() => createPlayerAndJoin()}>Create player and Join</button>
+  <button onClick={createPlayerAndJoin}>Create player and Join</button>
+  <button onClick={deletePlayer}>Delete me</button>
 </div>
 )
 }

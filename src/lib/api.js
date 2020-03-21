@@ -3,6 +3,7 @@ import axios from 'axios'
 
 let instance = axios.create({
   baseURL: 'https://api-catan.herokuapp.com'
+  // baseURL: 'https://api-catan.herokuapp.com'
 })
 
 const getAllPlayers = () => {
