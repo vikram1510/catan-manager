@@ -25,8 +25,7 @@ const setAmounts = async (listToBuy) => {
 return (
   <Wrapper>
     <div>{player.name}</div>
-    <AmountSetter amounts={player} setAmounts={setAmounts}>
-    </AmountSetter>
+    <AmountSetter amounts={player} setAmounts={setAmounts} />
     <BuyCard amounts={player} setAmounts={setAmounts}/>
   </Wrapper>
 )

@@ -6,10 +6,20 @@ import PlayerCard from '../components/PlayerCard'
 import AmountSetter from '../components/AmountSetter'
 
 const Trade = () => {
-  
-  const [player, setPlayer] = useState(undefined)
-  const [tradePlayer, setTradePlayer] = useState(undefined)
-  
+
+  const [amounts, setAmounts] = useState({ brick: 0, grain: 0, wood: 0, sheep: 0, rock: 0})
+  const [player, setPlayer] = useState(null)
+  const [tradePlayer, setTradePlayer] = useState(null)
+
+  const changeAmounts = (listTobuy) => {
+    const changedAmounts = Object.keys(listTobuy).reduce((final, resourceName) => {
+      final[resourceName] = amounts[resourceName] - listTobuy[resourceName]
+      return final
+    }, {})
+    setAmounts({...amounts, ...changedAmounts})
+  }
+
+
   const updatePlayers = async (playerId, tradePlayerId) => {
     const players = await api.getAllPlayers()
     const player = players.find(player => player._id === playerId)
@@ -35,8 +45,9 @@ const Trade = () => {
     <>
     <div>Haello {player.name} ,lets trade with player {tradePlayer.name}!</div>
     <PlayerCard  player={tradePlayer}/>
-    <AmountSetter amounts={player} setAmounts={(list) => {console.log(list)}}/>
+    <AmountSetter amounts={amounts} setAmounts={changeAmounts}/>
     <PlayerCard  player={player}/>
+    <button>Trade</button>
     </>
   )
 }

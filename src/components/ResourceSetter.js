@@ -9,8 +9,6 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount } ) => {
     if (amount >= 1) changeResourceAmount({[resourceName]: +1})
   }
 
-
-
   return (
     
     <ResourceWrapper amount={amount}>
@@ -42,7 +40,7 @@ const ResourceWrapper = styled.div`
     color:#d82828;
     opacity: ${(props) => {
       console.log('aa',props);
-      return props.amount <= 1 ? '0%' : '100%'}}
+      return props.amount <= 0 ? '30%' : '100%'}}
   }
 
   .resource-image-wrapper{

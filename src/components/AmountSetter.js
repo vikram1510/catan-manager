@@ -6,6 +6,8 @@ import { resourceArray } from '../lib/config'
 
 const AmountSetter = ({amounts, setAmounts}) => {
 
+  
+
   return (
     <WrapperDiv className="amount-setter-wrapper">
       {resourceArray.map(resource => (
