@@ -32,11 +32,17 @@ const openTrade = (id) => {
   history.push('/trade?player=' + id)
 }
 
+const logout = () => {
+  Auth.logout()
+  history.push('/')
+}
+
 
 if (!(players && player)) return null
 
 return (
   <Wrapper>
+  <LogoutButton onClick={logout}>Logout</LogoutButton>
   <Dashboard player={player}/>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
@@ -52,10 +58,21 @@ const Wrapper = styled.div`
 padding-top: 10px;
 width: 90%;
 margin: auto;
+display: flex;
+flex-direction: column;
 `
 
 
 const PlayerCardWrapper = styled.div `
 margin-bottom: 10px;
+`
+
+const LogoutButton = styled.button`
+background-color: #ce3737;
+color: white;
+border-radius: 10%;
+padding: 8px;
+margin-bottom: 8px;
+align-self: flex-end;
 `
 export default Game

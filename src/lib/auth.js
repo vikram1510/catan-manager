@@ -12,7 +12,7 @@ class Auth {
     return !!this.getToken()
   }
 
-  static logOut(){
+  static logout(){
     localStorage.removeItem('token')
   }
 

@@ -5,8 +5,8 @@ import api from '../lib/api'
 
 const Login = ({history}) => {
 
-  const [playerName, setPlayerName] = useState(undefined)
-  const [showError, setShowError] = useState(undefined)
+  const [playerName, setPlayerName] = useState('')
+  const [showError, setShowError] = useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
