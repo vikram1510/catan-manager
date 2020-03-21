@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
@@ -9,24 +9,27 @@ const Dashboard = ({player: initalPlayer}) => {
 
 const [player, setPlayer] = useState(initalPlayer);
 
+useEffect(() => {
+  api.updatePlayer(player._id, player)
+}, [player])
 
-const setAmounts = async (listToBuy) => {
+// const setAmounts = async (listToBuy) => {
 
-  let newAmounts = {}
-  Object.entries(listToBuy).forEach(([resourceName, amount]) => {
-    newAmounts[resourceName] = player[resourceName] - amount
-  })
+//   let newAmounts = {}
+//   Object.entries(listToBuy).forEach(([resourceName, amount]) => {
+//     newAmounts[resourceName] = player[resourceName] - amount
+//   })
 
-  const newPlayer = await api.updatePlayer(player._id, newAmounts)  
+//   const newPlayer = await api.updatePlayer(player._id, newAmounts)  
 
-  setPlayer(newPlayer)
-} 
+//   setPlayer(newPlayer)
+// } 
 
 return (
   <Wrapper>
     <div>{player.name}</div>
-    <AmountSetter amounts={player} setAmounts={setAmounts} />
-    <BuyCard amounts={player} setAmounts={setAmounts}/>
+    <AmountSetter amounts={player} setAmounts={setPlayer} />
+    <BuyCard amounts={player} setAmounts={setPlayer}/>
   </Wrapper>
 )
 

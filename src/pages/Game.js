@@ -5,9 +5,6 @@ import styled from 'styled-components'
 import Dashboard from '../components/Dashboard';
 import PlayerCard from '../components/PlayerCard'
 
-
-
-// import AmountSetter from '../components/AmountSetter'
 import Auth from '../lib/auth'
 import api from '../lib/api';
 

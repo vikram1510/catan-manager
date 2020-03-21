@@ -5,37 +5,41 @@ import assets from '../lib/assets'
 const items = [
   { itemName: 'Road',
     resources: ['brick','wood'],
-    canBuy: undefined,
   },
   { itemName: 'Settlement',
     resources: ['brick','wood','sheep','grain'],
-    canBuy: undefined,
   },
   { itemName: 'City',
     resources: ['grain','grain','rock','rock','rock'],
-    canBuy: undefined,
   },
   { itemName: 'Development Card',
     resources: ['sheep','grain','rock'],
-    canBuy: undefined,
   }]
 
 const BuyCard = ({amounts, setAmounts}) => {
 
-const [showCard, setShowCard] = useState(false);
+  const [showCard, setShowCard] = useState(false);
 
-const calculateAmounts = (itemName) => {
+  const calculateAmounts = (itemName) => {
 
-  const itemToBuy = items.find(item => item.itemName === itemName)
-  if (itemToBuy.canBuy) {
-    setAmounts(createResourceMap(itemToBuy.resources))
-  }
+    const itemToBuy = items.find(item => item.itemName === itemName)
   
-}
+    if (itemToBuy?.canBuy) {
+      const listToBuy = createResourceMap(itemToBuy.resources)
 
-items.forEach((item) => {
-  item.canBuy = canBuy(item.resources, amounts)
-})
+      let newAmounts = {}
+      Object.entries(listToBuy).forEach(([resourceName, amount]) => {
+        newAmounts[resourceName] = amounts[resourceName] - amount
+      })
+
+      setAmounts({...amounts, ...newAmounts})
+    }
+    
+  }
+
+  items.forEach((item) => {
+    item.canBuy = canBuy(item.resources, amounts)
+  })
 
   return (
   <Wrapper>
@@ -60,7 +64,7 @@ const createResourceMap = (resources) => {
   }, {})
 }
 
-const renderBuyCard = (items, setShowCard, calculateAmounts, playerAmounts) => (
+const renderBuyCard = (items, setShowCard, calculateAmounts) => (
   <>
   <CollapsedCardWrapper onClick={() => setShowCard(false)}>
   <span>{''}</span>
