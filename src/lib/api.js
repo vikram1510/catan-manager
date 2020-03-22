@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'development') {
   baseURL = 'https://api-catan.herokuapp.com'
 }
 
+console.log(process.env);
 console.log(process.env.NODE_ENV);
 console.log(baseURL);
 
