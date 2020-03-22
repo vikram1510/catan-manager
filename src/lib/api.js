@@ -1,9 +1,18 @@
 import axios from 'axios'
 
+let baseURL
+
+if (process.env.NODE_ENV === 'development') {
+  baseURL = 'http://localhost:3030'
+} else {
+  baseURL = 'https://api-catan.herokuapp.com'
+}
+
+console.log(process.env.NODE_ENV);
+console.log(baseURL);
 
 let instance = axios.create({
-  // baseURL: 'https://api-catan.herokuapp.com'
-  baseURL: 'http://localhost:3030'
+  baseURL
 })
 
 const getAllPlayers = () => {
