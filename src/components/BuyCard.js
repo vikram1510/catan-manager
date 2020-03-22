@@ -112,7 +112,7 @@ const BuyButton = styled.div`
   font-size: 0.9rem;
   margin: auto;
   border: 1px solid ${props => props.canBuy ? '#50b350' : '#50b350'};
-  opacity: ${props => props.canBuy ? '100%' : '30%'};
+  opacity: ${props => props.canBuy ? '1' : '0.3'};
   color: white;
   flex-grow: 2;
 `
