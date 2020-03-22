@@ -31,16 +31,8 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmoun
 
       }
 
-
     }
 
-    // if (watchAmount === null){
-    //   if (by < 0 && watchAmount > 0) {
-    //     decreaseAmount()
-    //   } else {
-    //     changeResourceAmount({[resourceName]: amount + 1})
-    //   }
-    // }
 
   }
 
@@ -48,17 +40,16 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmoun
   return (
     
     <ResourceWrapper amount={amount} watchAmount={watchAmount}>
-        <i className="fas fa-chevron-circle-up" onClick={() => checkAmountsAndChange(1)}></i>
+        <i className="fas fa-plus-square" onClick={() => checkAmountsAndChange(1)}></i>
         <div className="resource-image-wrapper"> 
           <img src={assets[resourceName]} alt={resourceName}></img>
         </div>
-        <i  className="fas fa-chevron-circle-down" onClick={() => checkAmountsAndChange(-1)}></i>
+        <i  className="fas fa-minus-square" onClick={() => checkAmountsAndChange(-1)}></i>
         <p>{amount}</p>
     </ResourceWrapper>
   )
 
 }
-
 
 const ResourceWrapper = styled.div`
 
@@ -68,12 +59,16 @@ const ResourceWrapper = styled.div`
   width: 16%;
   margin-right: 4%;
 
-  .fa-chevron-circle-up {
+  :last-child {
+    margin-right: 0px
+  }
+
+  .fa-plus-square {
     color:green;
     opacity: ${({watchAmount}) => ((watchAmount !== null) && (watchAmount <= 0))  ? '30%' : '100%'}
   }
 
-  .fa-chevron-circle-down {
+  .fa-minus-square {
     color:#d82828;
     opacity: ${({amount}) => amount <= 0 ? '30%' : '100%'}
   }
@@ -82,7 +77,7 @@ const ResourceWrapper = styled.div`
     width: 50px;
     height: 50px;
 
-    background-color: white;
+
     /* padding: 10px; */
     img {
       height: auto;

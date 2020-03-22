@@ -71,7 +71,8 @@ const renderBuyCard = (items, setShowCard, calculateAmounts) => (
   <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
   </CollapsedCardWrapper>
   {items.map(item =>
-      <div key={item.itemName}><p>{item.itemName}</p>
+      <Item key={item.name}>
+      <p>{item.itemName}</p>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <ResourceWraper>
             {item.resources.map((resource, key) => 
@@ -81,7 +82,9 @@ const renderBuyCard = (items, setShowCard, calculateAmounts) => (
           </ResourceWraper>
         <BuyButton canBuy={item.canBuy} onClick={() => calculateAmounts(item.itemName)}>Buy</BuyButton>
         </div>  
-      </div>)
+            <hr/>
+      </Item>
+      )
     }   
   </>
 )
@@ -93,17 +96,25 @@ const renderCollapsedCard = ({setShowCard}) => (
   </CollapsedCardWrapper>
 ) 
 
+const Item = styled.div`
+font-weight:700;
+
+hr {
+ margin: 0.2rem;
+}
+`
+
 const BuyButton = styled.div`
   padding: 2px 4px;
   width: 30px;
   background-color: ${props => props.canBuy ? '#50b350' : '#50b350'};
-  border-radius: 3px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   margin: auto;
   border: 1px solid ${props => props.canBuy ? '#50b350' : '#50b350'};
   opacity: ${props => props.canBuy ? '100%' : '30%'};
   color: white;
+  flex-grow: 2;
 `
 
 const CollapsedCardWrapper = styled.div`
@@ -127,6 +138,8 @@ margin-top: 2px;
 const ResourceWraper = styled.div`
 display: flex;
 width:80%;
+font-weight:800;
+flex-grow: 7;
 `
 
 const Resource = styled.div`

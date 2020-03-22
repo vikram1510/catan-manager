@@ -4,11 +4,12 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import Game from './pages/Game'
 import Login from './pages/Login'
 import Trade from './pages/Trade'
+import assets from './lib/assets';
 
 function App() {
 
   return (
-    <AppScreen className="App">
+    <AppScreen className="App" bg={assets.bg}>
       <BrowserRouter>
       <Switch>
         <Route exact path='/' component={Login}/>
@@ -23,8 +24,11 @@ function App() {
 const AppScreen = styled.div`
 width:100vw;
 height:100vh;
-background-color:#f0f0f0;
-font-family: 'Baloo 2'
+background-color:black;
+font-family: 'Baloo 2';
+background-image: url(${({bg})=> bg});
+overflow:scroll;
+background-position: center;
 `
 
 export default App;

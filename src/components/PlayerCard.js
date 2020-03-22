@@ -7,7 +7,7 @@ import { resourceArray } from '../lib/config'
 const PlayerCard = ({player}) => {
 
   return (
-    <Wrapper>
+    <Wrapper className='player-card'>
         <PlayerDot></PlayerDot> {player?.name ?? 'Aamir Khan'}
       <ResourceWraper>
         {resourceArray.map((resource, key) => 
@@ -27,7 +27,7 @@ padding: 0px 10px 4px;
 border-radius: 5px;
 font-weight: 800;
 font-size: 1rem;
-border: 1px solid grey;
+border: 1px solid #efc5c5;
 background-color: white;
 `
 

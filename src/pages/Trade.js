@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import styled from 'styled-components'
 
 import api from '../lib/api'
 import Auth from '../lib/auth'
@@ -50,6 +51,10 @@ const Trade = ({history}) => {
     history.push('/game')
   }
 
+  const cancelTrade = () => {
+    history.push('/game')
+  }
+
   useEffect(() => {  
     if (amounts && player && tradePlayer) {
 
@@ -69,14 +74,74 @@ const Trade = ({history}) => {
   if (!(tradePlayer && player)) return null
 
   return (
-    <>
-    <div>Haello {player.name} ,lets trade with player {tradePlayer.name}!</div>
-    <AmountSetter watchAmounts={finalPlayer} amounts={amounts} setAmounts={setAmounts}/>
-    <PlayerCard  player={finalPlayer ?? player}/>
-    <PlayerCard  player={finalTradePlayer ?? tradePlayer}/>
-    <button onClick={performTrade}>Trade</button>
-    </>
+    <Wrapper>
+      <TradingWrapper>
+      <h2>Trading</h2>
+      <h3>({player.name} ➔ {tradePlayer.name})</h3>
+      <AmountSetter watchAmounts={finalPlayer} amounts={amounts} setAmounts={setAmounts}/>
+      </TradingWrapper>
+      <PlayerCard player={finalPlayer}/>
+      <PlayerCard player={finalTradePlayer}/>
+      <Buttons>
+        <div className='cancel-button' onClick={cancelTrade}>Cancel</div>
+        <div className='trade-button' onClick={performTrade}>Trade</div>
+      </Buttons>
+    </Wrapper>
   )
 }
+
+const TradingWrapper = styled.div`
+padding-top: 10px;
+padding: 10px;
+background-color: white;
+opacity: 100%;
+`
+
+const Wrapper = styled.div`
+padding-top: 10px;
+width: 90%;
+margin: auto;
+
+h2 {
+  margin: 0px;
+}
+
+h3 {
+  margin: 0px;
+  margin-bottom:15px;
+  color:grey;
+}
+
+.player-card {
+  margin-top: 10px;
+}
+`
+
+const Buttons = styled.div`
+
+margin-top: 20px;
+text-align: center;
+font-size: 1.1rem;
+font-weight: 700;
+color: white;
+display: flex;
+
+.trade-button {
+  flex-grow: 3;
+  border-radius: 5px;
+  padding: 3px 4px;
+  background-color: #50b350;
+  border: 2px solid #255225;
+}
+
+.cancel-button {
+  flex-grow: 1;
+  margin-right:10px;
+  border-radius: 5px;
+  padding: 3px 4px;
+  background-color: #ce5252;
+  border: 2px solid #671d38;
+}
+`
 
 export default Trade

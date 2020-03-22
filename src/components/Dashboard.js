@@ -40,7 +40,7 @@ return (
 const Wrapper = styled.div`
 padding: 0px 10px 4px;
 border-radius: 5px;
-border: 1px solid grey;
+border: 1px solid #efc5c5;
 -webkit-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 -moz-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);

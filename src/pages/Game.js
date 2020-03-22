@@ -7,6 +7,7 @@ import PlayerCard from '../components/PlayerCard'
 
 import Auth from '../lib/auth'
 import api from '../lib/api';
+import assets from '../lib/assets'
 
 const Game = ({history}) => {
 
@@ -41,8 +42,12 @@ const logout = () => {
 if (!(players && player)) return null
 
 return (
+  <>
   <Wrapper>
-  <LogoutButton onClick={logout}>Logout</LogoutButton>
+    <Header>
+  <img src={assets.logo} alt='Catan Logo'></img>
+  <LogoutButton onClick={logout}>Log out</LogoutButton>
+  </Header>
   <Dashboard player={player}/>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
@@ -50,29 +55,43 @@ return (
     <PlayerCard  player={opp}/>
     </PlayerCardWrapper> : undefined)}
   </Wrapper>
+  </>
 )
 }
 
 
+const Header = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+
+img {
+ width: 100px;
+ padding: 7px;
+}
+`
+
 const Wrapper = styled.div`
 padding-top: 10px;
-width: 90%;
+width: 95%;
 margin: auto;
+height: 100vh;
 display: flex;
 flex-direction: column;
 `
-
 
 const PlayerCardWrapper = styled.div `
 margin-bottom: 10px;
 `
 
 const LogoutButton = styled.button`
-background-color: #ce3737;
+background-color: #772020;
 color: white;
-border-radius: 10%;
+border-radius: 3px;
+border: 1px solid #772020;
 padding: 8px;
 margin-bottom: 8px;
+font-weight:700;
 align-self: flex-end;
 `
 export default Game

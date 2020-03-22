@@ -2,8 +2,8 @@ import axios from 'axios'
 
 
 let instance = axios.create({
-  baseURL: 'https://api-catan.herokuapp.com'
   // baseURL: 'https://api-catan.herokuapp.com'
+  baseURL: 'http://localhost:3030'
 })
 
 const getAllPlayers = () => {
@@ -20,7 +20,11 @@ const getPlayerByName = (name) => {
 
   const response =  instance
   .get('/players?name=' + name)
-  .then(res => res.data[0] ?? undefined )
+  .then(res => {
+    if (res.data.length === 1) {
+      return res.data[0] ?? undefined
+    }
+  } )
   .catch(err => console.log('Error in getting player by name ' + name, err.response.data))
 
   return response
