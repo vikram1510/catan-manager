@@ -59,18 +59,22 @@ const ResourceWrapper = styled.div`
   width: 16%;
   margin-right: 4%;
 
+  i {
+    font-size: 24px;
+  }
+
   :last-child {
     margin-right: 0px
   }
 
   .fa-plus-square {
     color:green;
-    opacity: ${({watchAmount}) => ((watchAmount !== null) && (watchAmount <= 0))  ? '30%' : '100%'}
+    opacity: ${({watchAmount}) => ((watchAmount !== null) && (watchAmount <= 0))  ? '0.3' : '1'};
   }
 
   .fa-minus-square {
     color:#d82828;
-    opacity: ${({amount}) => amount <= 0 ? '30%' : '100%'}
+    opacity: ${({amount}) => amount <= 0 ? '0.3' : '1'};
   }
 
   .resource-image-wrapper{

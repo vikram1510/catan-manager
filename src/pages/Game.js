@@ -45,7 +45,9 @@ return (
   <>
   <Wrapper>
     <Header>
-  <img src={assets.logo} alt='Catan Logo'></img>
+    <div className="logo-img-wrapper">
+      <img src={assets.logo} alt='Catan Logo'></img>
+    </div>
   <LogoutButton onClick={logout}>Log out</LogoutButton>
   </Header>
   <Dashboard player={player}/>
@@ -65,9 +67,14 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 
-img {
- width: 100px;
- padding: 7px;
+.logo-img-wrapper {
+  width:100px;
+  padding: 7px;
+
+  img {
+   width: 100%;
+   height: auto;
+  }
 }
 `
 

@@ -39,6 +39,7 @@ const Resource = styled.div`
 height: 25%;
 /* margin: auto; */
 padding: 0px 10px;
+font-size: 24px;
 
   div {
     text-align:center;

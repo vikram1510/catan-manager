@@ -29,6 +29,7 @@ const AmountSetter = ({amounts, setAmounts, watchAmounts = null }) => {
 }
 
 const WrapperDiv = styled.div`
+  touch-action: manipulation;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
