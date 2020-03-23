@@ -32,9 +32,6 @@ const PlayerCard = ({player}) => {
         )}
         </ResourceWraper>
       </div>
-      {/* <ResourceWraper>
-
-      </ResourceWraper> */} 
     </Wrapper>
   )
 
