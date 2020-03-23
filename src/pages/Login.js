@@ -59,8 +59,8 @@ return(
   <button>Join game</button>
   {showError && <ErrorMessage style={{color:'white'}}>{showError}</ErrorMessage>}
   </form>
-  <button onClick={createPlayerAndJoin}>Create player and Join</button>
-  <button onClick={deletePlayer}>Delete me</button>
+  <button onClick={() => createPlayerAndJoin()}>Create player and Join</button>
+  <button onClick={() => deletePlayer()}>Delete me</button>
 </div>
 )
 }

@@ -6,17 +6,35 @@ import { resourceArray } from '../lib/config'
 
 const PlayerCard = ({player}) => {
 
+  const resourceList =resourceArray.reduce((resourceList, resource) => {
+    let count = player?.[resource]
+
+    for (let i = 1; i < count; i++) {
+      resourceList.push(resource)
+    }
+
+    return resourceList
+  }, [])  
+
+  console.log(resourceList)
+
   return (
     <Wrapper className='player-card'>
-        <PlayerDot></PlayerDot> {player?.name ?? 'Aamir Khan'}
-      <ResourceWraper>
-        {resourceArray.map((resource, key) => 
+      <div className='player-avatar'>
+      {player.name}
+      </div>
+      <div className='resource-area'>
+        <ResourceWraper>
+        {resourceList.map((resource, key) => 
         <Resource key={key}>
-            <img src={assets[resource]} alt={resource}></img>
-            <div>{player?.[resource] ?? '?'}</div> {/* TODO make this a component with custom styling */}
-        </Resource>
+            <img src={assets[resource]} alt={resource}></img> {/* TODO make this a component with custom styling */}
+       </Resource>
         )}
-      </ResourceWraper>
+        </ResourceWraper>
+      </div>
+      {/* <ResourceWraper>
+
+      </ResourceWraper> */} 
     </Wrapper>
   )
 
@@ -29,17 +47,18 @@ font-weight: 800;
 font-size: 1rem;
 border: 1px solid #efc5c5;
 background-color: white;
+display:flex;
+
+
+.resource-area {
+  /* background-color: red */
+}
 `
 
-const ResourceWraper = styled.div`
-display: flex;
-`
 
 const Resource = styled.div`
-height: 25%;
-/* margin: auto; */
-padding: 0px 10px;
-font-size: 24px;
+padding: 0 5px;
+width:30px;
 
   div {
     text-align:center;
@@ -51,12 +70,9 @@ font-size: 24px;
   }
 `
 
-const PlayerDot = styled.span`
-  height: 10px;
-  width: 10px;
-  background-color: black;
-  border-radius: 50%;
-  display: inline-block;
+const ResourceWraper = styled.div`
+display: flex;
+flex-wrap: wrap;
 
 `
 
