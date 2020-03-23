@@ -38,18 +38,25 @@ const PlayerCard = ({player}) => {
 }
 
 const Wrapper = styled.div`
-padding: 0px 10px 4px;
-border-radius: 5px;
-font-weight: 800;
+/* padding: 0px 10px 4px; */
 font-size: 1rem;
-border: 1px solid #efc5c5;
-background-color: white;
 display:flex;
 
+.player-avatar {
+background-color: #962716;
+color: white;
+border-radius: 5px 0px 0px 5px;
+padding: 10px;
+width: 50px;
+}
 
 .resource-area {
-  /* background-color: red */
+border-radius: 0px 5px 5px 0px;
+background-color: #fefefe;
+flex-grow: 1;
+padding:10px;
 }
+
 `
 
 
