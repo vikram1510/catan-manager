@@ -9,7 +9,7 @@ import { resourceArray } from '../lib/config'
 
 const Trade = ({history}) => {
 
-  const [amounts, setAmounts] = useState({ brick: 0, grain: 0, wood: 0, sheep: 0, rock: 0})
+  const [amounts, setAmounts] = useState({name: 'Trade', brick: 0, grain: 0, wood: 0, sheep: 0, rock: 0})
   const [player, setPlayer] = useState(null)
   const [tradePlayer, setTradePlayer] = useState(null)
   const [finalPlayer, setFinalPlayer] = useState(null)
@@ -73,6 +73,7 @@ const Trade = ({history}) => {
     
   if (!(tradePlayer && player)) return null
 
+  console.log(amounts)
   return (
     <Wrapper>
       <TradingWrapper>
@@ -81,6 +82,7 @@ const Trade = ({history}) => {
       <AmountSetter watchAmounts={finalPlayer} amounts={amounts} setAmounts={setAmounts}/>
       </TradingWrapper>
       <PlayerCard player={finalPlayer}/>
+      <PlayerCard player={amounts}/>
       <PlayerCard player={finalTradePlayer}/>
       <Buttons>
         <div className='cancel-button' onClick={cancelTrade}>Cancel</div>

@@ -16,10 +16,10 @@ const [player, setPlayer] = useState(undefined)
 
 const updatePlayers = async (playerId) => {
   const players = await api.getAllPlayers()
-  setPlayers(players)
-
+  
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
+  setPlayers(players)
 }
 
 useEffect(() => {
@@ -38,8 +38,12 @@ const logout = () => {
   history.push('/')
 }
 
+if (players && !player) {
+  logout()
+}
 
 if (!(players && player)) return null
+
 
 return (
   <>

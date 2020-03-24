@@ -6,17 +6,19 @@ import { resourceArray } from '../lib/config'
 
 const PlayerCard = ({player}) => {
 
+  console.log('rdering player card', player)
+
   const resourceList =resourceArray.reduce((resourceList, resource) => {
     let count = player?.[resource]
 
-    for (let i = 1; i < count; i++) {
+    for (let i = 0; i < count; i++) {
       resourceList.push(resource)
     }
 
     return resourceList
   }, [])  
 
-  console.log(resourceList)
+  if (!player) return null
 
   return (
     <Wrapper className='player-card'>
