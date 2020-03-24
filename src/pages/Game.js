@@ -4,6 +4,8 @@ import styled from 'styled-components'
 
 import Dashboard from '../components/Dashboard';
 import PlayerCard from '../components/PlayerCard'
+import PlayerCardOld from '../components/PlayerCardOld'
+
 
 import Auth from '../lib/auth'
 import api from '../lib/api';
@@ -13,6 +15,7 @@ const Game = ({history}) => {
 
 const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
+const [oldPlayerCard, setOldPlayerCard] = useState(false)
 
 const updatePlayers = async (playerId) => {
   const players = await api.getAllPlayers()
@@ -44,7 +47,6 @@ if (players && !player) {
 
 if (!(players && player)) return null
 
-
 return (
   <>
   <Wrapper>
@@ -58,9 +60,10 @@ return (
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
     <PlayerCardWrapper onClick={() => openTrade(opp._id)} key={key} >
-    <PlayerCard  player={opp}/>
+    {oldPlayerCard ? <PlayerCardOld player={opp} /> : <PlayerCard  player={opp}/>}
     </PlayerCardWrapper> : undefined)}
   </Wrapper>
+  <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>
   </>
 )
 }
