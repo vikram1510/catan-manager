@@ -33,6 +33,7 @@ const BuyCard = ({amounts, setAmounts}) => {
       })
 
       setAmounts({...amounts, ...newAmounts})
+      setShowCard(false)
     }
     
   }

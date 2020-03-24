@@ -6,8 +6,6 @@ import { resourceArray } from '../lib/config'
 
 const PlayerCard = ({player}) => {
 
-  console.log('rdering player card', player)
-
   const resourceList =resourceArray.reduce((resourceList, resource) => {
     let count = player?.[resource]
 

@@ -10,8 +10,6 @@ const AmountSetter = ({amounts, setAmounts, watchAmounts = null }) => {
     setAmounts({...amounts, ...resourceMap})
   }
 
-  console.log('jkhkjsd', watchAmounts)
-
   return (
     <WrapperDiv className="amount-setter-wrapper">
       {resourceArray.map(resource => (

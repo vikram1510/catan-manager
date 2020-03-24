@@ -5,25 +5,11 @@ import AmountSetter from './AmountSetter'
 import BuyCard from '../components/BuyCard'
 import api from '../lib/api'
 
-const Dashboard = ({player: initalPlayer}) => {
-
-const [player, setPlayer] = useState(initalPlayer);
+const Dashboard = ({player, setPlayer}) => {
 
 useEffect(() => {
   api.updatePlayer(player._id, player)
 }, [player])
-
-// const setAmounts = async (listToBuy) => {
-
-//   let newAmounts = {}
-//   Object.entries(listToBuy).forEach(([resourceName, amount]) => {
-//     newAmounts[resourceName] = player[resourceName] - amount
-//   })
-
-//   const newPlayer = await api.updatePlayer(player._id, newAmounts)  
-
-//   setPlayer(newPlayer)
-// } 
 
 return (
   <Wrapper>

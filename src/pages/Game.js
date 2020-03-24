@@ -54,7 +54,7 @@ return (
     </div>
   <LogoutButton onClick={logout}>Log out</LogoutButton>
   </Header>
-  <Dashboard player={player}/>
+  <Dashboard player={player} setPlayer={setPlayer}/>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
     <PlayerCardWrapper onClick={() => openTrade(opp._id)} key={key} >
