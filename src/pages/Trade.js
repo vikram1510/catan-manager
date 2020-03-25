@@ -39,8 +39,18 @@ const Trade = ({history}) => {
 
   const performTrade = async () => {
     setTrading(true)
-    await api.updatePlayer(player._id, player)
-    await api.updatePlayer(tradePlayer._id, tradePlayer)
+
+    let latestPlayer = await api.getPlayerByID(player._id)
+    let latestTradePlayer = await api.getPlayerByID(tradePlayer._id)
+
+    resourceArray.forEach((resourceName) => {
+      latestPlayer[resourceName] = latestPlayer[resourceName] - amounts[resourceName]
+      latestTradePlayer[resourceName] = latestTradePlayer[resourceName] + amounts[resourceName]
+    })
+
+    await api.updatePlayer(player._id, latestPlayer)
+    await api.updatePlayer(tradePlayer._id, latestTradePlayer)
+
     setTrading(false)
     history.push('/game')
   }
@@ -79,7 +89,7 @@ const Trade = ({history}) => {
       <PlayerCard player={amounts}/>
       <PlayerCard player={tradePlayer}/>
       <Buttons>
-        <div className='cancel-button' onClick={cancelTrade}>Cancel</div>
+        <div className='cancel-button' onClick={cancelTrade} disabled={trading}>Cancel</div>
         <div className='trade-button' onClick={performTrade} disabled={trading}>Trade</div>
       </Buttons>
     </Wrapper>
@@ -144,6 +154,9 @@ display: flex;
   padding: 3px 4px;
   background-color: #ce5252;
   border: 2px solid #671d38;
+  &[disabled]{
+    opacity: 0.7;
+  }
 }
 `
 
