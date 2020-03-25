@@ -7,16 +7,11 @@ import api from '../lib/api'
 
 const Dashboard = ({player, setPlayer}) => {
 
-const updatePlayer = (newPlayer) => {
-  api.updatePlayer(player._id, newPlayer)
-  setPlayer(newPlayer)
-}
-
 return (
   <Wrapper>
     <div>{player.name}</div>
-    <AmountSetter amounts={player} setAmounts={updatePlayer} />
-    <BuyCard amounts={player} setAmounts={updatePlayer}/>
+    <AmountSetter amounts={player} setAmounts={setPlayer} />
+    <BuyCard amounts={player} setAmounts={setPlayer}/>
   </Wrapper>
 )
 

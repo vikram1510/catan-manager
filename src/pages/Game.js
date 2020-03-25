@@ -19,18 +19,26 @@ const [oldPlayerCard, setOldPlayerCard] = useState(false)
 
 const updatePlayers = async (playerId) => {
   const players = await api.getAllPlayers()
-  
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
   setPlayers(players)
 }
 
+
 useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
-  const interval = setInterval(async () => updatePlayers(playerId), 3000)
+  const interval = setInterval(async () => await updatePlayers(playerId), 3000)
   return (() => clearInterval(interval))
 }, [])
+
+useEffect(() => {
+  if (player){
+    api.updatePlayer(player._id, player)
+      .then(setPlayer(player))
+      .catch(console.log)
+  }
+}, [player])
 
 const openTrade = (id) => {
   history.push('/trade?player=' + id)
@@ -40,6 +48,8 @@ const logout = () => {
   Auth.logout()
   history.push('/')
 }
+
+const resetAmounts = () => setPlayer({ ...player, brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0})
 
 if (players && !player) {
   logout()
@@ -54,7 +64,11 @@ return (
     <div className="logo-img-wrapper">
       <img src={assets.logo} alt='Catan Logo'></img>
     </div>
-  <LogoutButton onClick={logout}>Log out</LogoutButton>
+    <div className="game-buttons">
+      <GameButton onClick={resetAmounts}>Reset</GameButton>
+      <GameButton onClick={logout}>Log out</GameButton>
+    </div>
+
   </Header>
   <Dashboard player={player} setPlayer={setPlayer}/>
   {players.map((opp, key) =>
@@ -83,6 +97,11 @@ justify-content: space-between;
    height: auto;
   }
 }
+.game-buttons {
+  button:first-of-type{
+    margin-right: 16px;
+  }
+}
 `
 
 const Wrapper = styled.div`
@@ -98,13 +117,12 @@ const PlayerCardWrapper = styled.div `
 margin-bottom: 10px;
 `
 
-const LogoutButton = styled.button`
+const GameButton = styled.button`
 background-color: #772020;
 color: white;
 border-radius: 3px;
 border: 1px solid #772020;
 padding: 8px;
-margin-bottom: 8px;
 font-weight:700;
 align-self: flex-end;
 `
