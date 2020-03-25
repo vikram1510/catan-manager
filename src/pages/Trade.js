@@ -68,6 +68,7 @@ const Trade = ({history}) => {
   if (!(tradePlayer && player)) return null
 
   return (
+    <>
     <Wrapper>
       <TradingWrapper>
       <h2>Trading</h2>
@@ -82,6 +83,7 @@ const Trade = ({history}) => {
         <div className='trade-button' onClick={performTrade} disabled={trading}>Trade</div>
       </Buttons>
     </Wrapper>
+    </>
   )
 }
 
@@ -96,6 +98,9 @@ const Wrapper = styled.div`
 padding-top: 10px;
 width: 90%;
 margin: auto;
+width:100vw;
+height: 100vh;
+background-color: #000000aa;
 
 h2 {
   margin: 0px;
