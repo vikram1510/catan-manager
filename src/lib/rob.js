@@ -1,7 +1,7 @@
 import { resourceArray } from "./config"
 
 export const rob = ({robber, innocent}) => {
-  console.log(robber, innocent)
+console.log(robber, innocent)
 
 let innocentResources = []
 
@@ -19,7 +19,7 @@ const resourceToRob = innocentResources[Math.floor(Math.random() * innocentResou
 
 robber[resourceToRob] += 1
 innocent[resourceToRob] -= 1
-
+console.log(robber,innocent)
 return {newRobber: robber, newInnocent: innocent, robbedItem: resourceToRob}
 }
 

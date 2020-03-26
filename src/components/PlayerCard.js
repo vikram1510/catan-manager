@@ -26,7 +26,7 @@ const PlayerCard = ({player, tradeHandler, robHandler}) => {
       <div className='player-avatar'>
       <div className='player-name'> {player.name} </div>
       <div className='player-total'>{total}</div>
-      <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton>
+      {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
       </div>
       <div onClick={() => tradeHandler(player._id)} className='resource-area'>
         <ResourceWraper>

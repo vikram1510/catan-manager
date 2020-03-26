@@ -16,41 +16,35 @@ const Game = ({history}) => {
 const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
 const [oldPlayerCard, setOldPlayerCard] = useState(false)
-const [updateInProgress, setUpdateInProgress] = useState(false)
+const [syncing, setSyncing] = useState(false)
 
 const updatePlayers = async (playerId) => {
 
-  setUpdateInProgress(true)
 
+  setSyncing(true)
   const players = await api.getAllPlayers()
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
   setPlayers(players)
-
-  setUpdateInProgress(false)
-
+  
+  setSyncing(false)
 }
 
-const setPlayerWhenReady = (player) => {
-  if (!updateInProgress) {
-    setPlayer(player)
-  }
-}
 
 useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
-  const interval = setInterval(async () => await updatePlayers(playerId), 3000)
-  return (() => clearInterval(interval))
+  // const interval = setInterval(async () => await updatePlayers(playerId), 3000)
+  // return (() => clearInterval(interval))
 }, [])
 
 useEffect(() => {
 
-  if (player && !updateInProgress) {
+  if (player) {
     api.updatePlayer(player._id, player)
   }
 
-}, [player, updateInProgress])
+}, [player])
 
 const openTrade = (id) => {
   history.push('/trade?player=' + id)
@@ -72,8 +66,10 @@ const robPlayer = async (innocent) => {
   } else {
     alert(`${innocent.name} has no items to rob`)
   }
-  api.updatePlayer(innocent._id, newInnocent)
-  api.updatePlayer(player._id, newRobber)
+  await api.updatePlayer(innocent._id, newInnocent)
+  await api.updatePlayer(player._id, newRobber)
+  await updatePlayers(player._id)
+  
 
 }
 
@@ -97,7 +93,8 @@ return (
     </div>
 
   </Header>
-  <Dashboard player={player} setPlayer={setPlayerWhenReady}/>
+  <Dashboard player={player} setPlayer={setPlayer}/>
+  <RefreshButton disabled={syncing} onClick={() => updatePlayers(player._id)}><div>Sync <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i></div></RefreshButton>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
     <PlayerCardWrapper key={key} >
@@ -105,12 +102,33 @@ return (
     <PlayerCardOld tradeHandler={(id) => openTrade(id)} player={opp} /> : 
     <PlayerCard robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
     </PlayerCardWrapper> : undefined)}
+
   <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>
   </Wrapper>
   </>
 )
 }
 
+const RefreshButton = styled.div`
+border-radius: 5px;
+padding: 5px;
+background-color:#ffdf00;
+border: 1px solid black;
+text-align:center;
+font-weight: 800;
+font-size:1.2rem;
+height:60px;
+vertical-align:center;
+margin-bottom: 10px;
+display:flex;
+align-items: center;
+justify-content: center;
+
+
+&[disabled] {
+  opacity:0.5;
+}
+`
 
 const Header = styled.div`
 display: flex;
