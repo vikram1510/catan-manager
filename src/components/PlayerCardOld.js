@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 import { resourceArray } from '../lib/config'
 
-const PlayerCard = ({player}) => {
+const PlayerCard = ({player, tradeHandler}) => {
 
   return (
-    <Wrapper className='player-card'>
+    <Wrapper onClick={() => tradeHandler(player._id)} className='player-card'>
         <PlayerDot></PlayerDot> {player?.name ?? 'Aamir Khan'}
       <ResourceWraper>
         {resourceArray.map((resource, key) => 

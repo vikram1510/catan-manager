@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 import { resourceArray } from '../lib/config'
 
-const PlayerCard = ({player}) => {
+const PlayerCard = ({player, tradeHandler, robHandler}) => {
 
   let total = 0;
 
-  const resourceList =resourceArray.reduce((resourceList, resource) => {
+  const resourceList = resourceArray.reduce((resourceList, resource) => {
     let count = player?.[resource]
 
     for (let i = 0; i < count; i++) {
@@ -26,8 +26,9 @@ const PlayerCard = ({player}) => {
       <div className='player-avatar'>
       <div className='player-name'> {player.name} </div>
       <div className='player-total'>{total}</div>
+      <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton>
       </div>
-      <div className='resource-area'>
+      <div onClick={() => tradeHandler(player._id)} className='resource-area'>
         <ResourceWraper>
         {resourceList.map((resource, key) =>  
           <Resource key={key}>
@@ -41,6 +42,20 @@ const PlayerCard = ({player}) => {
 
 }
 
+
+const RobButton = styled.div`
+
+  background: #e01616;
+  border-radius: 4px;
+  margin:auto;
+  text-align: center;
+  color: #61180d;
+  
+  &:active {
+    background: #671c1c;
+  }
+`
+
 const Wrapper = styled.div`
 /* padding: 0px 10px 4px; */
 font-size: 1rem;
@@ -53,6 +68,8 @@ border-radius: 5px 0px 0px 5px;
 padding: 10px;
 min-width: 50px;
 }
+
+
 
 .player-name {
   font-weight: 600;

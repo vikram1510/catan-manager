@@ -6,10 +6,10 @@ import Dashboard from '../components/Dashboard';
 import PlayerCard from '../components/PlayerCard'
 import PlayerCardOld from '../components/PlayerCardOld'
 
-
 import Auth from '../lib/auth'
 import api from '../lib/api';
 import assets from '../lib/assets'
+import {rob} from '../lib/rob'
 
 const Game = ({history}) => {
 
@@ -63,6 +63,21 @@ const logout = () => {
 
 const resetAmounts = () => setPlayer({ ...player, brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0})
 
+const robPlayer = async (innocent) => {
+
+  const {newRobber, newInnocent, robbedItem} = rob({robber:player,innocent})
+
+  if (robbedItem) {
+    alert(`You robbed 1 ${robbedItem} from ${innocent.name}!`)
+  } else {
+    alert(`${innocent.name} has no items to rob`)
+  }
+  api.updatePlayer(innocent._id, newInnocent)
+  api.updatePlayer(player._id, newRobber)
+
+}
+
+
 if (players && !player) {
   logout()
 }
@@ -85,8 +100,10 @@ return (
   <Dashboard player={player} setPlayer={setPlayerWhenReady}/>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
-    <PlayerCardWrapper onClick={() => openTrade(opp._id)} key={key} >
-    {oldPlayerCard ? <PlayerCardOld player={opp} /> : <PlayerCard  player={opp}/>}
+    <PlayerCardWrapper key={key} >
+    {oldPlayerCard ? 
+    <PlayerCardOld tradeHandler={(id) => openTrade(id)} player={opp} /> : 
+    <PlayerCard robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
     </PlayerCardWrapper> : undefined)}
   <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>
   </Wrapper>
