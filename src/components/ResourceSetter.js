@@ -72,6 +72,10 @@ const ResourceWrapper = styled.div`
     opacity: ${({watchAmount}) => ((watchAmount !== null) && (watchAmount <= 0))  ? '0.3' : '1'};
   }
 
+  i:active {
+     opacity: 0.5
+    }
+
   .fa-minus-square {
     color:#d82828;
     opacity: ${({amount}) => amount <= 0 ? '0.3' : '1'};

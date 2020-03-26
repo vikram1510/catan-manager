@@ -6,11 +6,14 @@ import { resourceArray } from '../lib/config'
 
 const PlayerCard = ({player}) => {
 
+  let total = 0;
+
   const resourceList =resourceArray.reduce((resourceList, resource) => {
     let count = player?.[resource]
 
     for (let i = 0; i < count; i++) {
       resourceList.push(resource)
+      total +=1
     }
 
     return resourceList
@@ -21,15 +24,16 @@ const PlayerCard = ({player}) => {
   return (
     <Wrapper className='player-card'>
       <div className='player-avatar'>
-      {player.name}
+      <div className='player-name'> {player.name} </div>
+      <div className='player-total'>{total}</div>
       </div>
       <div className='resource-area'>
         <ResourceWraper>
-        {resourceList.map((resource, key) => 
-        <Resource key={key}>
-            <img src={assets[resource]} alt={resource}></img> {/* TODO make this a component with custom styling */}
-       </Resource>
-        )}
+        {resourceList.map((resource, key) =>  
+          <Resource key={key}>
+            <img src={assets[resource]} alt={resource}></img> 
+          </Resource>
+       )}
         </ResourceWraper>
       </div>
     </Wrapper>
@@ -47,14 +51,26 @@ background-color: #962716;
 color: white;
 border-radius: 5px 0px 0px 5px;
 padding: 10px;
-width: 50px;
+min-width: 50px;
+}
+
+.player-name {
+  font-weight: 600;
+  text-align: center;
+  margin: auto;
+}
+
+.player-total {
+  color: #da8d82;
+  font-weight: 1000;
+  text-align: center;
 }
 
 .resource-area {
 border-radius: 0px 5px 5px 0px;
 background-color: #fefefe;
-flex-grow: 1;
 padding:10px;
+flex-grow: 1;
 }
 
 `

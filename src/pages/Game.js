@@ -16,14 +16,26 @@ const Game = ({history}) => {
 const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
 const [oldPlayerCard, setOldPlayerCard] = useState(false)
+const [updateInProgress, setUpdateInProgress] = useState(false)
 
 const updatePlayers = async (playerId) => {
+
+  setUpdateInProgress(true)
+
   const players = await api.getAllPlayers()
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
   setPlayers(players)
+
+  setUpdateInProgress(false)
+
 }
 
+const setPlayerWhenReady = (player) => {
+  if (!updateInProgress) {
+    setPlayer(player)
+  }
+}
 
 useEffect(() => {
   const playerId = Auth.getToken()
@@ -33,12 +45,12 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  if (player){
+
+  if (player && !updateInProgress) {
     api.updatePlayer(player._id, player)
-      .then(setPlayer(player))
-      .catch(console.log)
   }
-}, [player])
+
+}, [player, updateInProgress])
 
 const openTrade = (id) => {
   history.push('/trade?player=' + id)
@@ -70,14 +82,14 @@ return (
     </div>
 
   </Header>
-  <Dashboard player={player} setPlayer={setPlayer}/>
+  <Dashboard player={player} setPlayer={setPlayerWhenReady}/>
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
     <PlayerCardWrapper onClick={() => openTrade(opp._id)} key={key} >
     {oldPlayerCard ? <PlayerCardOld player={opp} /> : <PlayerCard  player={opp}/>}
     </PlayerCardWrapper> : undefined)}
-  </Wrapper>
   <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>
+  </Wrapper>
   </>
 )
 }

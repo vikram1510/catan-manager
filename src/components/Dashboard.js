@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
 import BuyCard from '../components/BuyCard'
-import api from '../lib/api'
 
 const Dashboard = ({player, setPlayer}) => {
 
@@ -22,7 +21,7 @@ return (
 const Wrapper = styled.div`
 padding: 0px 10px 4px;
 border-radius: 5px;
-border: 1px solid #efc5c5;
+border: 1px solid #980b0b;
 -webkit-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 -moz-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
