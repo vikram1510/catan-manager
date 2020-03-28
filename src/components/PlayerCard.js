@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 
 import assets from '../lib/assets'
 import { resourceArray } from '../lib/config'
+import QuickTrader from './QuickTrader'
 
-const PlayerCard = ({player, tradeHandler, robHandler}) => {
+const PlayerCard = ({
+  mainPlayer, player, tradeHandler, robHandler, quickTradeHandler}) => {
+
+  const [showQuickTrade, setShowQuickTrade] = useState(false)
 
   let total = 0;
 
@@ -22,13 +26,14 @@ const PlayerCard = ({player, tradeHandler, robHandler}) => {
   if (!player) return null
 
   return (
+    <BiggerWrapper>
     <Wrapper className='player-card'>
       <div className='player-avatar'>
       <div className='player-name'> {player.name} </div>
       <div className='player-total'>{total}</div>
       {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
       </div>
-      <div onClick={() => tradeHandler(player._id)} className='resource-area'>
+      <div onClick={() => setShowQuickTrade(!showQuickTrade)} className='resource-area'>
         <ResourceWraper>
         {resourceList.map((resource, key) =>  
           <Resource key={key}>
@@ -38,6 +43,8 @@ const PlayerCard = ({player, tradeHandler, robHandler}) => {
         </ResourceWraper>
       </div>
     </Wrapper>
+      {showQuickTrade ? <QuickTrader mainPlayer={mainPlayer} setShowQuickTrade={setShowQuickTrade} performTrade={(resource) => quickTradeHandler(resource, player._id)} player={player}/> : null}
+      </BiggerWrapper>
   )
 
 }
@@ -54,6 +61,11 @@ const RobButton = styled.div`
   &:active {
     background: #671c1c;
   }
+`
+
+const BiggerWrapper = styled.div`
+display:flex;
+flex-direction:column;
 `
 
 const Wrapper = styled.div`

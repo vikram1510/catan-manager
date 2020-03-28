@@ -34,7 +34,7 @@ const updatePlayers = async (playerId) => {
 useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
-  // const interval = setInterval(async () => await updatePlayers(playerId), 3000)
+  const interval = setInterval(async () => await updatePlayers(playerId), 3000)
   // return (() => clearInterval(interval))
 }, [])
 
@@ -59,6 +59,7 @@ const resetAmounts = () => setPlayer({ ...player, brick: 0, wood: 0, grain: 0, r
 
 const robPlayer = async (innocent) => {
 
+  await updatePlayers(player._id)
   const {newRobber, newInnocent, robbedItem} = rob({robber:player,innocent})
 
   if (robbedItem) {
@@ -70,6 +71,14 @@ const robPlayer = async (innocent) => {
   await api.updatePlayer(player._id, newRobber)
   await updatePlayers(player._id)
   
+}
+
+const doQuickTrade = async (resource, toId) => {
+
+  if (player[resource] >= 1 ) {
+    await api.transaction({toId, fromId:player._id, amounts:{[resource]: 1}})
+    await updatePlayers(player._id)
+  }
 
 }
 
@@ -100,7 +109,7 @@ return (
     <PlayerCardWrapper key={key} >
     {oldPlayerCard ? 
     <PlayerCardOld tradeHandler={(id) => openTrade(id)} player={opp} /> : 
-    <PlayerCard robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
+    <PlayerCard mainPlayer={player} quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
     </PlayerCardWrapper> : undefined)}
 
   <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>

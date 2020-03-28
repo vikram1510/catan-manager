@@ -12,7 +12,6 @@ if (process.env.REACT_APP_API_VERSION === 'test') {
 console.log(process.env);
 console.log(process.env.NODE_ENV);
 console.log(baseURL);
-// console.log('hardcoded baseurl for now to : https://api-catan.herokuapp.com')
 
 let instance = axios.create({ baseURL })
 
@@ -83,23 +82,24 @@ const updatePlayer = (id, payload) => {
   .catch(err => console.log('Error in updating player: ' + id + ' with: ' + payload, err.response.data))
 }
 
-const transaction = (fromId, toId, amounts) => {
+const transaction = ({fromId, toId, amounts}) => {
 
   let verifiedAmounts = {}
 
   resourceArray.forEach((resource) => {
-    if (amounts[resource]) {
+    if (amounts?.[resource]) {
       verifiedAmounts[resource] = amounts[resource]
     } 
   })
     
 
-  console.log(verifiedAmounts)
+  console.log(amounts)
+  console.log('verified to:',verifiedAmounts)
 
-  // return instance
-  // .put('/players/transaction/', {fromId, toId, amounts} )
-  // .then(res => res.data)
-  // .catch(err => console.log('Error in performing transaction', fromId, toId, amounts))
+  return instance
+  .post('/players/transaction', {fromId, toId, amounts:verifiedAmounts} )
+  .then(res => res.data)
+  .catch(err => console.log('Error in performing transaction', fromId, toId, amounts))
 }
 
 console.log('loading api')
@@ -112,7 +112,8 @@ const api = {
   getPlayerByID,
   createPlayer,
   deletePlayer,
-  updatePlayer
+  updatePlayer,
+  transaction
 }
 
 export default api
