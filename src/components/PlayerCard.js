@@ -6,9 +6,7 @@ import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
 
 const PlayerCard = ({
-  mainPlayer, player, tradeHandler, robHandler, quickTradeHandler, trading}) => {
-
-  const [showQuickTrade, setShowQuickTrade] = useState(false)
+  mainPlayer, player, tradeHandler, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
 
   let total = 0;
 
@@ -33,7 +31,7 @@ const PlayerCard = ({
       <div className='player-total'>{total}</div>
       {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
       </div>
-      <div onClick={() => setShowQuickTrade(!showQuickTrade)} className='resource-area'>
+      <div onClick={() => setTradePlayerId(player._id)} className='resource-area'>
         <ResourceWraper>
         {resourceList.map((resource, key) =>  
           <Resource key={key}>
@@ -43,7 +41,7 @@ const PlayerCard = ({
         </ResourceWraper>
       </div>
     </Wrapper>
-      {showQuickTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} setShowQuickTrade={setShowQuickTrade} performTrade={(resource) => quickTradeHandler(resource, player._id)} player={player}/> : null}
+      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => quickTradeHandler(resource, player._id)} player={player}/> : null}
       </BiggerWrapper>
   )
 

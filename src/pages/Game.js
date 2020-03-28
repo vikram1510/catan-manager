@@ -18,6 +18,7 @@ const [player, setPlayer] = useState(undefined)
 const [oldPlayerCard, setOldPlayerCard] = useState(false)
 const [syncing, setSyncing] = useState(false)
 const [trading, setTrading] = useState(false)
+const [tradePlayerId, setTradePlayerId] =  useState(null)
 
 const updatePlayers = async (playerId) => {
 
@@ -116,7 +117,14 @@ return (
     <PlayerCardWrapper key={key} >
     {oldPlayerCard ? 
     <PlayerCardOld tradeHandler={(id) => openTrade(id)} player={opp} /> : 
-    <PlayerCard trading={trading} mainPlayer={player} quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
+    <PlayerCard
+      showTrade={opp._id === tradePlayerId ? true : false}
+      setTradePlayerId={setTradePlayerId}
+      trading={trading} 
+      mainPlayer={player} 
+      quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} 
+      robHandler={(player) => robPlayer(player)} 
+      tradeHandler={(id) => openTrade(id)} player={opp}/>}
     </PlayerCardWrapper> : undefined)}
 
   {/* <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input> */}
