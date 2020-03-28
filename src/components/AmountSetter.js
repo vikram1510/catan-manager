@@ -3,11 +3,13 @@ import styled from 'styled-components'
 
 import ResourceSetter from './ResourceSetter'
 import { resourceArray } from '../lib/config'
+import api from '../lib/api'
 
 const AmountSetter = ({amounts, setAmounts, watchAmounts = null }) => {
 
-  const changeResourceAmount = (resourceMap) => {
-    setAmounts({...amounts, ...resourceMap})
+  const changeResourceAmount = async (resourceMap) => {
+    const newAmounts = await api.bank({playerId: amounts._id, amounts: resourceMap })
+    setAmounts(newAmounts)
   }
 
   return (

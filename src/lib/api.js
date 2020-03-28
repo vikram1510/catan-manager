@@ -98,9 +98,13 @@ const transaction = ({fromId, toId, amounts}) => {
   .catch(err => console.log('Error in performing transaction', fromId, toId, amounts))
 }
 
-console.log('loading api')
-transaction('asdad','dssadd',{'brick':2,'aaa':1})
+const bank = ({amounts, playerId}) => {
+  return instance
+  .post('/players/bank', {playerId, amounts} )
+  .then(res => res.data)
+  .catch(err => console.log('Error in performing banking'))
 
+}
 
 const api = {
   getAllPlayers,
@@ -109,7 +113,8 @@ const api = {
   createPlayer,
   deletePlayer,
   updatePlayer,
-  transaction
+  transaction,
+  bank
 }
 
 export default api

@@ -37,17 +37,9 @@ const updatePlayers = async (playerId) => {
 useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
-  const interval = setInterval(async () => await updatePlayers(playerId), 3000)
+  const interval = setInterval(async () => await updatePlayers(playerId), 2000)
   return (() => clearInterval(interval))
 }, [])
-
-useEffect(() => {
-
-  if (player) {
-    api.updatePlayer(player._id, player)
-  }
-
-}, [player])
 
 const openTrade = (id) => {
   history.push('/trade?player=' + id)
@@ -58,7 +50,11 @@ const logout = () => {
   history.push('/')
 }
 
-const resetAmounts = () => setPlayer({ ...player, brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0})
+const resetAmounts = async () => {
+  const resetAmounts = {brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0}
+  await api.updatePlayer(player._id, resetAmounts)
+  setPlayer({ ...player, ...resetAmounts})
+}
 
 const robPlayer = async (innocent) => {
 
