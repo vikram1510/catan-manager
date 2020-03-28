@@ -91,10 +91,6 @@ const transaction = ({fromId, toId, amounts}) => {
       verifiedAmounts[resource] = amounts[resource]
     } 
   })
-    
-
-  console.log(amounts)
-  console.log('verified to:',verifiedAmounts)
 
   return instance
   .post('/players/transaction', {fromId, toId, amounts:verifiedAmounts} )

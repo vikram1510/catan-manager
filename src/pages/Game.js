@@ -35,7 +35,7 @@ useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
   const interval = setInterval(async () => await updatePlayers(playerId), 3000)
-  // return (() => clearInterval(interval))
+  return (() => clearInterval(interval))
 }, [])
 
 useEffect(() => {
