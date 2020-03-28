@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components'
 import Auth from '../lib/auth'
 import api from '../lib/api'
@@ -7,6 +7,20 @@ const Login = ({history}) => {
 
   const [playerName, setPlayerName] = useState('')
   const [showError, setShowError] = useState('')
+  const [players, setPlayers] = useState(null);
+
+  const updatePlayers = async () => {
+  
+    const players = await api.getAllPlayers()
+    setPlayers(players)
+    
+  }
+  
+  useEffect(() => {
+    updatePlayers()
+    const interval = setInterval(async () => await updatePlayers(), 2000)
+    return (() => clearInterval(interval))
+  }, [])
 
   if (Auth.isAuthenticated()) history.push('/game') 
 
@@ -43,13 +57,19 @@ const Login = ({history}) => {
     if (playerName) {
       const playerAboutToBeGarbaged = await api.getPlayerByName(playerName)
       await api.deletePlayer(playerAboutToBeGarbaged?._id)
-      setShowError(`The player ${playerAboutToBeGarbaged?.name} has been delted`)
+
+      if (playerAboutToBeGarbaged) {
+        setShowError(`The player ${playerAboutToBeGarbaged?.name} has been deleted`)
+      } else {
+        setShowError(`The player '${playerName}' never existed`)
+      }
     } else {
       setShowError('Enter a name to delete')
     }
   }
 
 return(
+  <>
   <Wrapper>
     <h1>Catan Manager</h1>
   <p>Enter a name to Join</p>
@@ -64,7 +84,11 @@ return(
   <button className='create' onClick={() => createPlayerAndJoin()}>Create player and Join</button>
   <button className='delete' onClick={() => deletePlayer()}>Delete me</button>
   </Buttons>
+  <PlayerList>
+    <p>Players in game</p> {players?.map((player) => <li>{player.name}</li>)}
+  </PlayerList>
   </Wrapper>
+  </>
 )
 }
 
@@ -76,6 +100,7 @@ left: 50%;
 -webkit-transform: translate(-50%, -50%);
 transform: translate(-50%, -50%);
 width:80%;
+max-width:500px;
 height: auto;
 padding: 10px;
 -webkit-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
@@ -191,6 +216,15 @@ margin-bottom: 5px;
 
 i {
   margin-right:4px;
+}
+`
+
+
+const PlayerList = styled.div`
+margin-top:10px;
+
+li {
+  height:1rem;
 }
 `
 
