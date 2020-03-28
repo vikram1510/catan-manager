@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import Game from './pages/Game'
 import Login from './pages/Login'
-import Trade from './pages/Trade'
 import assets from './lib/assets';
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
       <Switch>
         <Route exact path='/' component={Login}/>
         <Route exact path='/game' component={Game}/>
-        <Route path='/trade' component={Trade}/>
         </Switch>
       </BrowserRouter>  
     </AppScreen>
