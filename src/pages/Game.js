@@ -119,7 +119,7 @@ return (
     <PlayerCard trading={trading} mainPlayer={player} quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
     </PlayerCardWrapper> : undefined)}
 
-  <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>
+  {/* <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input> */}
   </Wrapper>
   </>
 )
