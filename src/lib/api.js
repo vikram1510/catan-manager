@@ -1,21 +1,20 @@
 import axios from 'axios'
+import { resourceArray } from './config'
 
-// let baseURL
+let baseURL
 
-// if (process.env.NODE_ENV === 'development') {
-//   baseURL = 'http://localhost:3030'
-// } else {
-//   baseURL = 'https://api-catan.herokuapp.com'
-// }
+if (process.env.REACT_APP_API_VERSION === 'test') {
+  baseURL = 'http://localhost:3030'
+} else {
+  baseURL = 'https://api-catan.herokuapp.com'
+}
 
 console.log(process.env);
 console.log(process.env.NODE_ENV);
-// console.log(baseURL);
-console.log('hardcoded baseurl for now to : https://api-catan.herokuapp.com')
+console.log(baseURL);
+// console.log('hardcoded baseurl for now to : https://api-catan.herokuapp.com')
 
-let instance = axios.create({
-  baseURL: 'https://api-catan.herokuapp.com'
-})
+let instance = axios.create({ baseURL })
 
 const getAllPlayers = () => {
 
@@ -83,6 +82,28 @@ const updatePlayer = (id, payload) => {
   .then(res => res.data)
   .catch(err => console.log('Error in updating player: ' + id + ' with: ' + payload, err.response.data))
 }
+
+const transaction = (fromId, toId, amounts) => {
+
+  let verifiedAmounts = {}
+
+  resourceArray.forEach((resource) => {
+    if (amounts[resource]) {
+      verifiedAmounts[resource] = amounts[resource]
+    } 
+  })
+    
+
+  console.log(verifiedAmounts)
+
+  // return instance
+  // .put('/players/transaction/', {fromId, toId, amounts} )
+  // .then(res => res.data)
+  // .catch(err => console.log('Error in performing transaction', fromId, toId, amounts))
+}
+
+console.log('loading api')
+transaction('asdad','dssadd',{'brick':2,'aaa':1})
 
 
 const api = {
