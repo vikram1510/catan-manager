@@ -20,12 +20,16 @@ const items = [
 const BuyCard = ({amounts, setAmounts}) => {
 
   const [showCard, setShowCard] = useState(false);
+  
+  items.forEach((item) => {
+    item.canBuy = canBuy(item.resources, amounts)
+  })
 
-  const calculateAmounts = (itemName) => {
+  const buyItem = (itemName) => {
     const itemToBuy = items.find(item => item.itemName === itemName)
   
     if (itemToBuy?.canBuy) {
-      const listToBuy = createNegResourceMap(itemToBuy.resources)
+      const listToBuy = createResourceMap(itemToBuy.resources, -1)
 
       api.bank({ playerId: amounts._id, amounts: listToBuy})
         .then(setAmounts)
@@ -34,13 +38,9 @@ const BuyCard = ({amounts, setAmounts}) => {
     
   }
 
-  items.forEach((item) => {
-    item.canBuy = canBuy(item.resources, amounts)
-  })
-
   return (
   <Wrapper>
-    {showCard ? renderBuyCard(items, setShowCard, calculateAmounts) : renderCollapsedCard({setShowCard})}
+    {showCard ? renderBuyCard(items, setShowCard, buyItem) : renderCollapsedCard({setShowCard})}
   </Wrapper>)
 
 }
@@ -53,28 +53,20 @@ const canBuy = (itemResources, playerAmounts) => {
 }
 
 
-const createResourceMap = (resources) => {
+const createResourceMap = (resources, polarity=1) => {
   return resources.reduce((final, resource) => {
     if (!(resource in final)) final[resource] = 0
-    final[resource]++
+    final[resource] = final[resource] + (1 * polarity) 
     return final
   }, {})
 }
 
-
-const createNegResourceMap = (resources) => {
-  return resources.reduce((final, resource) => {
-    if (!(resource in final)) final[resource] = 0
-    final[resource]--
-    return final
-  }, {})
-}
-const renderBuyCard = (items, setShowCard, calculateAmounts) => (
+const renderBuyCard = (items, setShowCard, buyItem) => (
   <>
-  <CollapsedCardWrapper onClick={() => setShowCard(false)}>
+  <Header onClick={() => setShowCard(false)}>
   <span>{''}</span>
   <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
-  </CollapsedCardWrapper>
+  </Header>
   {items.map(item =>
       <Item key={item.name}>
       <p>{item.itemName}</p>
@@ -85,9 +77,9 @@ const renderBuyCard = (items, setShowCard, calculateAmounts) => (
               <img src={assets[resource]} alt={resource}></img>
             </Resource>)}
           </ResourceWraper>
-        <BuyButton canBuy={item.canBuy} onClick={() => calculateAmounts(item.itemName)}>Buy</BuyButton>
+        <BuyButton canBuy={item.canBuy} onClick={() => buyItem(item.itemName)}>Buy</BuyButton>
         </div>  
-            <hr/>
+        <hr/>
       </Item>
       )
     }   
@@ -95,10 +87,10 @@ const renderBuyCard = (items, setShowCard, calculateAmounts) => (
 )
  
 const renderCollapsedCard = ({setShowCard}) => (
-  <CollapsedCardWrapper onClick={() => setShowCard(true)}>
+  <Header onClick={() => setShowCard(true)}>
   <span style={{marginTop:'1px'}}>{'Buy Card'}</span>
   <i style={{margin:'right'}} className="fas fa-chevron-down"></i>
-  </CollapsedCardWrapper>
+  </Header>
 ) 
 
 const Item = styled.div`
@@ -122,7 +114,7 @@ const BuyButton = styled.div`
   flex-grow: 2;
 `
 
-const CollapsedCardWrapper = styled.div`
+const Header = styled.div`
 display: flex;
 justify-content: space-between;
 

@@ -25,7 +25,6 @@ border: 1px solid #980b0b;
 -webkit-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 -moz-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
-/* box-shadow: 5px 10px; */
 background-color: white;
 font-weight: 800;
 margin-bottom:10px; 

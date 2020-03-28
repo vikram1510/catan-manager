@@ -13,7 +13,7 @@ const PlayerCard = ({player, tradeHandler}) => {
         {resourceArray.map((resource, key) => 
         <Resource key={key}>
             <img src={assets[resource]} alt={resource}></img>
-            <div>{player?.[resource] ?? '?'}</div> {/* TODO make this a component with custom styling */}
+            <div>{player?.[resource] ?? '?'}</div>
         </Resource>
         )}
       </ResourceWraper>

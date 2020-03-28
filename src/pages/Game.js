@@ -15,14 +15,11 @@ const Game = ({history}) => {
 
 const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
-const [oldPlayerCard, setOldPlayerCard] = useState(false)
 const [syncing, setSyncing] = useState(false)
 const [trading, setTrading] = useState(false)
 const [tradePlayerId, setTradePlayerId] =  useState(null)
 
 const updatePlayers = async (playerId) => {
-
-
   setSyncing(true)
 
   const players = await api.getAllPlayers()
@@ -33,17 +30,12 @@ const updatePlayers = async (playerId) => {
   setSyncing(false)
 }
 
-
 useEffect(() => {
   const playerId = Auth.getToken()
   updatePlayers(playerId)
   const interval = setInterval(async () => await updatePlayers(playerId), 2000)
   return (() => clearInterval(interval))
 }, [])
-
-const openTrade = (id) => {
-  history.push('/trade?player=' + id)
-}
 
 const logout = () => {
   Auth.logout()
@@ -53,7 +45,6 @@ const logout = () => {
 const resetAmounts = async () => {
   const resetAmounts = {brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0}
   await api.updatePlayer(player._id, resetAmounts)
-  setPlayer({ ...player, ...resetAmounts})
 }
 
 const robPlayer = async (innocent) => {
@@ -67,9 +58,7 @@ const robPlayer = async (innocent) => {
     await updatePlayers(player._id)
 
   } else {
-
     alert(`${innocent.name} has no items to rob`)
-
   }
   
 }
@@ -93,62 +82,36 @@ if (players && !player) {
 if (!(players && player)) return null
 
 return (
-  <>
   <Wrapper>
     <Header>
     <div className="logo-img-wrapper">
       <img src={assets.logo} alt='Catan Logo'></img>
     </div>
     <div className="game-buttons">
-      <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}> <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i></GameButton>
+      <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}>
+        <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i>
+        </GameButton>
       <GameButton onClick={resetAmounts}>Reset</GameButton>
       <GameButton onClick={logout}>Log out</GameButton>
     </div>
-
   </Header>
   <Dashboard player={player} setPlayer={setPlayer}/>
-  
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
     <PlayerCardWrapper key={key} >
-    {oldPlayerCard ? 
-    <PlayerCardOld tradeHandler={(id) => openTrade(id)} player={opp} /> : 
-    <PlayerCard
-      showTrade={opp._id === tradePlayerId ? true : false}
-      setTradePlayerId={setTradePlayerId}
-      trading={trading} 
-      mainPlayer={player} 
-      quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} 
-      robHandler={(player) => robPlayer(player)} 
-      tradeHandler={(id) => openTrade(id)} player={opp}/>}
-    </PlayerCardWrapper> : undefined)}
-
-  {/* <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input> */}
+      {<PlayerCard
+          mainPlayer={player} 
+          player={opp}
+          showTrade={opp._id === tradePlayerId}
+          trading={trading} 
+          setTradePlayerId={setTradePlayerId}
+          quickTradeHandler={doQuickTrade} 
+          robHandler={robPlayer} 
+      />}
+    </PlayerCardWrapper> : undefined )}
   </Wrapper>
-  </>
 )
 }
-
-const RefreshButton = styled.div`
-border-radius: 5px;
-padding: 5px;
-background-color:#ffdf00;
-border: 1px solid black;
-text-align:center;
-font-weight: 800;
-font-size:1.2rem;
-height:60px;
-vertical-align:center;
-margin-bottom: 10px;
-display:flex;
-align-items: center;
-justify-content: center;
-
-
-&[disabled] {
-
-}
-`
 
 const Header = styled.div`
 display: flex;
@@ -164,11 +127,7 @@ justify-content: space-between;
    height: auto;
   }
 }
-.game-buttons {
-  button:first-of-type{
-    margin-right: 16px;
-  }
-}
+
 `
 
 const Wrapper = styled.div`
@@ -191,6 +150,9 @@ border: 1px solid #772020;
 padding: 8px;
 font-weight:700;
 align-self: flex-end;
+margin-left: 10px;
+  
+
 &.refresh {
   border-radius: 100%;
 }

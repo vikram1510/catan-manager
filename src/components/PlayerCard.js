@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import assets from '../lib/assets'
@@ -6,10 +6,9 @@ import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
 
 const PlayerCard = ({
-  mainPlayer, player, tradeHandler, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
+  mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
 
   let total = 0;
-
   const resourceList = resourceArray.reduce((resourceList, resource) => {
     let count = player?.[resource]
 
@@ -21,7 +20,17 @@ const PlayerCard = ({
     return resourceList
   }, [])  
 
+
+  const showTradeMenu = () => {
+    if (!showTrade) {
+      setTradePlayerId(player._id)
+    } else {
+      setTradePlayerId('')
+    }
+  }
+
   if (!player) return null
+
 
   return (
     <BiggerWrapper>
@@ -31,7 +40,7 @@ const PlayerCard = ({
       <div className='player-total'>{total}</div>
       {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
       </div>
-      <div onClick={() => setTradePlayerId(player._id)} className='resource-area'>
+      <div onClick={() => showTradeMenu()} className='resource-area'>
         <ResourceWraper>
         {resourceList.map((resource, key) =>  
           <Resource key={key}>
