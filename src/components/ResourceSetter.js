@@ -60,7 +60,7 @@ const ResourceWrapper = styled.div`
   margin-right: 4%;
 
   i {
-    font-size: 24px;
+    font-size: 40px;
   }
 
   :last-child {

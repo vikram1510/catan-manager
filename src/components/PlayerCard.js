@@ -6,7 +6,7 @@ import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
 
 const PlayerCard = ({
-  mainPlayer, player, tradeHandler, robHandler, quickTradeHandler}) => {
+  mainPlayer, player, tradeHandler, robHandler, quickTradeHandler, trading}) => {
 
   const [showQuickTrade, setShowQuickTrade] = useState(false)
 
@@ -43,7 +43,7 @@ const PlayerCard = ({
         </ResourceWraper>
       </div>
     </Wrapper>
-      {showQuickTrade ? <QuickTrader mainPlayer={mainPlayer} setShowQuickTrade={setShowQuickTrade} performTrade={(resource) => quickTradeHandler(resource, player._id)} player={player}/> : null}
+      {showQuickTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} setShowQuickTrade={setShowQuickTrade} performTrade={(resource) => quickTradeHandler(resource, player._id)} player={player}/> : null}
       </BiggerWrapper>
   )
 

@@ -17,11 +17,13 @@ const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
 const [oldPlayerCard, setOldPlayerCard] = useState(false)
 const [syncing, setSyncing] = useState(false)
+const [trading, setTrading] = useState(false)
 
 const updatePlayers = async (playerId) => {
 
 
   setSyncing(true)
+
   const players = await api.getAllPlayers()
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
@@ -59,26 +61,30 @@ const resetAmounts = () => setPlayer({ ...player, brick: 0, wood: 0, grain: 0, r
 
 const robPlayer = async (innocent) => {
 
-  await updatePlayers(player._id)
-  const {newRobber, newInnocent, robbedItem} = rob({robber:player,innocent})
+  const robbedItem = rob({innocent})
 
   if (robbedItem) {
     alert(`You robbed 1 ${robbedItem} from ${innocent.name}!`)
+
+    await api.transaction({toId: player._id, fromId: innocent._id, amounts:{[robbedItem]: 1}})
+    await updatePlayers(player._id)
+
   } else {
+
     alert(`${innocent.name} has no items to rob`)
+
   }
-  await api.updatePlayer(innocent._id, newInnocent)
-  await api.updatePlayer(player._id, newRobber)
-  await updatePlayers(player._id)
   
 }
 
 const doQuickTrade = async (resource, toId) => {
-
+  
+  setTrading(true)
   if (player[resource] >= 1 ) {
     await api.transaction({toId, fromId:player._id, amounts:{[resource]: 1}})
     await updatePlayers(player._id)
   }
+  setTrading(false)
 
 }
 
@@ -97,19 +103,20 @@ return (
       <img src={assets.logo} alt='Catan Logo'></img>
     </div>
     <div className="game-buttons">
+      <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}> <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i></GameButton>
       <GameButton onClick={resetAmounts}>Reset</GameButton>
       <GameButton onClick={logout}>Log out</GameButton>
     </div>
 
   </Header>
   <Dashboard player={player} setPlayer={setPlayer}/>
-  <RefreshButton disabled={syncing} onClick={() => updatePlayers(player._id)}><div>Sync <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i></div></RefreshButton>
+  
   {players.map((opp, key) =>
     (opp.name !== player.name) ?
     <PlayerCardWrapper key={key} >
     {oldPlayerCard ? 
     <PlayerCardOld tradeHandler={(id) => openTrade(id)} player={opp} /> : 
-    <PlayerCard mainPlayer={player} quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
+    <PlayerCard trading={trading} mainPlayer={player} quickTradeHandler={(resource, id) => doQuickTrade(resource, id)} robHandler={(player) => robPlayer(player)} tradeHandler={(id) => openTrade(id)} player={opp}/>}
     </PlayerCardWrapper> : undefined)}
 
   <input className='aaa' type="checkbox" value={oldPlayerCard} onClick={() => setOldPlayerCard(!oldPlayerCard)}></input>
@@ -135,7 +142,7 @@ justify-content: center;
 
 
 &[disabled] {
-  opacity:0.5;
+
 }
 `
 
@@ -181,5 +188,8 @@ border: 1px solid #772020;
 padding: 8px;
 font-weight:700;
 align-self: flex-end;
+&.refresh {
+  border-radius: 100%;
+}
 `
 export default Game

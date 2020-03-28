@@ -5,7 +5,7 @@ import {resourceArray} from '../lib/config'
 import assets from '../lib/assets'
 import api from '../lib/api'
 
-const QuickTrader = ({mainPlayer, player, performTrade, setShowQuickTrade}) => {
+const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
 
   const availaibleResources = []
   resourceArray.forEach((resource) => {
@@ -20,7 +20,7 @@ const QuickTrader = ({mainPlayer, player, performTrade, setShowQuickTrade}) => {
       {availaibleResources.length > 0 ? `I'll give you...` : 'Nothing to trade 😞'}
     </div>
         {availaibleResources.map(resource => 
-        <div onClick={() => {performTrade(resource)}}  className="resource-image-wrapper"> 
+        <div disabled={trading} key={resource} onClick={() => {performTrade(resource)}}  className="resource-image-wrapper"> 
           <img src={assets[resource]} alt={resource}></img>
         </div>)
         }
@@ -36,11 +36,18 @@ flex-direction:row;
 justify-content:space-evenly;
 align-items: center;  
 
+
+
 .text {
   vertical-align:center;
 }
 
 .resource-image-wrapper{
+
+  &[disabled] {
+    opacity:0.5;
+  }
+
     max-width: 40px;
     max-height: 40px;
     padding: 4px 10px;

@@ -4,7 +4,7 @@ import { resourceArray } from './config'
 let baseURL
 
 if (process.env.REACT_APP_API_VERSION === 'test') {
-  baseURL = 'http://localhost:3030'
+  baseURL = 'http://192.168.0.17:3030'
 } else {
   baseURL = 'https://api-catan.herokuapp.com'
 }
