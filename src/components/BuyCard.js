@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import assets from '../lib/assets'
+import api from '../lib/api'
 
 const items = [
   { itemName: 'Road',
@@ -21,19 +22,14 @@ const BuyCard = ({amounts, setAmounts}) => {
   const [showCard, setShowCard] = useState(false);
 
   const calculateAmounts = (itemName) => {
-
     const itemToBuy = items.find(item => item.itemName === itemName)
   
     if (itemToBuy?.canBuy) {
-      const listToBuy = createResourceMap(itemToBuy.resources)
+      const listToBuy = createNegResourceMap(itemToBuy.resources)
 
-      let newAmounts = {}
-      Object.entries(listToBuy).forEach(([resourceName, amount]) => {
-        newAmounts[resourceName] = amounts[resourceName] - amount
-      })
-
-      setAmounts({...amounts, ...newAmounts})
-      setShowCard(false)
+      api.bank({ playerId: amounts._id, amounts: listToBuy})
+        .then(setAmounts)
+        .then(() => setShowCard(false))
     }
     
   }
@@ -65,6 +61,14 @@ const createResourceMap = (resources) => {
   }, {})
 }
 
+
+const createNegResourceMap = (resources) => {
+  return resources.reduce((final, resource) => {
+    if (!(resource in final)) final[resource] = 0
+    final[resource]--
+    return final
+  }, {})
+}
 const renderBuyCard = (items, setShowCard, calculateAmounts) => (
   <>
   <CollapsedCardWrapper onClick={() => setShowCard(false)}>
