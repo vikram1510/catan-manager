@@ -175,7 +175,6 @@ const Wrapper = styled.div`
 padding-top: 10px;
 width: 95%;
 margin: auto;
-height: 100vh;
 display: flex;
 flex-direction: column;
 `
