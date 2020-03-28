@@ -6,7 +6,7 @@ import api from '../lib/api'
 const Login = ({history}) => {
 
   const [playerName, setPlayerName] = useState('')
-  const [showError, setShowError] = useState('default error')
+  const [showError, setShowError] = useState('')
 
   if (Auth.isAuthenticated()) history.push('/game') 
 
@@ -50,13 +50,14 @@ const Login = ({history}) => {
   }
 
 return(
-<div>
   <Wrapper>
     <h1>Catan Manager</h1>
   <p>Enter a name to Join</p>
   <form onSubmit={handleSubmit}>
+    <div className='input-area'>
     <input placeholder={'Player Name'} value={playerName} maxLength="35" onChange={e => setPlayerName(e.target.value)}></input>
     {showError && <ErrorMessage className='error-container'><i className="fas fa-exclamation-circle"></i>{showError}</ErrorMessage>}
+    </div>
     <button className='join'>Join game</button>
   </form>
   <Buttons>
@@ -64,20 +65,18 @@ return(
   <button className='delete' onClick={() => deletePlayer()}>Delete me</button>
   </Buttons>
   </Wrapper>
-</div>
 )
 }
 
 const Wrapper = styled.div`
 background-color: white;
 position: absolute;
-top: 50%;
+top: 30%;
 left: 50%;
 -webkit-transform: translate(-50%, -50%);
 transform: translate(-50%, -50%);
-width: 90%;
-height: 50%;
-min-height:250px;
+width:80%;
+height: auto;
 padding: 10px;
 -webkit-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
 -moz-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
@@ -108,6 +107,12 @@ input {
   margin-bottom:5px;
 }
 
+.input-area {
+  display:flex;
+  flex-direction:column;
+  margin-bottom:10px;
+}
+
 button {
   width: 90%;
   align-self: center;
@@ -120,7 +125,7 @@ button {
 .join {
 	border:1px solid #3ac247;
   background-color:#98f5b1;
-	color:#439e3b;
+	color:#3ac247;
 }
 
 .join:hover {
@@ -137,11 +142,13 @@ const Buttons = styled.div`
 
 display:flex;
 flex-direction:column;
+  margin-top:20px;
 
 button {
+
   width: 90%;
   align-self: center;
-  margin-top:5px;
+  margin-top:10px;
 	border-radius:3px;
 	cursor:pointer;
 	padding:6px 47px;
@@ -151,7 +158,7 @@ button {
 .create {
 	border:1px solid #3ac247;
   background-color:white;
-	color:#439e3b;
+	color:#3ac247;
 }
 
 .delete {
