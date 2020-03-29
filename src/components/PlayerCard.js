@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
-import TransitionResource from './TransitionResource'
+import assets from '../lib/assets'
 import { TransitionGroup } from 'react-transition-group'
 
 const PlayerCard = ({
@@ -48,8 +48,11 @@ const PlayerCard = ({
         <ResourceWraper>
           <TransitionGroup className='resource-wrapper'>
         {resourceList.map((resource, key) =>
-        <TransitionResource key={resourceListKey[key]} resource={resource}/>
-        
+        <Resource
+        key={resource}
+        className="resource-image-wrapper animated bounceIn">
+        <img src={assets[resource]} alt={resource}></img>
+      </Resource>
        )}
        </TransitionGroup>
         </ResourceWraper>
@@ -122,6 +125,19 @@ flex-wrap: wrap;
 `
 
 
+const Resource = styled.div`
+padding: 0 5px;
+width:30px;
+
+  div {
+    text-align:center;
+  }
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+`
 
 
 const ResourceWraper = styled.div`
