@@ -29,7 +29,11 @@ const TransitionResource = ({ in: inProp, resource, onClickHandler, disabled }) 
         ...defaultStyle,
         ...transitionStyles[state]
       }}>
-        <Resource disabled={disabled} key={resource} onClick={inProp ? onClickHandler : null}  className="resource-image-wrapper"> 
+        <Resource
+          className="resource-image-wrapper"
+          disabled={disabled}
+          key={resource}
+          onClick={inProp ? onClickHandler : null}> 
           <img src={assets[resource]} alt={resource}></img>
         </Resource>
       </div>

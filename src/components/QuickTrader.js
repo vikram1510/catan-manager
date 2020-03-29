@@ -20,7 +20,7 @@ const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
     <div className='text'>
       {availaibleResources.length > 0? `I'll give you...` : 'Nothing to trade 😞'}
     </div>
-    <TransitionGroup className='resource-list'>
+    {availaibleResources.length > 0 ? <TransitionGroup className='resource-list'>
         {availaibleResources.map(resource => 
         <TransitionResource 
           key={resource}
@@ -28,7 +28,7 @@ const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
           disabled={trading}
           onClickHandler={() => performTrade(resource)}/>)
         }
-      </TransitionGroup>
+      </TransitionGroup> : null}
   </Wrapper>
 }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import assets from '../lib/assets'
 import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
 import TransitionResource from './TransitionResource'
@@ -11,11 +10,13 @@ const PlayerCard = ({
   mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
 
   let total = 0;
+  const resourceListKey = []
   const resourceList = resourceArray.reduce((resourceList, resource) => {
     let count = player?.[resource]
 
     for (let i = 0; i < count; i++) {
       resourceList.push(resource)
+      resourceListKey.push(`${resource} ${i}`)
       total +=1
     }
 
@@ -46,8 +47,9 @@ const PlayerCard = ({
       <div onClick={() => showTradeMenu()} className='resource-area'>
         <ResourceWraper>
           <TransitionGroup className='resource-wrapper'>
-        {resourceList.map((resource, key) =>  
-          <TransitionResource key={`${key}`} resource={resource}/>
+        {resourceList.map((resource, key) =>
+        <TransitionResource key={resourceListKey[key]} resource={resource}/>
+        
        )}
        </TransitionGroup>
         </ResourceWraper>
