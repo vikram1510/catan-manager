@@ -83,7 +83,7 @@ if (!(players && player)) return null
 return (
   <Wrapper>
     <Header>
-    <div className="logo-img-wrapper">
+    <div className="logo-img-wrapper animated shake">
       <img src={assets.logo} alt='Catan Logo'></img>
     </div>
     <div className="game-buttons">

@@ -30,7 +30,7 @@ const TransitionResource = ({ in: inProp, resource, onClickHandler, disabled }) 
         ...transitionStyles[state]
       }}>
         <Resource
-          className="resource-image-wrapper"
+          className="resource-image-wrapper animated bounceIn"
           disabled={disabled}
           key={resource}
           onClick={inProp ? onClickHandler : null}> 

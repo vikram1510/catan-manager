@@ -3,19 +3,24 @@ import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
 import BuyCard from '../components/BuyCard'
+import {resourceArray} from '../lib/config'
 
 const Dashboard = ({player, setPlayer}) => {
 
+  let total = 0;
+
+  resourceArray.forEach((resource) => {
+    let count = player?.[resource]
+    total +=count
+  })  
+
 return (
   <Wrapper>
-    <div>{player.name}</div>
+    <div>{player.name} ({total})</div>
     <AmountSetter amounts={player} setAmounts={setPlayer} />
     <BuyCard amounts={player} setAmounts={setPlayer}/>
   </Wrapper>
 )
-
-
-
 }
 
 const Wrapper = styled.div`

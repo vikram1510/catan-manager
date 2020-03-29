@@ -33,7 +33,7 @@ const Login = ({history}) => {
         history.push('/game') 
       }
       else {
-        setShowError(`The name '${playerName}' does not exist`)
+        setShowError(`The name '${playerName}' does not exist 🤔`)
     }
     }
       )
@@ -48,7 +48,7 @@ const Login = ({history}) => {
       }
       )
     } else {
-      setShowError('Enter a name create and join')
+      setShowError('Enter a name to create and join 😉')
     }
   }
 
@@ -59,12 +59,12 @@ const Login = ({history}) => {
       await api.deletePlayer(playerAboutToBeGarbaged?._id)
 
       if (playerAboutToBeGarbaged) {
-        setShowError(`The player ${playerAboutToBeGarbaged?.name} has been deleted`)
+        setShowError(`The player ${playerAboutToBeGarbaged?.name} has been deleted 😌`)
       } else {
-        setShowError(`The player '${playerName}' never existed`)
+        setShowError(`The player '${playerName}' never existed 😬`)
       }
     } else {
-      setShowError('Enter a name to delete')
+      setShowError(`Enter a name to delete ${Math.random() > 0.5 ? '🤦' : '🤦‍♀️'}`)
     }
   }
 
@@ -81,7 +81,7 @@ return(
     <button className='join'>Join game</button>
   </form>
   <Buttons>
-  <button className='create' onClick={() => createPlayerAndJoin()}>Create player and Join</button>
+  <button className='create' onClick={() => createPlayerAndJoin()}>Create player and join</button>
   <button className='delete' onClick={() => deletePlayer()}>Delete me</button>
   </Buttons>
   <PlayerList>
@@ -123,11 +123,11 @@ form {
 }
 
 input {
-  padding:5px; 
-  border:1px solid #ccc; 
+  padding: 5px; 
+  border: 1px solid #ccc; 
   -webkit-border-radius: 5px;
-  border-radius: 5px;
-  width:90%;
+  border-radius: 3px;
+  width: 95%;
   align-self: center;
   margin-bottom:5px;
 }
