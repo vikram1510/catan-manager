@@ -5,7 +5,7 @@ import assets from '../lib/assets'
 import api from '../lib/api'
 
 const EVENT_TYPE = {
-  'BANK':'#124E78',
+  'TRADE':'#124E78',
   'COLLECT':'#1B998B',
   'RETURN':'#67115c',
   'BUY':'#5BC16C',
@@ -14,7 +14,7 @@ const EVENT_TYPE = {
 }
 
 
-const EventsViewer = ({player, events, listCapacity=5}) => {
+const EventsViewer = ({player, events, listCapacity=50}) => {
 
   let filterEvents 
   if (events.length > listCapacity) {
@@ -23,7 +23,6 @@ const EventsViewer = ({player, events, listCapacity=5}) => {
     filterEvents = events;
   }
 
-  console.log(filterEvents)
   let resourcesToRender = []
   filterEvents.forEach((event, key) => {
     
@@ -56,6 +55,7 @@ const EventsViewer = ({player, events, listCapacity=5}) => {
   return (
     <Wrapper>
       <h3>History</h3>
+      <div className='event-scrolView'>
      {filterEvents.map((event, key) => 
         <Event mine={event.text.includes(player.name)} className='event'> 
           <span style={{backgroundColor: EVENT_TYPE[event.type]}}>{event.type} </span>
@@ -65,6 +65,7 @@ const EventsViewer = ({player, events, listCapacity=5}) => {
             <img src={assets[resourcesToRender[key]]} alt={resourcesToRender[key]}></img>
           </Resource>
         </Event>)}
+        </div>
       <button onClick={deleteHistory}>Clear History</button>
     </Wrapper>
   )
@@ -80,6 +81,14 @@ margin-bottom:10px;
 h3 {
   margin:0px;
 }
+
+.event-scrolView {
+  padding:5px;
+  max-height:200px;
+  overflow: scroll;
+}
+
+
 button {
   width: 100%;
   margin-top:10px;
