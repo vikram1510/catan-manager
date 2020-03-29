@@ -44,7 +44,7 @@ const PlayerCard = ({
       </div>
       <div onClick={() => showTradeMenu()} className='resource-area'>
         <ResourceWraper>
-          <TransitionGroup className='resource-wrapper'>
+          <div className='resource-wrapper'>
         {resourceList.map((resource, key) =>
         <Resource
         key={resource}
@@ -52,7 +52,7 @@ const PlayerCard = ({
         <img src={assets[resource]} alt={resource}></img>
       </Resource>
        )}
-       </TransitionGroup>
+       </div>
         </ResourceWraper>
       </div>
     </Wrapper>
