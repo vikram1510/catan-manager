@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
 import assets from '../lib/assets'
-import { TransitionGroup } from 'react-transition-group'
 
 const PlayerCard = ({
   mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
@@ -47,8 +46,8 @@ const PlayerCard = ({
           <div className='resource-wrapper'>
         {resourceList.map((resource, key) =>
         <Resource
-        key={resource}
-        className="resource-image-wrapper animated bounceIn">
+        key={key}
+        className="resource-image-wrapper">
         <img src={assets[resource]} alt={resource}></img>
       </Resource>
        )}
