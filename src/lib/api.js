@@ -103,8 +103,39 @@ const bank = ({amounts, playerId}) => {
   .post('/players/bank', {playerId, amounts} )
   .then(res => res.data)
   .catch(err => console.log('Error in performing banking'))
+}
+
+
+const getHistory = () => {
+
+  
+  return instance
+  .get('/history')
+  .then(res => res.data)
+  .catch(err => console.log('Error in getting history', err))
+  
+}
+
+
+const addToHistory = ({text, type}) => {
+  
+    return instance
+    .post('/history', {text, type})
+    .then(res => res.data)
+    .catch(err => console.log('Error in updating history', err))
 
 }
+
+
+const deleteHistory = () => {
+  
+    instance
+    .delete('/history')
+    .then(res => res.data)
+    .catch(err => console.log('Error in deleting history', err))
+
+}
+
 
 const api = {
   getAllPlayers,
@@ -114,7 +145,10 @@ const api = {
   deletePlayer,
   updatePlayer,
   transaction,
-  bank
+  bank,
+  getHistory,
+  addToHistory,
+  deleteHistory,
 }
 
 export default api

@@ -20,10 +20,6 @@ const transitionStyles = {
 const TransitionResource = ({ in: inProp, resource, onClickHandler, disabled }) => (
   <Transition in={inProp} timeout={duration}>
     {state => {
-      if (state === 'entering') {
-
-        console.log(state, resource, 'state')
-      }
       return (
       <div style={{
         ...defaultStyle,

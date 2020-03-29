@@ -7,8 +7,20 @@ import api from '../lib/api'
 
 const AmountSetter = ({amounts, setAmounts, watchAmounts = null }) => {
 
-  const changeResourceAmount = async (resourceMap) => {
-    const newAmounts = await api.bank({playerId: amounts._id, amounts: resourceMap })
+  const changeResourceAmount = async (resource, amount) => {
+    const newAmounts = await api.bank({playerId: amounts._id, amounts: {[resource]: amount} })
+
+    let text = ''
+    let type = ''
+    if (amount > 0) {
+      text = `${amounts.name} got ${amount} ${resource}`
+      type = 'COLLECT'
+    } else {
+      text = `${amounts.name} lost ${amount * -1} ${resource}`
+      type = 'RETURN'
+    }
+
+    await api.addToHistory({text,type})
     setAmounts(newAmounts)
   }
 

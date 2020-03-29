@@ -34,6 +34,11 @@ const BuyCard = ({amounts, setAmounts}) => {
       api.bank({ playerId: amounts._id, amounts: listToBuy})
         .then(setAmounts)
         .then(() => setShowCard(false))
+
+      api.addToHistory({
+        text: `${amounts.name} bought a ${itemName}`,
+        type: 'BUY'
+      })
     }
     
   }

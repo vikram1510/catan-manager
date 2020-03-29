@@ -9,11 +9,13 @@ import Auth from '../lib/auth'
 import api from '../lib/api';
 import assets from '../lib/assets'
 import {rob} from '../lib/rob'
+import EventsViewer from '../components/EventsViewer';
 
 const Game = ({history}) => {
 
 const [players, setPlayers] = useState(null)
 const [player, setPlayer] = useState(undefined)
+const [events, setEvents] = useState(undefined)
 const [syncing, setSyncing] = useState(false)
 const [trading, setTrading] = useState(false)
 const [tradePlayerId, setTradePlayerId] =  useState(null)
@@ -22,8 +24,10 @@ const updatePlayers = async (playerId) => {
   setSyncing(true)
 
   const players = await api.getAllPlayers()
+  const events = await api.getHistory()
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
+  setEvents(events)
   setPlayers(players)
   
   setSyncing(false)
@@ -44,6 +48,11 @@ const logout = () => {
 const resetAmounts = async () => {
   const resetAmounts = {brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0}
   await api.updatePlayer(player._id, resetAmounts)
+  await api.addToHistory({
+    text: `${player.name} has reset!`,
+    type: 'RESET'
+  })
+  await updatePlayers(player._id)
 }
 
 const robPlayer = async (innocent) => {
@@ -54,6 +63,12 @@ const robPlayer = async (innocent) => {
     alert(`You robbed 1 ${robbedItem} from ${innocent.name}!`)
 
     await api.transaction({toId: player._id, fromId: innocent._id, amounts:{[robbedItem]: 1}})
+
+    await api.addToHistory({
+      text: `${player.name} stole a ${robbedItem} from ${innocent.name}`,
+      type: 'ROB'
+    })
+
     await updatePlayers(player._id)
 
   } else {
@@ -62,11 +77,17 @@ const robPlayer = async (innocent) => {
   
 }
 
-const doQuickTrade = async (resource, toId) => {
+const doQuickTrade = async (resource, toPlayer) => {
   
   setTrading(true)
   if (player[resource] >= 1 ) {
-    await api.transaction({toId, fromId:player._id, amounts:{[resource]: 1}})
+    await api.transaction({toId:toPlayer._id, fromId:player._id, amounts:{[resource]: 1}})
+
+    await api.addToHistory({
+      text: `${player.name} gave ${toPlayer.name} a ${resource}`,
+      type: 'TRADE'
+    })
+
     await updatePlayers(player._id)
   }
   setTrading(false)
@@ -106,8 +127,9 @@ return (
           setTradePlayerId={setTradePlayerId}
           quickTradeHandler={doQuickTrade} 
           robHandler={robPlayer} 
-      />}
+          />}
     </PlayerCardWrapper> : undefined )}
+    <EventsViewer player={player}events={events}/>
   </Wrapper>
 )
 }

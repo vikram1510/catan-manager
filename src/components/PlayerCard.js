@@ -34,8 +34,6 @@ const PlayerCard = ({
 
   if (!player) return null
 
-  console.log(resourceList)
-
   return (
     <BiggerWrapper>
     <Wrapper className='player-card'>
@@ -58,7 +56,7 @@ const PlayerCard = ({
         </ResourceWraper>
       </div>
     </Wrapper>
-      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => quickTradeHandler(resource, player._id)} player={player}/> : null}
+      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => quickTradeHandler(resource, player)} player={player}/> : null}
       </BiggerWrapper>
   )
 

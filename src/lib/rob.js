@@ -1,7 +1,6 @@
 import { resourceArray } from "./config"
 
 export const rob = ({ innocent}) => {
-console.log(innocent)
 
 let innocentResources = []
 

@@ -11,11 +11,11 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmoun
       
       if (by === -1) {
 
-        if (amount > 0) changeResourceAmount({[resourceName]: -1})
+        if (amount > 0) changeResourceAmount(resourceName, -1)
       
       } else if ((by === 1)) {
 
-        changeResourceAmount({[resourceName]: 1})
+        changeResourceAmount(resourceName, 1)
       
       }
 
@@ -23,11 +23,11 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmoun
 
       if (watchAmount >= 0 && by === -1) {
 
-        if (amount > 0) changeResourceAmount({[resourceName]: by})
+        if (amount > 0) changeResourceAmount(resourceName, by)
 
       } else if (watchAmount > 0 && by === 1) {
 
-        changeResourceAmount({[resourceName]: by})
+        changeResourceAmount(resourceName, by)
 
       }
 
