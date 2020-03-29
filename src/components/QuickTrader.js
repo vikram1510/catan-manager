@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import {resourceArray} from '../lib/config'
-import assets from '../lib/assets'
-import api from '../lib/api'
+import TransitionResource from './TransitionResource'
+import {TransitionGroup} from 'react-transition-group'
+// import assets from '../lib/assets'
 
 const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
 
@@ -17,13 +18,17 @@ const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
 
   return <Wrapper>
     <div className='text'>
-      {availaibleResources.length > 0 ? `I'll give you...` : 'Nothing to trade 😞'}
+      {availaibleResources.length > 0? `I'll give you...` : 'Nothing to trade 😞'}
     </div>
+    <TransitionGroup className='resource-list'>
         {availaibleResources.map(resource => 
-        <div disabled={trading} key={resource} onClick={() => {performTrade(resource)}}  className="resource-image-wrapper"> 
-          <img src={assets[resource]} alt={resource}></img>
-        </div>)
+        <TransitionResource 
+          key={resource}
+          resource={resource} 
+          disabled={trading}
+          onClickHandler={() => performTrade(resource)}/>)
         }
+      </TransitionGroup>
   </Wrapper>
 }
 
@@ -35,8 +40,13 @@ display:flex;
 flex-direction:row;
 justify-content:space-evenly;
 align-items: center;  
+border-radius: 0 0 5px 5px;
+animation: slide-up 0.4s ease;
 
-
+.resource-list {
+  display: flex;
+  flex-direction:row;
+}
 
 .text {
   vertical-align:center;
@@ -53,12 +63,33 @@ align-items: center;
     padding: 4px 10px;
 
 
-    /* padding: 10px; */
     img {
       height: auto;
       width: 100%;
     }
-  }
+}
+
+@keyframes slide-up-img {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
 
 `
 

@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 import { resourceArray } from '../lib/config'
 import QuickTrader from './QuickTrader'
+import TransitionResource from './TransitionResource'
+import { TransitionGroup } from 'react-transition-group'
 
 const PlayerCard = ({
   mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
@@ -31,6 +33,7 @@ const PlayerCard = ({
 
   if (!player) return null
 
+  console.log(resourceList)
 
   return (
     <BiggerWrapper>
@@ -42,11 +45,11 @@ const PlayerCard = ({
       </div>
       <div onClick={() => showTradeMenu()} className='resource-area'>
         <ResourceWraper>
+          <TransitionGroup className='resource-wrapper'>
         {resourceList.map((resource, key) =>  
-          <Resource key={key}>
-            <img src={assets[resource]} alt={resource}></img> 
-          </Resource>
+          <TransitionResource key={`${key}`} resource={resource}/>
        )}
+       </TransitionGroup>
         </ResourceWraper>
       </div>
     </Wrapper>
@@ -109,27 +112,19 @@ padding:10px;
 flex-grow: 1;
 }
 
+
+.resource-wrapper {
+  display: flex;
+flex-wrap: wrap;
+}
 `
 
 
-const Resource = styled.div`
-padding: 0 5px;
-width:30px;
 
-  div {
-    text-align:center;
-  }
-
-  img {
-    height: auto;
-    width: 100%;
-  }
-`
 
 const ResourceWraper = styled.div`
 display: flex;
 flex-wrap: wrap;
-
 `
 
 export default PlayerCard

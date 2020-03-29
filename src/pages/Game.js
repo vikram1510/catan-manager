@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 import Dashboard from '../components/Dashboard';
 import PlayerCard from '../components/PlayerCard'
-import PlayerCardOld from '../components/PlayerCardOld'
 
 import Auth from '../lib/auth'
 import api from '../lib/api';
