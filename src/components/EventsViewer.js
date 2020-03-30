@@ -1,8 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { resourceArray } from '../lib/config'
 import assets from '../lib/assets'
 import api from '../lib/api'
+import moment from 'moment'
+
+moment.updateLocale('en', {
+  relativeTime : {
+      s  : 'a few seconds',
+      m:  "a min",
+      mm: "%d mins",
+      h:  "an h",
+      hh: "%d hrs",
+  }
+});
 
 const EVENT_TYPE = {
   'TRADE':'#124E78',
@@ -16,9 +27,11 @@ const EVENT_TYPE = {
 
 const EventsViewer = ({player, events, listCapacity=50}) => {
 
+  const [showTime, setShowTime] = useState(false)
+
   let filterEvents 
   if (events.length > listCapacity) {
-    filterEvents = events.slice(events.length-listCapacity,events.length)
+    filterEvents = events.slice(0,listCapacity)
   } else {
     filterEvents = events;
   }
@@ -51,19 +64,20 @@ const EventsViewer = ({player, events, listCapacity=50}) => {
   }
 
   if (filterEvents.length <= 0) return null
-
+  // console.log(events)
   return (
     <Wrapper>
-      <h3>History</h3>
-      <div className='event-scrolView'>
+      <h3>History <span>{`(${events.length})`}</span></h3>
+      <div onClick={() => setShowTime(!showTime)} className='event-scrolView'>
      {filterEvents.map((event, key) => 
         <Event mine={event.text.includes(player.name)} className='event'> 
-          <span style={{backgroundColor: EVENT_TYPE[event.type]}}>{event.type} </span>
+          <span className='eventType' style={{backgroundColor: EVENT_TYPE[event.type]}}>{event.type} </span>
           {`${event.text}`} 
           <Resource
             className="resource-image-wrapper animated bounceIn">
             <img src={assets[resourcesToRender[key]]} alt={resourcesToRender[key]}></img>
           </Resource>
+          {showTime ? <span className='timeStamp animated slideInRight'> {moment(event.createdAt).fromNow()}</span> : null}
         </Event>)}
         </div>
       <button onClick={deleteHistory}>Clear History</button>
@@ -80,6 +94,12 @@ margin-bottom:10px;
 
 h3 {
   margin:0px;
+
+  span {
+    font-size:0.9rem;
+    margin-left:5px;
+    color: grey;
+  }
 }
 
 .event-scrolView {
@@ -111,7 +131,7 @@ const Event = styled.div`
   display:flex;
   align-items: center;
 
-span {
+.eventType {
 
   font-family: 'Roboto Condensed', sans-serif;
 
@@ -124,6 +144,13 @@ span {
   margin-right:4px;
   margin-left:10px;
   height:12px;
+}
+
+.timeStamp {
+  color: grey;
+  margin-left:auto;
+  margin-right: 5px;
+  font-size:0.6rem;
 }
 `
 
