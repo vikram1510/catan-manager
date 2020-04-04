@@ -29,13 +29,16 @@ const EventsViewer = ({player, events, listCapacity=50}) => {
 
   const [showTime, setShowTime] = useState(false)
 
+console.log(events)
   let filterEvents 
   if (events.length > listCapacity) {
     filterEvents = events.slice(0,listCapacity)
   } else {
     filterEvents = events;
   }
-
+  
+  filterEvents = combineEvents(filterEvents)
+  
   let resourcesToRender = []
   filterEvents.forEach((event, key) => {
     
@@ -84,6 +87,55 @@ const EventsViewer = ({player, events, listCapacity=50}) => {
     </Wrapper>
   )
 }
+
+
+const combineEvents = (events) => {
+
+  let combinedEvents = []
+
+  let count = 0
+  events.forEach((event, index) => {
+
+    if (['RETURN','COLLECT'].includes(event.type)) {
+
+      if (events?.[index-1]?.text === event.text || events?.[index+1]?.text === event.text) {
+        count = count + 1
+
+        if (events?.[index+1]?.text !== event.text) {
+          combinedEvents.push({...event, text: event.text.replace('1', count)})
+          count = 0
+        }
+
+      } else {
+        combinedEvents.push(event)
+      }
+      
+      
+    } else {
+      combinedEvents.push(event)
+    }
+  
+    
+  })
+
+  return combinedEvents
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const Wrapper = styled.div`
 background-color: white;
