@@ -20,6 +20,7 @@ const items = [
 const BuyCard = ({amounts, setAmounts}) => {
 
   const [showCard, setShowCard] = useState(false);
+
   
   items.forEach((item) => {
     item.canBuy = canBuy(item.resources, amounts)
@@ -73,7 +74,7 @@ const renderBuyCard = (items, setShowCard, buyItem) => (
   <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
   </Header>
   {items.map(item =>
-      <Item key={item.name}>
+      <Item key={item.itemName}>
       <p>{item.itemName}</p>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <ResourceWraper>
@@ -87,7 +88,7 @@ const renderBuyCard = (items, setShowCard, buyItem) => (
         <hr/>
       </Item>
       )
-    }   
+    }
   </>
 )
  

@@ -99,6 +99,8 @@ const transaction = ({fromId, toId, amounts}) => {
 }
 
 const bank = ({amounts, playerId}) => {
+
+  console.log(amounts, playerId)
   return instance
   .post('/players/bank', {playerId, amounts} )
   .then(res => res.data)
