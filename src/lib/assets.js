@@ -10,4 +10,15 @@ const assets =  {
   logo: PUBLIC_URL + '/catanlogo.png',
 }
 
+
+export const harborAssets =  {
+  brick: PUBLIC_URL + '/21BricksScroll.png',
+  sheep: PUBLIC_URL + '/21SheepScroll.png',
+  wood: PUBLIC_URL + '/21TreeScroll.png',
+  grain: PUBLIC_URL + '/21WheatScroll.png',
+  rock: PUBLIC_URL + '/21RocksScroll.png',
+  any3: PUBLIC_URL + '/31CatanQ.png',
+  any4: PUBLIC_URL + '/41CatanQ.png',
+}
+
 export default assets
