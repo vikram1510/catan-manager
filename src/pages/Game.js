@@ -10,6 +10,7 @@ import api from '../lib/api';
 import assets from '../lib/assets'
 import {rob} from '../lib/rob'
 import EventsViewer from '../components/EventsViewer';
+import Timer from '../components/Timer';
 
 const Game = ({history}) => {
 
@@ -108,6 +109,7 @@ return (
       <img src={assets.logo} alt='Catan Logo'></img>
     </div>
     <div className="game-buttons">
+      <Timer />
       <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}>
         <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i>
         </GameButton>
@@ -138,6 +140,7 @@ const Header = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-between;
+align-items: center;
 
 .logo-img-wrapper {
   width:100px;
@@ -147,6 +150,11 @@ justify-content: space-between;
    width: 100%;
    height: auto;
   }
+}
+
+.game-buttons{
+  display: flex;
+  align-items: center;
 }
 
 `
@@ -163,7 +171,7 @@ const PlayerCardWrapper = styled.div `
 margin-bottom: 10px;
 `
 
-const GameButton = styled.button`
+export const GameButton = styled.button`
 background-color: #772020;
 color: white;
 border-radius: 3px;
