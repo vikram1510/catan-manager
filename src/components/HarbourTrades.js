@@ -22,20 +22,6 @@ const HarbourTrades = ({amounts, setAmounts}) => {
     setHarborTrades(harborTrades.filter(e => e !== 'any4'))
   }
 
-  const doTrade = (tradeName) => {
-  
-    if (canDo(tradeName)) {
-
-      // call api
-
-      api.addToHistory({
-        text: `${amounts.name} converted ${'n'} ${'resource'} into a ${'new resource'}`,
-        type: 'HARBOUR'
-      })
-    }
-    
-  }
-
   const modifyHarborTrade = (tradeName) => {
     
     if (harborTrades.includes(tradeName)) {
@@ -49,7 +35,7 @@ const HarbourTrades = ({amounts, setAmounts}) => {
 
   return (
   <Wrapper>
-    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, doTrade, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
+    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
   </Wrapper>)
 
 }
@@ -73,7 +59,7 @@ const canDo = (tradeType, playerAmounts) => {
 //   }, {})
 // }
 
-const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, buyItem, editMode, setEditMode) => (
+const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, editMode, setEditMode) => (
   <>
   <Header onClick={() => setShowCard(false)}>
   <span>{''}</span>
@@ -96,6 +82,7 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
           checked={harborTrades.includes(item)}
           canDo={canDo(item, amounts)}
           modifyHarborTrade={modifyHarborTrade}
+          setShowCard={setShowCard}
         />
       )
     })}
@@ -142,6 +129,18 @@ background-color: white;
 font-weight: 500;
 margin-bottom: 4px;
 margin-top: 2px;
+
+button {
+  padding: 2px 4px; 
+  background-color: #50b350;
+  text-align: center;
+  font-size: 0.9rem;
+  margin: auto;
+  margin-top: 5px;
+  border: 1px solid #50b350;
+  color: white;
+  border-radius: 3px;
+}
  `
 // const ResourceWraper = styled.div`
 // display: flex;

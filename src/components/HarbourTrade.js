@@ -7,7 +7,7 @@ import QuickTrader from './QuickTrader'
 import api from '../lib/api';
 
 
-const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrade}) => {
+const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrade, setShowCard}) => {
 
   const [lose, setLose] = useState(undefined)
 
@@ -19,8 +19,6 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
       setLose(undefined)
     }
   }, [editMode])
-
-  console.log(lose)
 
   const doHarborTrade = (gainItem) => {
 
@@ -37,6 +35,9 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
       type: 'HARBOUR'
     })
 
+    setShowCard((s) => !s)
+
+    console.log(loseQuantity)
     api.bank({playerId: amounts._id, amounts: {
       [lose]: -loseQuantity,
       [gainItem]: 1
@@ -46,7 +47,7 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
 
 
     return (
-      <Item key={item}>
+      <Item disabled={canDo} key={item}>
       <p disabled={canDo} className={canDo ? 'enabled' : 'disabled'} onClick={() => setLose(item)}>
         <input 
           type="checkbox"
@@ -57,7 +58,7 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
         {item}
       </p>
       {!editMode && canDo && displayLose() ? <QuickTrader min={item[item.length-1]} placeholder={'I\'ll exchange'} trading={false} mainPlayer={amounts} performTrade={setLose}/> : null}
-      {!editMode && canDo && displayGain() ? <QuickTrader min={0} placeholder={`I\'ll get`} trading={false} mainPlayer={amounts} performTrade={doHarborTrade}/> : null}
+      {!editMode && canDo && displayGain() ? <QuickTrader min={0} filter={lose} placeholder={`I\'ll get`} trading={false} mainPlayer={amounts} performTrade={doHarborTrade}/> : null}
    </Item>
     )
 
@@ -68,17 +69,19 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
 
 const Item = styled.div`
 font-weight:700;
+border-radius: 3px;
+border: 1px solid ${({disabled}) =>  disabled ? '#2d4290' : '#dcdcdc'};
+background-color: ${({disabled}) =>  disabled ? '#3754e0' : '#acacac'};
+padding: 2px;
+margin-bottom: 3px;
+color: white;
 
 hr {
  margin: 0.2rem;
 }
 
-.enabled {
-    color: #3754e0;
-  }
-
-.disabled {
-  color: grey;
+input {
+  opacity: 1
 }
 `
 
