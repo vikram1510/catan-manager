@@ -20,10 +20,10 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
     }
   }, [editMode])
 
+  console.log(lose)
 
   const doHarborTrade = (gainItem) => {
 
-    
     let loseQuantity = 2
     
     if (item.includes('any')) {
@@ -42,11 +42,6 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
       [gainItem]: 1
     }}).then(setLose(undefined))
 
-
-
-
-   
-
   }  
 
 
@@ -61,9 +56,9 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
           checked={checked}/>    
         {item}
       </p>
-      {!editMode && canDo && displayLose() ? <QuickTrader placeholder={'I\'ll exchange'} trading={false} mainPlayer={amounts} performTrade={setLose}/> : null}
-      {!editMode && canDo && displayGain() ? <QuickTrader placeholder={'I\'ll get'} trading={false} mainPlayer={amounts} performTrade={doHarborTrade}/> : null}
-      </Item>
+      {!editMode && canDo && displayLose() ? <QuickTrader min={item[item.length-1]} placeholder={'I\'ll exchange'} trading={false} mainPlayer={amounts} performTrade={setLose}/> : null}
+      {!editMode && canDo && displayGain() ? <QuickTrader min={0} placeholder={`I\'ll get`} trading={false} mainPlayer={amounts} performTrade={doHarborTrade}/> : null}
+   </Item>
     )
 
 
