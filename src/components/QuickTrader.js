@@ -6,11 +6,13 @@ import TransitionResource from './TransitionResource'
 import {TransitionGroup} from 'react-transition-group'
 // import assets from '../lib/assets'
 
-const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
+const QuickTrader = ({placeholder, mainPlayer, player, performTrade, trading, min=1}) => {
 
   const availaibleResources = []
+
   resourceArray.forEach((resource) => {
-    if(mainPlayer[resource] >= 1) {
+
+    if(mainPlayer[resource] >= min) {
       availaibleResources.push(resource)
     }
 
@@ -18,7 +20,7 @@ const QuickTrader = ({mainPlayer, player, performTrade, trading}) => {
 
   return <Wrapper>
     <div className='text'>
-      {availaibleResources.length > 0? `I'll give you...` : 'Nothing to trade 😞'}
+      {availaibleResources.length > 0? (placeholder ?? `I'll give you...`) : 'Nothing to trade 😞'}
     </div>
     {availaibleResources.length > 0 ? <TransitionGroup className='resource-list'>
         {availaibleResources.map(resource => 

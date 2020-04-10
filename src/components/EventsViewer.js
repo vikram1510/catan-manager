@@ -67,13 +67,12 @@ console.log(events)
   }
 
   if (filterEvents.length <= 0) return null
-  // console.log(events)
   return (
     <Wrapper>
       <h3>History <span>{`(${events.length})`}</span></h3>
       <div onClick={() => setShowTime(!showTime)} className='event-scrolView'>
      {filterEvents.map((event, key) => 
-        <Event mine={event.text.includes(player.name)} className='event'> 
+        <Event key={key} mine={event.text.includes(player.name)} className='event'> 
           <span className='eventType' style={{backgroundColor: EVENT_TYPE[event.type]}}>{event.type} </span>
           {`${event.text}`} 
           <Resource

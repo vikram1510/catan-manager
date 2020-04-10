@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
 import BuyCard from '../components/BuyCard'
+import HarbourTrades from '../components/HarbourTrades'
 import {resourceArray} from '../lib/config'
 
 const Dashboard = ({player, setPlayer}) => {
@@ -19,6 +20,7 @@ return (
     <div>{player.name} ({total})</div>
     <AmountSetter amounts={player} setAmounts={setPlayer} />
     <BuyCard amounts={player} setAmounts={setPlayer}/>
+    <HarbourTrades amounts={player} setAmounts={setPlayer}/>
   </Wrapper>
 )
 }
