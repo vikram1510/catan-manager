@@ -148,9 +148,9 @@ button {
 }
 
 .join {
-	border:1px solid #3ac247;
+	border:1px solid #174e1c;
   background-color:#98f5b1;
-	color:#3ac247;
+	color:#174e1c;
 }
 
 .join:hover {
@@ -181,15 +181,15 @@ button {
 }
 
 .create {
-	border:1px solid #3ac247;
+	border:1px solid #174e1c;
   background-color:white;
-	color:#3ac247;
+	color:#174e1c;
 }
 
 .delete {
-  border: 1px solid #c23a3a;
+  border: 1px solid #401313;
   background-color: #f59898;
-  color: #9e3b3b;
+  color: #401313;
 }
 
 .create:hover {
