@@ -7,7 +7,7 @@ import HarbourTrade from './HarbourTrade'
 
 // const APIHarbourTrades = ['brick','any4','wood','any3']
 
-const availableTrades = ['any4','any3','brick','wood','rock','sheep','grain']
+const availableTrades = ['any 4','any 3','brick','wood','rock','sheep','grain']
 
 const HarbourTrades = ({amounts, setAmounts}) => {
 
@@ -15,7 +15,7 @@ const HarbourTrades = ({amounts, setAmounts}) => {
 
   const [editMode, setEditMode] = useState(false);
   const [showCard, setShowCard] = useState(false);
-  const [harborTrades, setHarborTrades] = useState(['any4']);
+  const [harborTrades, setHarborTrades] = useState(['any 4']);
 
   if (harborTrades.includes('any3') && harborTrades.includes('any4')) {
     console.log('removing any4',harborTrades)
@@ -35,7 +35,7 @@ const HarbourTrades = ({amounts, setAmounts}) => {
 
   return (
   <Wrapper>
-    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
+    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, setAmounts, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
   </Wrapper>)
 
 }
@@ -59,7 +59,7 @@ const canDo = (tradeType, playerAmounts) => {
 //   }, {})
 // }
 
-const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, editMode, setEditMode) => (
+const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, setAmounts, editMode, setEditMode) => (
   <>
   <Header onClick={() => setShowCard(false)}>
   <span>{''}</span>
@@ -83,6 +83,7 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
           canDo={canDo(item, amounts)}
           modifyHarborTrade={modifyHarborTrade}
           setShowCard={setShowCard}
+          setAmounts={setAmounts}
         />
       )
     })}

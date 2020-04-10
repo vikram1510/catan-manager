@@ -7,7 +7,7 @@ import QuickTrader from './QuickTrader'
 import api from '../lib/api';
 
 
-const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrade, setShowCard}) => {
+const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrade, setShowCard, setAmounts}) => {
 
   const [lose, setLose] = useState(undefined)
 
@@ -28,21 +28,20 @@ const HarbourTrade = ({amounts, item, editMode, checked, canDo, modifyHarborTrad
       loseQuantity = item[item.length-1]
     }
     
-    console.log(`${amounts.name} traded ${loseQuantity} ${lose} for ${gainItem} with ${item}`)
+    // console.log(`${amounts.name} traded ${loseQuantity} ${lose} for ${gainItem} with ${item}`)
     
     api.addToHistory({
       text: `${amounts.name} traded ${loseQuantity} ${lose} for ${gainItem} with ${item}`,
       type: 'HARBOUR'
     })
 
-    setShowCard((s) => !s)
-
-    console.log(loseQuantity)
+    
     api.bank({playerId: amounts._id, amounts: {
       [lose]: -loseQuantity,
       [gainItem]: 1
-    }}).then(setLose(undefined))
-
+    }}).then(setLose(undefined)).then(setAmounts)
+    
+    setShowCard((s) => !s)
   }  
 
 
