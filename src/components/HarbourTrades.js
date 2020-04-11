@@ -7,7 +7,7 @@ import HarbourTrade from './HarbourTrade'
 
 // const APIHarbourTrades = ['brick','any4','wood','any3']
 
-const availableTrades = ['any 4','any 3','brick','wood','rock','sheep','grain']
+const availableTrades = ['any-4','any-3','brick','wood','rock','sheep','grain']
 
 const HarbourTrades = ({amounts, setAmounts}) => {
 
@@ -15,11 +15,11 @@ const HarbourTrades = ({amounts, setAmounts}) => {
 
   const [editMode, setEditMode] = useState(false);
   const [showCard, setShowCard] = useState(false);
-  const [harborTrades, setHarborTrades] = useState(['any 4']);
+  const [harborTrades, setHarborTrades] = useState(['any-4']);
 
-  if (harborTrades.includes('any3') && harborTrades.includes('any4')) {
-    console.log('removing any4',harborTrades)
-    setHarborTrades(harborTrades.filter(e => e !== 'any4'))
+  if (harborTrades.includes('any-3') && harborTrades.includes('any-4')) {
+    console.log('removing any-4',harborTrades)
+    setHarborTrades(harborTrades.filter(e => e !== 'any-4'))
   }
 
   const modifyHarborTrade = (tradeName) => {
@@ -65,6 +65,7 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
   <span>{''}</span>
   <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
   </Header>
+  <HarbourTradesWrapper editMode={editMode}>
   {
     
     availableTrades.map(item => {
@@ -74,7 +75,7 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
       }
 
       return (
-       <HarbourTrade 
+        <HarbourTrade 
           key={item}
           amounts={amounts}
           item={item}
@@ -85,8 +86,11 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
           setShowCard={setShowCard}
           setAmounts={setAmounts}
         />
+
+
       )
     })}
+    </HarbourTradesWrapper>
     <button onClick={() => setEditMode(!editMode)}>{editMode ? 'Save' : 'Edit'}</button>
   </>
 )
@@ -160,6 +164,12 @@ button {
 //     width: 100%;
 //   }
 // `
+
+const HarbourTradesWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: ${({ editMode }) => editMode ? 'row' : 'column'}
+`
 
 
 export default HarbourTrades
