@@ -7,7 +7,7 @@ import HarbourTrade from './HarbourTrade'
 
 // const APIHarbourTrades = ['brick','any4','wood','any3']
 
-const availableTrades = ['any4','any3','brick','wood','rock','sheep','grain']
+const availableTrades = ['any-4','any-3','brick','wood','rock','sheep','grain']
 
 const HarbourTrades = ({amounts, setAmounts}) => {
 
@@ -15,25 +15,11 @@ const HarbourTrades = ({amounts, setAmounts}) => {
 
   const [editMode, setEditMode] = useState(false);
   const [showCard, setShowCard] = useState(false);
-  const [harborTrades, setHarborTrades] = useState(['any4']);
+  const [harborTrades, setHarborTrades] = useState(['any-4']);
 
-  if (harborTrades.includes('any3') && harborTrades.includes('any4')) {
-    console.log('removing any4',harborTrades)
-    setHarborTrades(harborTrades.filter(e => e !== 'any4'))
-  }
-
-  const doTrade = (tradeName) => {
-  
-    if (canDo(tradeName)) {
-
-      // call api
-
-      api.addToHistory({
-        text: `${amounts.name} converted ${'n'} ${'resource'} into a ${'new resource'}`,
-        type: 'HARBOUR'
-      })
-    }
-    
+  if (harborTrades.includes('any-3') && harborTrades.includes('any-4')) {
+    console.log('removing any-4',harborTrades)
+    setHarborTrades(harborTrades.filter(e => e !== 'any-4'))
   }
 
   const modifyHarborTrade = (tradeName) => {
@@ -49,7 +35,7 @@ const HarbourTrades = ({amounts, setAmounts}) => {
 
   return (
   <Wrapper>
-    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, doTrade, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
+    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, setAmounts, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
   </Wrapper>)
 
 }
@@ -73,12 +59,13 @@ const canDo = (tradeType, playerAmounts) => {
 //   }, {})
 // }
 
-const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, buyItem, editMode, setEditMode) => (
+const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, setAmounts, editMode, setEditMode) => (
   <>
   <Header onClick={() => setShowCard(false)}>
   <span>{''}</span>
   <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
   </Header>
+  <HarbourTradesWrapper editMode={editMode}>
   {
     
     availableTrades.map(item => {
@@ -88,7 +75,7 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
       }
 
       return (
-       <HarbourTrade 
+        <HarbourTrade 
           key={item}
           amounts={amounts}
           item={item}
@@ -96,9 +83,14 @@ const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, se
           checked={harborTrades.includes(item)}
           canDo={canDo(item, amounts)}
           modifyHarborTrade={modifyHarborTrade}
+          setShowCard={setShowCard}
+          setAmounts={setAmounts}
         />
+
+
       )
     })}
+    </HarbourTradesWrapper>
     <button onClick={() => setEditMode(!editMode)}>{editMode ? 'Save' : 'Edit'}</button>
   </>
 )
@@ -142,6 +134,18 @@ background-color: white;
 font-weight: 500;
 margin-bottom: 4px;
 margin-top: 2px;
+
+button {
+  padding: 2px 4px; 
+  background-color: #50b350;
+  text-align: center;
+  font-size: 0.9rem;
+  margin: auto;
+  margin-top: 5px;
+  border: 1px solid #50b350;
+  color: white;
+  border-radius: 3px;
+}
  `
 // const ResourceWraper = styled.div`
 // display: flex;
@@ -160,6 +164,12 @@ margin-top: 2px;
 //     width: 100%;
 //   }
 // `
+
+const HarbourTradesWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: ${({ editMode }) => editMode ? 'row' : 'column'}
+`
 
 
 export default HarbourTrades

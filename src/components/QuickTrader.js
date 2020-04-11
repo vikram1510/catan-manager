@@ -6,13 +6,13 @@ import TransitionResource from './TransitionResource'
 import {TransitionGroup} from 'react-transition-group'
 // import assets from '../lib/assets'
 
-const QuickTrader = ({placeholder, mainPlayer, player, performTrade, trading, min=1}) => {
+const QuickTrader = ({placeholder, mainPlayer, player, performTrade, trading, min=1, filter=[]}) => {
 
   const availaibleResources = []
 
   resourceArray.forEach((resource) => {
 
-    if(mainPlayer[resource] >= min) {
+    if(mainPlayer[resource] >= min && !filter.includes(resource)) {
       availaibleResources.push(resource)
     }
 

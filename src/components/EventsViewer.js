@@ -40,7 +40,7 @@ const EventsViewer = ({player, events, listCapacity=50}) => {
   filterEvents = combineEvents(filterEvents)
   
   let resourcesToRender = []
-  filterEvents.forEach((event, key) => {
+  filterEvents.forEach((event) => {
     
     let resourceToRender = ''
     
@@ -95,13 +95,13 @@ const combineEvents = (events) => {
   let count = 0
   events.forEach((event, index) => {
 
-    if (['RETURN','COLLECT'].includes(event.type)) {
+    if (['RETURN','COLLECT','BUY','ROB'].includes(event.type)) {
 
       if (events?.[index-1]?.text === event.text || events?.[index+1]?.text === event.text) {
         count = count + 1
 
         if (events?.[index+1]?.text !== event.text) {
-          combinedEvents.push({...event, text: event.text.replace('1', count)})
+          combinedEvents.push({...event, text: event.text.replace('1', count).replace(' a ', ` ${count} `)})
           count = 0
         }
 
