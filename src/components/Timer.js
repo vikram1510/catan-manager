@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 
-const end = 3;
+const end = 60;
 
 const Timer = ({ action }) => {
 
