@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 
-const end = 60;
+const end = 3;
 
 const Timer = ({action}) => {
 
   const [count, setCount] = useState(0);
   const [isTimerOn, setTimerState] = useState(false);
   const interval = useRef(null)
-  const timerEndFunction = useCallback(action)
 
   useEffect(() => {
     if (isTimerOn && (!count && !interval.current)){
@@ -19,10 +18,9 @@ const Timer = ({action}) => {
       stopInterval()
     }
     if (isTimerOn && count === end){
-      stopInterval()
-      timerEndFunction().then(setTimerState(false)).catch(console.log)
+      action().then(() => setTimerState(false))
     }
-  }, [count, isTimerOn, timerEndFunction])
+  }, [count, isTimerOn, action])
 
   const stopInterval = () => {
     clearInterval(interval.current)

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import api from '../lib/api'
 import Auth from '../lib/auth'
 
-const TimerEndMessage = ({gameEvents}) => {
+const TimerAlert = ({gameEvents}) => {
   const [createdBy, setCreatedBy] = useState(null)
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const Wrapper = styled.div `
 
 `
 
-export default TimerEndMessage
+export default TimerAlert

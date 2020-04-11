@@ -11,7 +11,7 @@ import assets from '../lib/assets'
 import {rob} from '../lib/rob'
 import EventsViewer from '../components/EventsViewer';
 import Timer from '../components/Timer';
-import TimerEndMessage from '../components/TimerEndMessage'
+import TimerAlert from '../components/TimerAlert'
 
 const Game = ({history}) => {
 
@@ -108,7 +108,7 @@ if (!(players && player)) return null
 
 return (
   <>
-  <TimerEndMessage gameEvents={gameEvents} />
+  <TimerAlert gameEvents={gameEvents} />
   <Wrapper>
     <Header>
     <div className="logo-img-wrapper animated shake">
