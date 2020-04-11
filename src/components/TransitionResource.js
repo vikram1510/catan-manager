@@ -12,28 +12,29 @@ const defaultStyle = {
 
 const transitionStyles = {
   entering: { opacity: 0 },
-  entered:  { opacity: 1 },
-  exiting:  { opacity: 1 },
-  exited:  { opacity: 0 },
+  entered: { opacity: 1 },
+  exiting: { opacity: 1 },
+  exited: { opacity: 0 },
 };
 
 const TransitionResource = ({ in: inProp, resource, onClickHandler, disabled }) => (
   <Transition in={inProp} timeout={duration}>
     {state => {
       return (
-      <div style={{
-        ...defaultStyle,
-        ...transitionStyles[state]
-      }}>
-        <Resource
-          className="resource-image-wrapper animated bounceIn"
-          disabled={disabled}
-          key={resource}
-          onClick={inProp ? onClickHandler : null}> 
-          <img src={assets[resource]} alt={resource}></img>
-        </Resource>
-      </div>
-    )}}
+        <div style={{
+          ...defaultStyle,
+          ...transitionStyles[state]
+        }}>
+          <Resource
+            className="resource-image-wrapper animated bounceIn"
+            disabled={disabled}
+            key={resource}
+            onClick={inProp ? onClickHandler : null}>
+            <img src={assets[resource]} alt={resource}></img>
+          </Resource>
+        </div>
+      )
+    }}
   </Transition>
 );
 

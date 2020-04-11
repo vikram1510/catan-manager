@@ -5,10 +5,10 @@ import ResourceSetter from './ResourceSetter'
 import { resourceArray } from '../lib/config'
 import api from '../lib/api'
 
-const AmountSetter = ({amounts, setAmounts, watchAmounts = null }) => {
+const AmountSetter = ({ amounts, setAmounts, watchAmounts = null }) => {
 
   const changeResourceAmount = async (resource, amount) => {
-    const newAmounts = await api.bank({playerId: amounts._id, amounts: {[resource]: amount} })
+    const newAmounts = await api.bank({ playerId: amounts._id, amounts: { [resource]: amount } })
 
     let text = ''
     let type = ''
@@ -20,7 +20,7 @@ const AmountSetter = ({amounts, setAmounts, watchAmounts = null }) => {
       type = 'RETURN'
     }
 
-    await api.addToHistory({text,type})
+    await api.addToHistory({ text, type })
     setAmounts(newAmounts)
   }
 

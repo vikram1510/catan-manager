@@ -3,20 +3,20 @@ import styled from 'styled-components'
 
 import assets from '../lib/assets'
 
-const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount } ) => {
+const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount }) => {
 
   const checkAmountsAndChange = (by) => {
 
     if (watchAmount === null) {
-      
+
       if (by === -1) {
 
         if (amount > 0) changeResourceAmount(resourceName, -1)
-      
+
       } else if ((by === 1)) {
 
         changeResourceAmount(resourceName, 1)
-      
+
       }
 
     } else {
@@ -38,14 +38,14 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmoun
 
 
   return (
-    
+
     <ResourceWrapper amount={amount} watchAmount={watchAmount}>
-        <i className="fas fa-plus-square" onClick={() => checkAmountsAndChange(1)}></i>
-        <div className="resource-image-wrapper"> 
-          <img src={assets[resourceName]} alt={resourceName}></img>
-        </div>
-        <i  className="fas fa-minus-square" onClick={() => checkAmountsAndChange(-1)}></i>
-        <p>{amount}</p>
+      <i className="fas fa-plus-square" onClick={() => checkAmountsAndChange(1)}></i>
+      <div className="resource-image-wrapper">
+        <img src={assets[resourceName]} alt={resourceName}></img>
+      </div>
+      <i className="fas fa-minus-square" onClick={() => checkAmountsAndChange(-1)}></i>
+      <p>{amount}</p>
     </ResourceWrapper>
   )
 
@@ -69,7 +69,7 @@ const ResourceWrapper = styled.div`
 
   .fa-plus-square {
     color:green;
-    opacity: ${({watchAmount}) => ((watchAmount !== null) && (watchAmount <= 0))  ? '0.3' : '1'};
+    opacity: ${({ watchAmount }) => ((watchAmount !== null) && (watchAmount <= 0)) ? '0.3' : '1'};
   }
 
   i:active {
@@ -78,7 +78,7 @@ const ResourceWrapper = styled.div`
 
   .fa-minus-square {
     color:#d82828;
-    opacity: ${({amount}) => amount <= 0 ? '0.3' : '1'};
+    opacity: ${({ amount }) => amount <= 0 ? '0.3' : '1'};
   }
 
   .resource-image-wrapper{

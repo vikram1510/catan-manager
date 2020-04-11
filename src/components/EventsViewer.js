@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { resourceArray } from '../lib/config'
 import assets from '../lib/assets'
@@ -6,59 +6,59 @@ import api from '../lib/api'
 import moment from 'moment'
 
 moment.updateLocale('en', {
-  relativeTime : {
-      s  : 'a few seconds',
-      m:  "a min",
-      mm: "%d mins",
-      h:  "an h",
-      hh: "%d hrs",
+  relativeTime: {
+    s: 'a few seconds',
+    m: "a min",
+    mm: "%d mins",
+    h: "an h",
+    hh: "%d hrs",
   }
 });
 
 const EVENT_TYPE = {
-  'TRADE':'#124E78',
-  'COLLECT':'#1B998B',
-  'RETURN':'#67115c',
-  'BUY':'#5BC16C',
-  'ROB':'#E71D36',
-  'RESET':'#CE63A0',
+  'TRADE': '#124E78',
+  'COLLECT': '#1B998B',
+  'RETURN': '#67115c',
+  'BUY': '#5BC16C',
+  'ROB': '#E71D36',
+  'RESET': '#CE63A0',
 }
 
 
-const EventsViewer = ({player, events, listCapacity=50}) => {
+const EventsViewer = ({ player, events, listCapacity = 50 }) => {
 
   const [showTime, setShowTime] = useState(false)
 
   // console.log(events)
-  let filterEvents 
+  let filterEvents
   if (events.length > listCapacity) {
-    filterEvents = events.slice(0,listCapacity)
+    filterEvents = events.slice(0, listCapacity)
   } else {
     filterEvents = events;
   }
-  
+
   filterEvents = combineEvents(filterEvents)
-  
+
   let resourcesToRender = []
   filterEvents.forEach((event) => {
-    
+
     let resourceToRender = ''
-    
+
     resourceArray.forEach((resource) => {
       if (event.text.includes(resource)) {
-        
+
         resourceToRender = resource
       }
     })
-    
+
     resourcesToRender.push(resourceToRender)
-    
+
   })
-  
+
   const deleteHistory = () => {
     // eslint-disable-next-line no-restricted-globals
     const confirmAnswer = confirm('You are about to delete the game history. This process is irreversible. Are you sure?')
-    
+
     if (confirmAnswer) {
       api.deleteHistory()
     } else {
@@ -71,17 +71,17 @@ const EventsViewer = ({player, events, listCapacity=50}) => {
     <Wrapper>
       <h3>History <span>{`(${events.length})`}</span></h3>
       <div onClick={() => setShowTime(!showTime)} className='event-scrolView'>
-     {filterEvents.map((event, key) => 
-        <Event key={key} mine={event.text.includes(player.name)} className='event'> 
-          <span className='eventType' style={{backgroundColor: EVENT_TYPE[event.type]}}>{event.type} </span>
-          {`${event.text}`} 
-          <Resource
-            className="resource-image-wrapper animated bounceIn">
-            <img src={assets[resourcesToRender[key]]} alt={resourcesToRender[key]}></img>
-          </Resource>
-          {showTime ? <span className='timeStamp animated slideInRight'> {moment(event.createdAt).fromNow()}</span> : null}
-        </Event>)}
-        </div>
+        {filterEvents.map((event, key) =>
+          <Event key={key} mine={event.text.includes(player.name)} className='event'>
+            <span className='eventType' style={{ backgroundColor: EVENT_TYPE[event.type] }}>{event.type} </span>
+            {`${event.text}`}
+            <Resource
+              className="resource-image-wrapper animated bounceIn">
+              <img src={assets[resourcesToRender[key]]} alt={resourcesToRender[key]}></img>
+            </Resource>
+            {showTime ? <span className='timeStamp animated slideInRight'> {moment(event.createdAt).fromNow()}</span> : null}
+          </Event>)}
+      </div>
       <button onClick={deleteHistory}>Clear History</button>
     </Wrapper>
   )
@@ -95,26 +95,26 @@ const combineEvents = (events) => {
   let count = 0
   events.forEach((event, index) => {
 
-    if (['RETURN','COLLECT','BUY','ROB'].includes(event.type)) {
+    if (['RETURN', 'COLLECT', 'BUY', 'ROB'].includes(event.type)) {
 
-      if (events?.[index-1]?.text === event.text || events?.[index+1]?.text === event.text) {
+      if (events?.[index - 1]?.text === event.text || events?.[index + 1]?.text === event.text) {
         count = count + 1
 
-        if (events?.[index+1]?.text !== event.text) {
-          combinedEvents.push({...event, text: event.text.replace('1', count).replace(' a ', ` ${count} `)})
+        if (events?.[index + 1]?.text !== event.text) {
+          combinedEvents.push({ ...event, text: event.text.replace('1', count).replace(' a ', ` ${count} `) })
           count = 0
         }
 
       } else {
         combinedEvents.push(event)
       }
-      
-      
+
+
     } else {
       combinedEvents.push(event)
     }
-  
-    
+
+
   })
 
   return combinedEvents

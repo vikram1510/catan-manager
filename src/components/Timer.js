@@ -3,17 +3,17 @@ import styled from 'styled-components'
 
 const end = 3;
 
-const Timer = ({action}) => {
+const Timer = ({ action }) => {
 
   const [count, setCount] = useState(0);
   const [isTimerOn, setTimerState] = useState(false);
   const interval = useRef(null)
 
   useEffect(() => {
-    if (isTimerOn && (!count && !interval.current)){
-      interval.current = setInterval(() => setCount(c => c +1), 1000)
+    if (isTimerOn && (!count && !interval.current)) {
+      interval.current = setInterval(() => setCount(c => c + 1), 1000)
     }
-    if (!isTimerOn){
+    if (!isTimerOn) {
       setCount(0)
       stopInterval()
     }
@@ -53,7 +53,7 @@ const TimerSpan = styled.span`
   
 
   > div.bottom {
-    flex-grow: ${({count}) => count/end};
+    flex-grow: ${({ count }) => count / end};
     background-color: black;
     width: 100%;
   }

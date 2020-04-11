@@ -1,18 +1,18 @@
 class Auth {
 
-  static setToken(token){
+  static setToken(token) {
     localStorage.setItem('token', token)
   }
 
-  static getToken(){
+  static getToken() {
     return localStorage.getItem('token')
   }
 
-  static isAuthenticated(){
+  static isAuthenticated() {
     return !!this.getToken()
   }
 
-  static logout(){
+  static logout() {
     localStorage.removeItem('token')
   }
 

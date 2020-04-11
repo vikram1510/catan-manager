@@ -1,6 +1,6 @@
 const { PUBLIC_URL } = process.env
 
-const assets =  {
+const assets = {
   brick: PUBLIC_URL + '/NewBricksCatan.png',
   sheep: PUBLIC_URL + '/NewSheepCatan.png',
   wood: PUBLIC_URL + '/NewTreeCatan.png',
@@ -11,7 +11,7 @@ const assets =  {
 }
 
 
-export const harborAssets =  {
+export const harborAssets = {
   brick: PUBLIC_URL + '/21BricksScroll.png',
   sheep: PUBLIC_URL + '/21SheepScroll.png',
   wood: PUBLIC_URL + '/21TreeScroll.png',

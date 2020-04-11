@@ -1,38 +1,42 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import assets from '../lib/assets'
 import api from '../lib/api'
 
 const items = [
-  { itemName: 'Road',
-    resources: ['brick','wood'],
+  {
+    itemName: 'Road',
+    resources: ['brick', 'wood'],
   },
-  { itemName: 'Settlement',
-    resources: ['brick','wood','sheep','grain'],
+  {
+    itemName: 'Settlement',
+    resources: ['brick', 'wood', 'sheep', 'grain'],
   },
-  { itemName: 'City',
-    resources: ['grain','grain','rock','rock','rock'],
+  {
+    itemName: 'City',
+    resources: ['grain', 'grain', 'rock', 'rock', 'rock'],
   },
-  { itemName: 'Development Card',
-    resources: ['sheep','grain','rock'],
+  {
+    itemName: 'Development Card',
+    resources: ['sheep', 'grain', 'rock'],
   }]
 
-const BuyCard = ({amounts, setAmounts}) => {
+const BuyCard = ({ amounts, setAmounts }) => {
 
   const [showCard, setShowCard] = useState(false);
 
-  
+
   items.forEach((item) => {
     item.canBuy = canBuy(item.resources, amounts)
   })
 
   const buyItem = (itemName) => {
     const itemToBuy = items.find(item => item.itemName === itemName)
-  
+
     if (itemToBuy?.canBuy) {
       const listToBuy = createResourceMap(itemToBuy.resources, -1)
 
-      api.bank({ playerId: amounts._id, amounts: listToBuy})
+      api.bank({ playerId: amounts._id, amounts: listToBuy })
         .then(setAmounts)
         .then(() => setShowCard(false))
 
@@ -41,13 +45,13 @@ const BuyCard = ({amounts, setAmounts}) => {
         type: 'BUY'
       })
     }
-    
+
   }
 
   return (
-  <Wrapper>
-    {showCard ? renderBuyCard(items, setShowCard, buyItem) : renderCollapsedCard({setShowCard})}
-  </Wrapper>)
+    <Wrapper>
+      {showCard ? renderBuyCard(items, setShowCard, buyItem) : renderCollapsedCard({ setShowCard })}
+    </Wrapper>)
 
 }
 
@@ -59,45 +63,45 @@ const canBuy = (itemResources, playerAmounts) => {
 }
 
 
-const createResourceMap = (resources, polarity=1) => {
+const createResourceMap = (resources, polarity = 1) => {
   return resources.reduce((final, resource) => {
     if (!(resource in final)) final[resource] = 0
-    final[resource] = final[resource] + (1 * polarity) 
+    final[resource] = final[resource] + (1 * polarity)
     return final
   }, {})
 }
 
 const renderBuyCard = (items, setShowCard, buyItem) => (
   <>
-  <Header onClick={() => setShowCard(false)}>
-  <span>{''}</span>
-  <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
-  </Header>
-  {items.map(item =>
+    <Header onClick={() => setShowCard(false)}>
+      <span>{''}</span>
+      <i style={{ margin: 'right' }} className="fas fa-chevron-up"></i>
+    </Header>
+    {items.map(item =>
       <Item key={item.itemName}>
-      <p>{item.itemName}</p>
-        <div style={{display:'flex', justifyContent:'space-between'}}>
+        <p>{item.itemName}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <ResourceWraper>
-            {item.resources.map((resource, key) => 
-            <Resource key={key}>
-              <img src={assets[resource]} alt={resource}></img>
-            </Resource>)}
+            {item.resources.map((resource, key) =>
+              <Resource key={key}>
+                <img src={assets[resource]} alt={resource}></img>
+              </Resource>)}
           </ResourceWraper>
-        <BuyButton canBuy={item.canBuy} onClick={() => buyItem(item.itemName)}>Buy</BuyButton>
-        </div>  
-        <hr/>
+          <BuyButton canBuy={item.canBuy} onClick={() => buyItem(item.itemName)}>Buy</BuyButton>
+        </div>
+        <hr />
       </Item>
-      )
+    )
     }
   </>
 )
- 
-const renderCollapsedCard = ({setShowCard}) => (
+
+const renderCollapsedCard = ({ setShowCard }) => (
   <Header onClick={() => setShowCard(true)}>
-  <span style={{marginTop:'1px'}}>{'Buy Card'}</span>
-  <i style={{margin:'right'}} className="fas fa-chevron-down"></i>
+    <span style={{ marginTop: '1px' }}>{'Buy Card'}</span>
+    <i style={{ margin: 'right' }} className="fas fa-chevron-down"></i>
   </Header>
-) 
+)
 
 const Item = styled.div`
 font-weight:700;
