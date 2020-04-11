@@ -29,7 +29,7 @@ const EventsViewer = ({player, events, listCapacity=50}) => {
 
   const [showTime, setShowTime] = useState(false)
 
-console.log(events)
+  // console.log(events)
   let filterEvents 
   if (events.length > listCapacity) {
     filterEvents = events.slice(0,listCapacity)

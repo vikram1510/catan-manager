@@ -139,6 +139,39 @@ const deleteHistory = () => {
 }
 
 
+const getEvents = () => {
+
+  
+  return instance
+  .get('/events')
+  .then(res => res.data)
+  .catch(err => console.log('Error in getting Events', err))
+  
+}
+
+
+const addToEvents = ({name, createdBy}) => {
+  
+    return instance
+    .post('/events', {name, createdBy})
+    .then(res => res.data)
+    .catch(err => console.log('Error in updating Events', err))
+
+}
+
+
+const deleteEvents = () => {
+  
+    return instance
+    .delete('/events')
+    .then(res => res.data)
+    .catch(err => console.log('Error in deleting Events', err))
+
+}
+
+
+
+
 const api = {
   getAllPlayers,
   getPlayerByName,
@@ -151,6 +184,9 @@ const api = {
   getHistory,
   addToHistory,
   deleteHistory,
+  getEvents,
+  addToEvents,
+  deleteEvents
 }
 
 export default api

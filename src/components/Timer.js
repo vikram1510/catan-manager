@@ -1,57 +1,71 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
-
 
 const end = 60;
 
-const Timer = () => {
+const Timer = ({action}) => {
 
   const [count, setCount] = useState(0);
-  const [isTimerOn, setTimerState] = useState(true);
+  const [isTimerOn, setTimerState] = useState(false);
+  const interval = useRef(null)
+  const timerEndFunction = useCallback(action)
 
   useEffect(() => {
-    if (isTimerOn){
-      setCount(count + 1)
+    if (isTimerOn && (!count && !interval.current)){
+      interval.current = setInterval(() => setCount(c => c +1), 1000)
     }
-  }, [count, isTimerOn])
+    if (!isTimerOn){
+      setCount(0)
+      stopInterval()
+    }
+    if (isTimerOn && count === end){
+      stopInterval()
+      timerEndFunction().then(setTimerState(false)).catch(console.log)
+    }
+  }, [count, isTimerOn, timerEndFunction])
+
+  const stopInterval = () => {
+    clearInterval(interval.current)
+    interval.current = null
+  }
 
 
-
-
-
-
-  
-
-  
 
   return (
-    <TimerSpan onClick={() => setTimerState(!!isTimerOn)}>
+    <TimerSpan onClick={() => setTimerState(!isTimerOn)} count={count}>
       <div className='top'></div>
       <div className='bottom'></div>
-      <p>{count}</p>
+      <p>{isTimerOn ? count : 'Timer'}</p>
     </TimerSpan>
   )
 }
 
 const TimerSpan = styled.span`
   height: 30px;
-  width: 40px;
-  background-color: black;
+  width: 54px;
+  background-color: #772020;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid #772020;
+  font-weight:700;
   display: flex;
   flex-direction: column-reverse;
   position: relative;
+  text-align: center;
+  
 
   > div.bottom {
-    flex-grow: 0.6;
-    background-color: yellow;
+    flex-grow: ${({count}) => count/end};
+    background-color: black;
+    width: 100%;
   }
 
   p {
     position: absolute;
     width: 100%;
     height: 100%;
-    text-align: center;
     color: white;
+    left: 0;
   }
 `
 

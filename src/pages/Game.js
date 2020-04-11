@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import styled from 'styled-components'
 
@@ -11,6 +11,7 @@ import assets from '../lib/assets'
 import {rob} from '../lib/rob'
 import EventsViewer from '../components/EventsViewer';
 import Timer from '../components/Timer';
+import TimerEndMessage from '../components/TimerEndMessage'
 
 const Game = ({history}) => {
 
@@ -20,17 +21,19 @@ const [events, setEvents] = useState(undefined)
 const [syncing, setSyncing] = useState(false)
 const [trading, setTrading] = useState(false)
 const [tradePlayerId, setTradePlayerId] =  useState(null)
+const [gameEvents, setGameEvents] = useState(null)
 
 const updatePlayers = async (playerId) => {
   setSyncing(true)
 
   const players = await api.getAllPlayers()
   const events = await api.getHistory()
+  const gameEvents = await api.getEvents()
   const player = players.find(player => player._id === playerId)
   setPlayer(player)
   setEvents(events)
   setPlayers(players)
-  
+  setGameEvents(gameEvents)
   setSyncing(false)
 }
 
@@ -95,6 +98,7 @@ const doQuickTrade = async (resource, toPlayer) => {
 
 }
 
+const addTimerEndEvent = () => api.addToEvents({ name: 'timer-end', createdBy: player._id })
 
 if (players && !player) {
   logout()
@@ -103,13 +107,15 @@ if (players && !player) {
 if (!(players && player)) return null
 
 return (
+  <>
+  <TimerEndMessage gameEvents={gameEvents} />
   <Wrapper>
     <Header>
     <div className="logo-img-wrapper animated shake">
       <img src={assets.logo} alt='Catan Logo'></img>
     </div>
     <div className="game-buttons">
-      <Timer />
+      <Timer action={addTimerEndEvent}/>
       <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}>
         <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i>
         </GameButton>
@@ -133,6 +139,7 @@ return (
     </PlayerCardWrapper> : undefined )}
     <EventsViewer player={player}events={events}/>
   </Wrapper>
+  </>
 )
 }
 
