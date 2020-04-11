@@ -8,139 +8,139 @@ import PlayerCard from '../components/PlayerCard'
 import Auth from '../lib/auth'
 import api from '../lib/api';
 import assets from '../lib/assets'
-import {rob} from '../lib/rob'
+import { rob } from '../lib/rob'
 import EventsViewer from '../components/EventsViewer';
 import Timer from '../components/Timer';
 import TimerEndMessage from '../components/TimerEndMessage'
 
-const Game = ({history}) => {
+const Game = ({ history }) => {
 
-const [players, setPlayers] = useState(null)
-const [player, setPlayer] = useState(undefined)
-const [events, setEvents] = useState(undefined)
-const [syncing, setSyncing] = useState(false)
-const [trading, setTrading] = useState(false)
-const [tradePlayerId, setTradePlayerId] =  useState(null)
-const [gameEvents, setGameEvents] = useState(null)
+  const [players, setPlayers] = useState(null)
+  const [player, setPlayer] = useState(undefined)
+  const [events, setEvents] = useState(undefined)
+  const [syncing, setSyncing] = useState(false)
+  const [trading, setTrading] = useState(false)
+  const [tradePlayerId, setTradePlayerId] = useState(null)
+  const [gameEvents, setGameEvents] = useState(null)
 
-const updatePlayers = async (playerId) => {
-  setSyncing(true)
+  const updatePlayers = async (playerId) => {
+    setSyncing(true)
 
-  const players = await api.getAllPlayers()
-  const events = await api.getHistory()
-  const gameEvents = await api.getEvents()
-  const player = players.find(player => player._id === playerId)
-  setPlayer(player)
-  setEvents(events)
-  setPlayers(players)
-  setGameEvents(gameEvents)
-  setSyncing(false)
-}
-
-useEffect(() => {
-  const playerId = Auth.getToken()
-  updatePlayers(playerId)
-  const interval = setInterval(async () => await updatePlayers(playerId), 2000)
-  return (() => clearInterval(interval))
-}, [])
-
-const logout = () => {
-  Auth.logout()
-  history.push('/')
-}
-
-const resetAmounts = async () => {
-  const resetAmounts = {brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0}
-  await api.updatePlayer(player._id, resetAmounts)
-  await api.addToHistory({
-    text: `${player.name} has reset!`,
-    type: 'RESET'
-  })
-  await updatePlayers(player._id)
-}
-
-const robPlayer = async (innocent) => {
-
-  const robbedItem = rob({innocent})
-
-  if (robbedItem) {
-    alert(`You robbed 1 ${robbedItem} from ${innocent.name}!`)
-
-    await api.transaction({toId: player._id, fromId: innocent._id, amounts:{[robbedItem]: 1}})
-
-    await api.addToHistory({
-      text: `${player.name} stole a ${robbedItem} from ${innocent.name}`,
-      type: 'ROB'
-    })
-
-    await updatePlayers(player._id)
-
-  } else {
-    alert(`${innocent.name} has no items to rob`)
+    const players = await api.getAllPlayers()
+    const events = await api.getHistory()
+    const gameEvents = await api.getEvents()
+    const player = players.find(player => player._id === playerId)
+    setPlayer(player)
+    setEvents(events)
+    setPlayers(players)
+    setGameEvents(gameEvents)
+    setSyncing(false)
   }
-  
-}
 
-const doQuickTrade = async (resource, toPlayer) => {
-  
-  setTrading(true)
-  if (player[resource] >= 1 ) {
-    await api.transaction({toId:toPlayer._id, fromId:player._id, amounts:{[resource]: 1}})
+  useEffect(() => {
+    const playerId = Auth.getToken()
+    updatePlayers(playerId)
+    const interval = setInterval(async () => await updatePlayers(playerId), 2000)
+    return (() => clearInterval(interval))
+  }, [])
 
+  const logout = () => {
+    Auth.logout()
+    history.push('/')
+  }
+
+  const resetAmounts = async () => {
+    const resetAmounts = { brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0 }
+    await api.updatePlayer(player._id, resetAmounts)
     await api.addToHistory({
-      text: `${player.name} gave ${toPlayer.name} a ${resource}`,
-      type: 'TRADE'
+      text: `${player.name} has reset!`,
+      type: 'RESET'
     })
-
     await updatePlayers(player._id)
   }
-  setTrading(false)
 
-}
+  const robPlayer = async (innocent) => {
 
-const addTimerEndEvent = () => api.addToEvents({ name: 'timer-end', createdBy: player._id })
+    const robbedItem = rob({ innocent })
 
-if (players && !player) {
-  logout()
-}
+    if (robbedItem) {
+      alert(`You robbed 1 ${robbedItem} from ${innocent.name}!`)
 
-if (!(players && player)) return null
+      await api.transaction({ toId: player._id, fromId: innocent._id, amounts: { [robbedItem]: 1 } })
 
-return (
-  <>
-  <TimerEndMessage gameEvents={gameEvents} />
-  <Wrapper>
-    <Header>
-    <div className="logo-img-wrapper animated shake">
-      <img src={assets.logo} alt='Catan Logo'></img>
-    </div>
-    <div className="game-buttons">
-      <Timer action={addTimerEndEvent}/>
-      <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}>
-        <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i>
-        </GameButton>
-      <GameButton onClick={resetAmounts}>Reset</GameButton>
-      <GameButton onClick={logout}>Log out</GameButton>
-    </div>
-  </Header>
-  <Dashboard player={player} setPlayer={setPlayer}/>
-  {players.map((opp, key) =>
-    (opp.name !== player.name) ?
-    <PlayerCardWrapper key={key} >
-      {<PlayerCard
-          mainPlayer={player} 
-          player={opp}
-          showTrade={opp._id === tradePlayerId}
-          trading={trading} 
-          setTradePlayerId={setTradePlayerId}
-          quickTradeHandler={doQuickTrade} 
-          robHandler={robPlayer} 
-          />}
-    </PlayerCardWrapper> : undefined )}
-    <EventsViewer player={player}events={events}/>
-  </Wrapper>
-  </>
-)
+      await api.addToHistory({
+        text: `${player.name} stole a ${robbedItem} from ${innocent.name}`,
+        type: 'ROB'
+      })
+
+      await updatePlayers(player._id)
+
+    } else {
+      alert(`${innocent.name} has no items to rob`)
+    }
+
+  }
+
+  const doQuickTrade = async (resource, toPlayer) => {
+
+    setTrading(true)
+    if (player[resource] >= 1) {
+      await api.transaction({ toId: toPlayer._id, fromId: player._id, amounts: { [resource]: 1 } })
+
+      await api.addToHistory({
+        text: `${player.name} gave ${toPlayer.name} a ${resource}`,
+        type: 'TRADE'
+      })
+
+      await updatePlayers(player._id)
+    }
+    setTrading(false)
+
+  }
+
+  const addTimerEndEvent = () => api.addToEvents({ name: 'timer-end', createdBy: player._id })
+
+  if (players && !player) {
+    logout()
+  }
+
+  if (!(players && player)) return null
+
+  return (
+    <>
+      <TimerEndMessage gameEvents={gameEvents} />
+      <Wrapper>
+        <Header>
+          <div className="logo-img-wrapper animated shake">
+            <img src={assets.logo} alt='Catan Logo'></img>
+          </div>
+          <div className="game-buttons">
+            <Timer action={addTimerEndEvent} />
+            <GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers(player._id)}>
+              <i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i>
+            </GameButton>
+            <GameButton onClick={resetAmounts}>Reset</GameButton>
+            <GameButton onClick={logout}>Log out</GameButton>
+          </div>
+        </Header>
+        <Dashboard player={player} setPlayer={setPlayer} />
+        {players.map((opp, key) =>
+          (opp.name !== player.name) ?
+            <PlayerCardWrapper key={key} >
+              {<PlayerCard
+                mainPlayer={player}
+                player={opp}
+                showTrade={opp._id === tradePlayerId}
+                trading={trading}
+                setTradePlayerId={setTradePlayerId}
+                quickTradeHandler={doQuickTrade}
+                robHandler={robPlayer}
+              />}
+            </PlayerCardWrapper> : undefined)}
+        <EventsViewer player={player} events={events} />
+      </Wrapper>
+    </>
+  )
 }
 
 const Header = styled.div`
@@ -174,7 +174,7 @@ display: flex;
 flex-direction: column;
 `
 
-const PlayerCardWrapper = styled.div `
+const PlayerCardWrapper = styled.div`
 margin-bottom: 10px;
 `
 

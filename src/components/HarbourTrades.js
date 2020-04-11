@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import api from '../lib/api'
-import {resourceArray} from '../lib/config'
+import { resourceArray } from '../lib/config'
 import HarbourTrade from './HarbourTrade'
 
 // const APIHarbourTrades = ['brick','any4','wood','any3']
 
-const availableTrades = ['any-4','any-3','brick','wood','rock','sheep','grain']
+const availableTrades = ['any-4', 'any-3', 'brick', 'wood', 'rock', 'sheep', 'grain']
 
-const HarbourTrades = ({amounts, setAmounts}) => {
+const HarbourTrades = ({ amounts, setAmounts }) => {
 
   // console.log('RERENDER harbortrade')
 
@@ -18,12 +18,12 @@ const HarbourTrades = ({amounts, setAmounts}) => {
   const [harborTrades, setHarborTrades] = useState(['any-4']);
 
   if (harborTrades.includes('any-3') && harborTrades.includes('any-4')) {
-    console.log('removing any-4',harborTrades)
+    console.log('removing any-4', harborTrades)
     setHarborTrades(harborTrades.filter(e => e !== 'any-4'))
   }
 
   const modifyHarborTrade = (tradeName) => {
-    
+
     if (harborTrades.includes(tradeName)) {
       setHarborTrades(harborTrades.filter(e => e !== tradeName))
     } else {
@@ -34,9 +34,9 @@ const HarbourTrades = ({amounts, setAmounts}) => {
   }
 
   return (
-  <Wrapper>
-    {showCard ? renderHarbourTrades(availableTrades, harborTrades,modifyHarborTrade,setShowCard, amounts, setAmounts, editMode, setEditMode) : renderCollapsedCard({setShowCard})}
-  </Wrapper>)
+    <Wrapper>
+      {showCard ? renderHarbourTrades(availableTrades, harborTrades, modifyHarborTrade, setShowCard, amounts, setAmounts, editMode, setEditMode) : renderCollapsedCard({ setShowCard })}
+    </Wrapper>)
 
 }
 
@@ -45,8 +45,8 @@ const canDo = (tradeType, playerAmounts) => {
   if (resourceArray.includes(tradeType)) {
     return playerAmounts[tradeType] >= 2
   }
-    
-  return resourceArray.some(resource => playerAmounts[resource] >= (tradeType[tradeType.length-1]))
+
+  return resourceArray.some(resource => playerAmounts[resource] >= (tradeType[tradeType.length - 1]))
 
 }
 
@@ -59,48 +59,48 @@ const canDo = (tradeType, playerAmounts) => {
 //   }, {})
 // }
 
-const renderHarbourTrades = (availableTrades,harborTrades, modifyHarborTrade, setShowCard, amounts, setAmounts, editMode, setEditMode) => (
+const renderHarbourTrades = (availableTrades, harborTrades, modifyHarborTrade, setShowCard, amounts, setAmounts, editMode, setEditMode) => (
   <>
-  <Header onClick={() => setShowCard(false)}>
-  <span>{''}</span>
-  <i style={{margin:'right'}} className="fas fa-chevron-up"></i>
-  </Header>
-  <HarbourTradesWrapper editMode={editMode}>
-  {
-    
-    availableTrades.map(item => {
+    <Header onClick={() => setShowCard(false)}>
+      <span>{''}</span>
+      <i style={{ margin: 'right' }} className="fas fa-chevron-up"></i>
+    </Header>
+    <HarbourTradesWrapper editMode={editMode}>
+      {
 
-      if (!editMode && !harborTrades.includes(item)) {
-        return null
-      }
+        availableTrades.map(item => {
 
-      return (
-        <HarbourTrade 
-          key={item}
-          amounts={amounts}
-          item={item}
-          editMode={editMode}
-          checked={harborTrades.includes(item)}
-          canDo={canDo(item, amounts)}
-          modifyHarborTrade={modifyHarborTrade}
-          setShowCard={setShowCard}
-          setAmounts={setAmounts}
-        />
+          if (!editMode && !harborTrades.includes(item)) {
+            return null
+          }
+
+          return (
+            <HarbourTrade
+              key={item}
+              amounts={amounts}
+              item={item}
+              editMode={editMode}
+              checked={harborTrades.includes(item)}
+              canDo={canDo(item, amounts)}
+              modifyHarborTrade={modifyHarborTrade}
+              setShowCard={setShowCard}
+              setAmounts={setAmounts}
+            />
 
 
-      )
-    })}
+          )
+        })}
     </HarbourTradesWrapper>
     <button onClick={() => setEditMode(!editMode)}>{editMode ? 'Save' : 'Edit'}</button>
   </>
 )
- 
-const renderCollapsedCard = ({setShowCard}) => (
+
+const renderCollapsedCard = ({ setShowCard }) => (
   <Header onClick={() => setShowCard(true)}>
-  <span style={{marginTop:'1px'}}>{'Harbour Trades'}</span>
-  <i style={{margin:'right'}} className="fas fa-chevron-down"></i>
+    <span style={{ marginTop: '1px' }}>{'Harbour Trades'}</span>
+    <i style={{ margin: 'right' }} className="fas fa-chevron-down"></i>
   </Header>
-) 
+)
 
 
 

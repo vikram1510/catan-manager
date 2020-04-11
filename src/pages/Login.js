@@ -1,52 +1,52 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import Auth from '../lib/auth'
 import api from '../lib/api'
 
-const Login = ({history}) => {
+const Login = ({ history }) => {
 
   const [playerName, setPlayerName] = useState('')
   const [showError, setShowError] = useState('')
   const [players, setPlayers] = useState(null);
 
   const updatePlayers = async () => {
-  
+
     const players = await api.getAllPlayers()
     setPlayers(players)
-    
+
   }
-  
+
   useEffect(() => {
     updatePlayers()
     const interval = setInterval(async () => await updatePlayers(), 2000)
     return (() => clearInterval(interval))
   }, [])
 
-  if (Auth.isAuthenticated()) history.push('/game') 
+  if (Auth.isAuthenticated()) history.push('/game')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     api.getPlayerByName(playerName)
-    .then(player => {
-      if (player) {
-        Auth.setToken(player._id)
-        history.push('/game') 
+      .then(player => {
+        if (player) {
+          Auth.setToken(player._id)
+          history.push('/game')
+        }
+        else {
+          setShowError(`The name '${playerName}' does not exist 🤔`)
+        }
       }
-      else {
-        setShowError(`The name '${playerName}' does not exist 🤔`)
-    }
-    }
       )
   }
 
   const createPlayerAndJoin = () => {
     if (playerName) {
       api.createPlayer(playerName)
-      .then(playerId => {
-        Auth.setToken(playerId)
-        history.push('/game')
-      }
-      )
+        .then(playerId => {
+          Auth.setToken(playerId)
+          history.push('/game')
+        }
+        )
     } else {
       setShowError('Enter a name to create and join 😉')
     }
@@ -68,28 +68,28 @@ const Login = ({history}) => {
     }
   }
 
-return(
-  <>
-  <Wrapper>
-    <h1>Catan Manager</h1>
-  <p>Enter a name to Join</p>
-  <form onSubmit={handleSubmit}>
-    <div className='input-area'>
-    <input placeholder={'Player Name'} value={playerName} maxLength="35" onChange={e => setPlayerName(e.target.value)}></input>
-    {showError && <ErrorMessage className='error-container'><i className="fas fa-exclamation-circle"></i>{showError}</ErrorMessage>}
-    </div>
-    <button className='join'>Join game</button>
-  </form>
-  <Buttons>
-  <button className='create' onClick={() => createPlayerAndJoin()}>Create player and join</button>
-  <button className='delete' onClick={() => deletePlayer()}>Delete me</button>
-  </Buttons>
-  <PlayerList>
-    <p>Players in game</p> {players?.map((player) => <li>{player.name}</li>)}
-  </PlayerList>
-  </Wrapper>
-  </>
-)
+  return (
+    <>
+      <Wrapper>
+        <h1>Catan Manager</h1>
+        <p>Enter a name to Join</p>
+        <form onSubmit={handleSubmit}>
+          <div className='input-area'>
+            <input placeholder={'Player Name'} value={playerName} maxLength="35" onChange={e => setPlayerName(e.target.value)}></input>
+            {showError && <ErrorMessage className='error-container'><i className="fas fa-exclamation-circle"></i>{showError}</ErrorMessage>}
+          </div>
+          <button className='join'>Join game</button>
+        </form>
+        <Buttons>
+          <button className='create' onClick={() => createPlayerAndJoin()}>Create player and join</button>
+          <button className='delete' onClick={() => deletePlayer()}>Delete me</button>
+        </Buttons>
+        <PlayerList>
+          <p>Players in game</p> {players?.map((player) => <li>{player.name}</li>)}
+        </PlayerList>
+      </Wrapper>
+    </>
+  )
 }
 
 const Wrapper = styled.div`

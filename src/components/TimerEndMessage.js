@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import api from '../lib/api'
 import Auth from '../lib/auth'
 
-const TimerEndMessage = ({gameEvents}) => {
+const TimerEndMessage = ({ gameEvents }) => {
   const [createdBy, setCreatedBy] = useState(null)
 
   useEffect(() => {
@@ -22,17 +22,17 @@ const TimerEndMessage = ({gameEvents}) => {
 
   return (
     <Wrapper className="timer">
-    <h1 className="animated shake">TIME UP</h1>
-    
-    {Auth.getToken() === createdBy._id 
-    ? <button onClick={clearEvents}>Continue</button> :
-    <p>( timer created by {createdBy.name} )</p>
-    }
+      <h1 className="animated shake">TIME UP</h1>
+
+      {Auth.getToken() === createdBy._id
+        ? <button onClick={clearEvents}>Continue</button> :
+        <p>( timer created by {createdBy.name} )</p>
+      }
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div `
+const Wrapper = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;

@@ -1,18 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import {resourceArray} from '../lib/config'
+import { resourceArray } from '../lib/config'
 import TransitionResource from './TransitionResource'
-import {TransitionGroup} from 'react-transition-group'
+import { TransitionGroup } from 'react-transition-group'
 // import assets from '../lib/assets'
 
-const QuickTrader = ({placeholder, mainPlayer, player, performTrade, trading, min=1, filter=[]}) => {
+const QuickTrader = ({ placeholder, mainPlayer, player, performTrade, trading, min = 1, filter = [] }) => {
 
   const availaibleResources = []
 
   resourceArray.forEach((resource) => {
 
-    if(mainPlayer[resource] >= min && !filter.includes(resource)) {
+    if (mainPlayer[resource] >= min && !filter.includes(resource)) {
       availaibleResources.push(resource)
     }
 
@@ -20,17 +20,17 @@ const QuickTrader = ({placeholder, mainPlayer, player, performTrade, trading, mi
 
   return <Wrapper>
     <div className='text'>
-      {availaibleResources.length > 0? (placeholder ?? `I'll give you...`) : 'Nothing to trade 😞'}
+      {availaibleResources.length > 0 ? (placeholder ?? `I'll give you...`) : 'Nothing to trade 😞'}
     </div>
     {availaibleResources.length > 0 ? <TransitionGroup className='resource-list'>
-        {availaibleResources.map(resource => 
-        <TransitionResource 
+      {availaibleResources.map(resource =>
+        <TransitionResource
           key={resource}
-          resource={resource} 
+          resource={resource}
           disabled={trading}
-          onClickHandler={() => performTrade(resource)}/>)
-        }
-      </TransitionGroup> : null}
+          onClickHandler={() => performTrade(resource)} />)
+      }
+    </TransitionGroup> : null}
   </Wrapper>
 }
 

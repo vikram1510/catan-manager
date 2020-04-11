@@ -6,7 +6,7 @@ import QuickTrader from './QuickTrader'
 import assets from '../lib/assets'
 
 const PlayerCard = ({
-  mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId}) => {
+  mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId }) => {
 
   let total = 0;
   const resourceListKey = []
@@ -16,11 +16,11 @@ const PlayerCard = ({
     for (let i = 0; i < count; i++) {
       resourceList.push(resource)
       resourceListKey.push(`${resource} ${i}`)
-      total +=1
+      total += 1
     }
 
     return resourceList
-  }, [])  
+  }, [])
 
 
   const showTradeMenu = () => {
@@ -35,28 +35,28 @@ const PlayerCard = ({
 
   return (
     <BiggerWrapper>
-    <Wrapper className='player-card'>
-      <div className='player-avatar'>
-      <div className='player-name'> {player.name} </div>
-      <div className='player-total'>{total}</div>
-      {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
-      </div>
-      <div onClick={() => showTradeMenu()} className='resource-area'>
-        <ResourceWraper>
-          <div className='resource-wrapper'>
-        {resourceList.map((resource, key) =>
-        <Resource
-        key={key}
-        className="resource-image-wrapper">
-        <img src={assets[resource]} alt={resource}></img>
-      </Resource>
-       )}
-       </div>
-        </ResourceWraper>
-      </div>
-    </Wrapper>
-      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => quickTradeHandler(resource, player)} player={player}/> : null}
-      </BiggerWrapper>
+      <Wrapper className='player-card'>
+        <div className='player-avatar'>
+          <div className='player-name'> {player.name} </div>
+          <div className='player-total'>{total}</div>
+          {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
+        </div>
+        <div onClick={() => showTradeMenu()} className='resource-area'>
+          <ResourceWraper>
+            <div className='resource-wrapper'>
+              {resourceList.map((resource, key) =>
+                <Resource
+                  key={key}
+                  className="resource-image-wrapper">
+                  <img src={assets[resource]} alt={resource}></img>
+                </Resource>
+              )}
+            </div>
+          </ResourceWraper>
+        </div>
+      </Wrapper>
+      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => quickTradeHandler(resource, player)} player={player} /> : null}
+    </BiggerWrapper>
   )
 
 }
