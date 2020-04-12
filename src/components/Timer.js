@@ -2,22 +2,23 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 
 const end = 60;
+const warningCount = end*0.2;
 
 const Timer = ({ action }) => {
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end);
   const [isTimerOn, setTimerState] = useState(false);
   const interval = useRef(null)
 
   useEffect(() => {
-    if (isTimerOn && (!count && !interval.current)) {
-      interval.current = setInterval(() => setCount(c => c + 1), 1000)
+    if (isTimerOn && !interval.current) {
+      interval.current = setInterval(() => setCount(c => c - 1), 1000)
     }
     if (!isTimerOn) {
-      setCount(0)
+      setCount(end)
       stopInterval()
     }
-    if (isTimerOn && count === end){
+    if (isTimerOn && count === 0){
       action().then(() => setTimerState(false))
     }
   }, [count, isTimerOn, action])
@@ -30,7 +31,7 @@ const Timer = ({ action }) => {
 
 
   return (
-    <TimerSpan onClick={() => setTimerState(!isTimerOn)} count={count}>
+    <TimerSpan onClick={() => setTimerState(!isTimerOn)} count={count} isTimerOn={isTimerOn}>
       <div className='top'></div>
       <div className='bottom'></div>
       <p>{isTimerOn ? count : 'Timer'}</p>
@@ -43,8 +44,6 @@ const TimerSpan = styled.span`
   width: 54px;
   background-color: #772020;
   color: white;
-  border-radius: 3px;
-  border: 1px solid #772020;
   font-weight:700;
   display: flex;
   flex-direction: column-reverse;
@@ -53,9 +52,10 @@ const TimerSpan = styled.span`
   
 
   > div.bottom {
-    flex-grow: ${({ count }) => count / end};
-    background-color: black;
+    flex-grow: ${({ count, isTimerOn }) => isTimerOn ? count/end : 0};
+    background-color: ${({count}) => count <= warningCount ? '#d70202' : 'black'};
     width: 100%;
+    transition: background-color 3s;
   }
 
   p {
