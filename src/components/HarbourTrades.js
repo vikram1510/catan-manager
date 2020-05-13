@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import api from '../lib/api'
 import { resourceArray } from '../lib/config'
 import HarbourTrade from './HarbourTrade'
 

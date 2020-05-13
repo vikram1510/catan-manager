@@ -59,8 +59,8 @@ const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTra
       <label htmlFor={editMode ? item : ''} disabled={canDo} className={canDo ? 'enabled' : 'disabled'} onClick={() => setLose(item)}>
         <img src={process.env.PUBLIC_URL + `/harbour_${item}.png`} alt={item}></img>
       </label>
-      {!editMode && canDo && displayLose() ? <QuickTrader min={item[item.length - 1]} placeholder={'I\'ll exchange'} trading={false} mainPlayer={amounts} performTrade={setLose} /> : null}
-      {!editMode && canDo && displayGain() ? <QuickTrader min={0} filter={lose} placeholder={`I\'ll get`} trading={false} mainPlayer={amounts} performTrade={doHarborTrade} /> : null}
+      {!editMode && canDo && displayLose() ? <QuickTrader min={item[item.length - 1]} placeholder={`I'll exchange`} trading={false} mainPlayer={amounts} performTrade={setLose} /> : null}
+      {!editMode && canDo && displayGain() ? <QuickTrader min={0} filter={lose} placeholder={`I'll get`} trading={false} mainPlayer={amounts} performTrade={doHarborTrade} /> : null}
     </Item>
   )
 

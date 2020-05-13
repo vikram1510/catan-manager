@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components'
 
@@ -42,7 +42,7 @@ const Game = ({ history }) => {
     updatePlayers(playerId)
     const interval = setInterval(async () => await updatePlayers(playerId), 2000)
     return (() => clearInterval(interval))
-  }, [])
+   }, [])
 
   const logout = () => {
     Auth.logout()
@@ -91,7 +91,7 @@ const Game = ({ history }) => {
         text: `${player.name} gave ${toPlayer.name} a ${resource}`,
         type: 'TRADE'
       })
-
+      
       await updatePlayers(player._id)
     }
     setTrading(false)

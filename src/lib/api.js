@@ -4,14 +4,12 @@ import { resourceArray } from './config'
 let baseURL
 
 if (process.env.REACT_APP_API_VERSION === 'test') {
-  baseURL = 'http://192.168.0.7:3030'
+  baseURL = 'http://localhost:3030'
 } else {
   baseURL = 'https://api-catan.herokuapp.com'
 }
 
-console.log(process.env);
-console.log(process.env.NODE_ENV);
-console.log(baseURL);
+console.log('Connecting to database', baseURL);
 
 let instance = axios.create({ baseURL })
 
