@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import Auth from '../lib/auth'
 import api from '../lib/api'
+import { socket } from '../lib/sockets'
 
 const Login = ({ history }) => {
 
@@ -10,10 +11,8 @@ const Login = ({ history }) => {
   const [players, setPlayers] = useState(null);
 
   const updatePlayers = async () => {
-
     const players = await api.getAllPlayers()
     setPlayers(players)
-
   }
 
   useEffect(() => {
@@ -31,6 +30,7 @@ const Login = ({ history }) => {
         if (player) {
           Auth.setToken(player._id)
           history.push('/game')
+          socket.emit('apiUpdateLocal')
         }
         else {
           setShowError(`The name '${playerName}' does not exist 🤔`)
@@ -45,7 +45,8 @@ const Login = ({ history }) => {
         .then(playerId => {
           Auth.setToken(playerId)
           history.push('/game')
-        }
+        }).then(
+          socket.emit('apiUpdateLocal', 'Player created')
         )
     } else {
       setShowError('Enter a name to create and join 😉')
@@ -57,6 +58,7 @@ const Login = ({ history }) => {
     if (playerName) {
       const playerAboutToBeGarbaged = await api.getPlayerByName(playerName)
       await api.deletePlayer(playerAboutToBeGarbaged?._id)
+      socket.emit('apiUpdateLocal', 'Player deleted')
 
       if (playerAboutToBeGarbaged) {
         setShowError(`The player ${playerAboutToBeGarbaged?.name} has been deleted 😌`)

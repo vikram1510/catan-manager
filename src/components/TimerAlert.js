@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import api from '../lib/api'
 import Auth from '../lib/auth'
+import { socket } from '../lib/sockets'
 
 const TimerAlert = ({gameEvents}) => {
   const [createdBy, setCreatedBy] = useState(null)
@@ -15,7 +16,11 @@ const TimerAlert = ({gameEvents}) => {
   }, [gameEvents])
 
   const clearEvents = () => {
-    api.deleteEvents().then(() => setCreatedBy(null))
+    api.deleteEvents().then(() => {
+      setCreatedBy(null)
+      socket.emit('apiUpdateLocal')
+    }
+    )
   }
 
   if (!createdBy) return null

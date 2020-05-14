@@ -5,6 +5,7 @@ import { resourceArray } from "../lib/config";
 
 import QuickTrader from './QuickTrader'
 import api from '../lib/api';
+import { socket } from '../lib/sockets';
 
 
 const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTrade, setShowCard, setAmounts }) => {
@@ -42,7 +43,8 @@ const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTra
         [gainItem]: 1
       }
     }).then(setLose(undefined)).then(setAmounts)
-
+    
+    socket.emit('apiUpdateLocal')
     setShowCard((s) => !s)
   }
 

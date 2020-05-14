@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { socket } from '../lib/sockets'
 
 import ResourceSetter from './ResourceSetter'
 import { resourceArray } from '../lib/config'
@@ -22,6 +23,7 @@ const AmountSetter = ({ amounts, setAmounts, watchAmounts = null }) => {
 
     await api.addToHistory({ text, type })
     setAmounts(newAmounts)
+    socket.emit('apiUpdateLocal')
   }
 
   return (

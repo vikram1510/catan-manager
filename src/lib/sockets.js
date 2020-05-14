@@ -1,10 +1,12 @@
 import socketIOClient from 'socket.io-client'
 
 let baseURL
-if (process.env.REACT_APP_API_VERSION === 'test') {
-    baseURL = 'http://localhost:4545'
+let env = process.env.REACT_APP_API_VERSION
+
+if (env === 'test') {
+    baseURL = 'http://192.168.0.41:4545'
   } else {
-    baseURL = 'https://api-catan.herokuapp.com'
+    baseURL = 'http://catan-sockets-manager.herokuapp.com/'
   }
 
 console.log('Sockets url', baseURL)

@@ -7,6 +7,7 @@ import PlayerCard from '../components/PlayerCard'
 
 import Auth from '../lib/auth'
 import api from '../lib/api';
+import { socket } from '../lib/sockets'
 import assets from '../lib/assets'
 import { rob } from '../lib/rob'
 import EventsViewer from '../components/EventsViewer';
@@ -27,21 +28,34 @@ const Game = ({ history }) => {
     setSyncing(true)
 
     const players = await api.getAllPlayers()
-    const events = await api.getHistory()
     const gameEvents = await api.getEvents()
     const player = players.find(player => player._id === playerId)
+    updateHistory()
+
     setPlayer(player)
-    setEvents(events)
     setPlayers(players)
     setGameEvents(gameEvents)
     setSyncing(false)
   }
 
+  const updateHistory = async () => {
+    const historyEvents = await api.getHistory()
+    setEvents(historyEvents)
+  }
+
+  useEffect(() => {
+    console.log('callback to update history')
+    updateHistory()
+  },[player])
+
   useEffect(() => {
     const playerId = Auth.getToken()
     updatePlayers(playerId)
-    const interval = setInterval(async () => await updatePlayers(playerId), 2000)
-    return (() => clearInterval(interval))
+    socket.on('apiUpdate', () => {
+      console.log('Update Call from API')
+      updatePlayers(playerId)
+    })
+    // eslint-disable-next-line
    }, [])
 
   const logout = () => {
@@ -57,6 +71,7 @@ const Game = ({ history }) => {
       type: 'RESET'
     })
     await updatePlayers(player._id)
+    socket.emit('apiUpdateLocal')
   }
 
   const robPlayer = async (innocent) => {
@@ -74,7 +89,7 @@ const Game = ({ history }) => {
       })
 
       await updatePlayers(player._id)
-
+      socket.emit('apiUpdateLocal')
     } else {
       alert(`${innocent.name} has no items to rob`)
     }
@@ -93,6 +108,7 @@ const Game = ({ history }) => {
       })
       
       await updatePlayers(player._id)
+      socket.emit('apiUpdateLocal')
     }
     setTrading(false)
 
@@ -137,7 +153,7 @@ return (
           robHandler={robPlayer} 
           />}
     </PlayerCardWrapper> : undefined )}
-    <EventsViewer player={player}events={events}/>
+    <EventsViewer player={player}events={events} updateHistory={updateHistory}/>
   </Wrapper>
   </>
 )

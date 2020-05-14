@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import assets from '../lib/assets'
 import api from '../lib/api'
+import { socket } from '../lib/sockets'
 
 const items = [
   {
@@ -44,6 +45,8 @@ const BuyCard = ({ amounts, setAmounts }) => {
         text: `${amounts.name} bought a ${itemName}`,
         type: 'BUY'
       })
+
+      socket.emit('apiUpdateLocal')
     }
 
   }

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { resourceArray } from '../lib/config'
 import assets from '../lib/assets'
 import api from '../lib/api'
+import { socket } from '../lib/sockets'
 import moment from 'moment'
 
 moment.updateLocale('en', {
@@ -25,11 +26,14 @@ const EVENT_TYPE = {
 }
 
 
-const EventsViewer = ({ player, events, listCapacity = 50 }) => {
+const EventsViewer = ({ player, events, listCapacity = 100, updateHistory }) => {
 
   const [showTime, setShowTime] = useState(false)
 
-  // console.log(events)
+  if (!events) {
+    return null
+  }
+
   let filterEvents
   if (events.length > listCapacity) {
     filterEvents = events.slice(0, listCapacity)
@@ -55,12 +59,15 @@ const EventsViewer = ({ player, events, listCapacity = 50 }) => {
 
   })
 
-  const deleteHistory = () => {
+  const deleteHistory = async () => {
     // eslint-disable-next-line no-restricted-globals
     const confirmAnswer = confirm('You are about to delete the game history. This process is irreversible. Are you sure?')
 
     if (confirmAnswer) {
       api.deleteHistory()
+      socket.emit('apiUpdateLocal')
+      // Make sure history is deleted before updating
+      setTimeout(() => { updateHistory()}, 100);
     } else {
       alert('GAME HISTORY DELETED. GAME HISTORY DELETED. GAME HISTORY DELETED. GAME HISTORY DELETED. GAME HISTORY DELETED. just kidding, cancelled it')
     }
