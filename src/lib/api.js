@@ -6,7 +6,7 @@ let baseURL
 if (process.env.REACT_APP_API_VERSION === 'test') {
   baseURL = 'http://192.168.0.41:3030'
 } else {
-  baseURL = 'https://api-catan.herokuapp.com'
+  baseURL = 'https://catan-manager-api-rb.herokuapp.com/'
 }
 
 console.log('Connecting to database', baseURL);
