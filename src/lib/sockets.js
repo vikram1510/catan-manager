@@ -6,7 +6,7 @@ let env = process.env.REACT_APP_API_VERSION
 if (env === 'test') {
     baseURL = 'http://192.168.0.41:4545'
   } else {
-    baseURL = 'http://catan-sockets-manager.herokuapp.com/'
+    baseURL = 'https://catan-sockets-manager.herokuapp.com/'
   }
 
 console.log('Sockets url', baseURL)
