@@ -28,8 +28,6 @@ const Timer = ({ action }) => {
     interval.current = null
   }
 
-
-
   return (
     <TimerSpan onClick={() => setTimerState(!isTimerOn)} count={count} isTimerOn={isTimerOn}>
       <div className='top'></div>

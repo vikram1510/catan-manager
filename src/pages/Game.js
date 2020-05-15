@@ -114,7 +114,12 @@ const Game = ({ history }) => {
 
   }
 
-  const addTimerEndEvent = () => api.addToEvents({ name: 'timer-end', createdBy: player._id })
+  const addTimerEndEvent = async () => 
+    {api.addToEvents({ name: 'timer-end', createdBy: player._id })
+    const gameEvents = await api.getEvents()
+    setGameEvents(gameEvents)
+    socket.emit('apiUpdateLocal')
+  }
 
   if (players && !player) {
     logout()
