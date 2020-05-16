@@ -9,10 +9,8 @@ import { resourceArray } from '../lib/config'
 const Dashboard = ({ player, setPlayer }) => {
 
   let total = 0;
-
   resourceArray.forEach((resource) => {
-    let count = player?.[resource]
-    total += count
+    total += player?.[resource]
   })
 
   return (
