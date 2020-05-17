@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { resourceArray } from '../../lib/config'
 import QuickTrader from '../QuickTrader'
-import assets from '../../lib/assets'
+// import assets from '../../lib/assets'
 import { rob } from '../../lib/rob'
 import { socket } from '../../lib/sockets'
 import api from '../../lib/api';
@@ -57,7 +57,7 @@ const PlayerCard = ({
                 <Resource
                   key={key}
                   className="resource-image-wrapper">
-                  <img src={assets[resource]} alt={resource}></img>
+                  <img src={'/question-mark.png'} alt={resource}></img>
                 </Resource>
               )}
             </div>
