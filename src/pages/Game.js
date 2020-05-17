@@ -5,10 +5,10 @@ import Auth from '../lib/auth'
 import api from '../lib/api';
 import { socket } from '../lib/sockets'
 
-import TimerAlert from '../components/TimerAlert'
+import TimerAlert from '../components/Timer/TimerAlert'
 import Header from '../components/Header'
-import Dashboard from '../components/Dashboard';
-import PlayerCards from "../components/PlayerCards";
+import Dashboard from '../components/Dashboard/Dashboard';
+import PlayerCards from "../components/PlayerCard/PlayerCards";
 import EventsViewer from '../components/EventsViewer';
 
 const Game = ({ history }) => {

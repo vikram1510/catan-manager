@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { socket } from '../lib/sockets'
+import { socket } from '../../lib/sockets'
 
 import ResourceSetter from './ResourceSetter'
-import { resourceArray } from '../lib/config'
-import api from '../lib/api'
+import { resourceArray } from '../../lib/config'
+import api from '../../lib/api'
 
 const AmountSetter = ({ amounts, setAmounts, watchAmounts = null }) => {
 

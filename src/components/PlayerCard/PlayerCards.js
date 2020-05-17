@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from 'styled-components'
 
-import PlayerCard from '../components/PlayerCard'
+import PlayerCard from './PlayerCard'
 
 const PlayerCards = ({ players, player: mainPlayer, updatePlayers }) => {
 

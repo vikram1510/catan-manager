@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { resourceArray } from '../lib/config'
-import QuickTrader from './QuickTrader'
-import assets from '../lib/assets'
-import { rob } from '../lib/rob'
-import { socket } from '../lib/sockets'
-import api from '../lib/api';
+import { resourceArray } from '../../lib/config'
+import QuickTrader from '../QuickTrader'
+import assets from '../../lib/assets'
+import { rob } from '../../lib/rob'
+import { socket } from '../../lib/sockets'
+import api from '../../lib/api';
 
 const PlayerCard = ({
   mainPlayer, player, updatePlayers, showTrade, setTradePlayerId }) => {

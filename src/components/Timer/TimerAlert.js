@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import api from '../lib/api'
-import Auth from '../lib/auth'
-import { socket } from '../lib/sockets'
+import api from '../../lib/api'
+import Auth from '../../lib/auth'
+import { socket } from '../../lib/sockets'
 
 const TimerAlert = ({ gameEvents }) => {
   const [createdBy, setCreatedBy] = useState(null)

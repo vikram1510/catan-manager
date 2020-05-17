@@ -5,7 +5,7 @@ import assets from '../lib/assets'
 import api from '../lib/api';
 import { socket } from '../lib/sockets'
 
-import Timer from '../components/Timer';
+import Timer from './Timer/Timer';
 
 const Header = ({ logout, player, updatePlayers, syncing }) => {
 

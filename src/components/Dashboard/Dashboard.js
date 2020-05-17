@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
-import BuyCard from '../components/BuyCard'
-import HarbourTrades from '../components/HarbourTrades'
-import { resourceArray } from '../lib/config'
+import BuyCard from './BuyCard'
+import HarbourTrades from './HarbourTrade/HarbourTrades'
+import { resourceArray } from '../../lib/config'
 
 const Dashboard = ({ player, setPlayer }) => {
 
