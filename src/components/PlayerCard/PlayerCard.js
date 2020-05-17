@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { resourceArray } from '../lib/config'
-import QuickTrader from './QuickTrader'
-import assets from '../lib/assets'
+import { resourceArray } from '../../lib/config'
+import QuickTrader from '../QuickTrader'
+import assets from '../../lib/assets'
+import { rob } from '../../lib/rob'
+import { socket } from '../../lib/sockets'
+import api from '../../lib/api';
 
 const PlayerCard = ({
-  mainPlayer, player, robHandler, quickTradeHandler, trading, showTrade, setTradePlayerId }) => {
+  mainPlayer, player, updatePlayers, showTrade, setTradePlayerId }) => {
+
+  const [trading, setTrading] = useState(false)
+
 
   let total = 0;
   const resourceListKey = []
@@ -39,7 +45,10 @@ const PlayerCard = ({
         <div className='player-avatar'>
           <div className='player-name'> {player.name} </div>
           <div className='player-total'>{total}</div>
-          {robHandler ? <RobButton className='rob' onClick={() => robHandler(player)}>Rob</RobButton> : null}
+          <RobButton className='rob' onClick={async () => {
+            await robPlayer(player, mainPlayer)
+            updatePlayers(mainPlayer._id)
+          }}>Rob</RobButton>
         </div>
         <div onClick={() => showTradeMenu()} className='resource-area'>
           <ResourceWraper>
@@ -55,12 +64,51 @@ const PlayerCard = ({
           </ResourceWraper>
         </div>
       </Wrapper>
-      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => quickTradeHandler(resource, player)} player={player} /> : null}
+      {showTrade ? <QuickTrader trading={trading} mainPlayer={mainPlayer} performTrade={(resource) => doQuickTrade(resource, player, mainPlayer, setTrading, updatePlayers)} player={player} /> : null}
     </BiggerWrapper>
   )
 
 }
 
+
+const robPlayer = async (innocent, player) => {
+
+  const robbedItem = rob({ innocent })
+
+  if (robbedItem) {
+    alert(`You robbed 1 ${robbedItem} from ${innocent.name}!`)
+
+    await api.transaction({ toId: player._id, fromId: innocent._id, amounts: { [robbedItem]: 1 } })
+    await api.addToHistory({
+      text: `${player.name} stole a ${robbedItem} from ${innocent.name}`,
+      type: 'ROB'
+    })
+
+    socket.emit('apiUpdateLocal')
+  } else {
+    alert(`${innocent.name} has no items to rob`)
+  }
+
+}
+
+
+
+const doQuickTrade = async (resource, toPlayer, player, setTrading, updatePlayers) => {
+
+  setTrading(true)
+  if (player[resource] >= 1) {
+    await api.transaction({ toId: toPlayer._id, fromId: player._id, amounts: { [resource]: 1 } })
+    await api.addToHistory({
+      text: `${player.name} gave ${toPlayer.name} a ${resource}`,
+      type: 'TRADE'
+    })
+
+    await updatePlayers(player._id)
+    socket.emit('apiUpdateLocal')
+  }
+  setTrading(false)
+
+}
 
 const RobButton = styled.div`
 

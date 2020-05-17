@@ -167,9 +167,6 @@ const deleteEvents = () => {
 
 }
 
-
-
-
 const api = {
   getAllPlayers,
   getPlayerByName,
@@ -184,7 +181,7 @@ const api = {
   deleteHistory,
   getEvents,
   addToEvents,
-  deleteEvents
+  deleteEvents,
 }
 
 export default api

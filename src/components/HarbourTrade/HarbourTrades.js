@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { resourceArray } from '../lib/config'
+import { resourceArray } from '../../../lib/config'
 import HarbourTrade from './HarbourTrade'
 
 // const APIHarbourTrades = ['brick','any4','wood','any3']

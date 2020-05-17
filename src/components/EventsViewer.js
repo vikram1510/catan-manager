@@ -60,14 +60,14 @@ const EventsViewer = ({ player, events, listCapacity = 100, updateHistory }) => 
   })
 
   const deleteHistory = async () => {
-    // eslint-disable-next-line no-restricted-globals
-    const confirmAnswer = confirm('You are about to delete the game history. This process is irreversible. Are you sure?')
+
+    const confirmAnswer = window.confirm('You are about to delete the game history. This process is irreversible. Are you sure?')
 
     if (confirmAnswer) {
       api.deleteHistory()
       socket.emit('apiUpdateLocal')
       // Make sure history is deleted before updating
-      setTimeout(() => { updateHistory()}, 100);
+      setTimeout(() => { updateHistory() }, 100);
     } else {
       alert('GAME HISTORY DELETED. GAME HISTORY DELETED. GAME HISTORY DELETED. GAME HISTORY DELETED. GAME HISTORY DELETED. just kidding, cancelled it')
     }

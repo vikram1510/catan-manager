@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 const end = 60;
-const warningCount = end*0.2;
+const warningCount = end * 0.2;
 
 const Timer = ({ action }) => {
 
@@ -18,7 +18,7 @@ const Timer = ({ action }) => {
       setCount(end)
       stopInterval()
     }
-    if (isTimerOn && count === 0){
+    if (isTimerOn && count === 0) {
       action().then(() => setTimerState(false))
     }
   }, [count, isTimerOn, action])
@@ -50,8 +50,8 @@ const TimerSpan = styled.span`
   
 
   > div.bottom {
-    flex-grow: ${({ count, isTimerOn }) => isTimerOn ? count/end : 0};
-    background-color: ${({count}) => count <= warningCount ? '#d70202' : 'black'};
+    flex-grow: ${({ count, isTimerOn }) => isTimerOn ? count / end : 0};
+    background-color: ${({ count }) => count <= warningCount ? '#d70202' : 'black'};
     width: 100%;
     transition: background-color 3s;
   }

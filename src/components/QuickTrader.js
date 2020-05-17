@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { resourceArray } from '../lib/config'
 import TransitionResource from './TransitionResource'
 import { TransitionGroup } from 'react-transition-group'
-// import assets from '../lib/assets'
 
 const QuickTrader = ({ placeholder, mainPlayer, player, performTrade, trading, min = 1, filter = [] }) => {
 

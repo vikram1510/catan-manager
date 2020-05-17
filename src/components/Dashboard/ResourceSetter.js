@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import assets from '../lib/assets'
+import assets from '../../lib/assets'
 
 const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount }) => {
 
