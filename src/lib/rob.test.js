@@ -20,17 +20,20 @@ test('rob is random', () => {
     sheep: 0
   }
 
-  for (let i = 0; i < 1000; i++) {
+  const iterations = 100_000
+  const expected = (iterations / 5) * 0.95
+
+  for (let i = 0; i < iterations; i++) {
     let output = rob(innocent)
     counts[output] = counts[output] + 1
   }
   console.log(counts)
 
-  expect(counts.brick).toBeGreaterThan(180)
-  expect(counts.rock).toBeGreaterThan(180)
-  expect(counts.grain).toBeGreaterThan(180)
-  expect(counts.wood).toBeGreaterThan(180)
-  expect(counts.sheep).toBeGreaterThan(180)
+  expect(counts.brick).toBeGreaterThan(expected)
+  expect(counts.rock).toBeGreaterThan(expected)
+  expect(counts.grain).toBeGreaterThan(expected)
+  expect(counts.wood).toBeGreaterThan(expected)
+  expect(counts.sheep).toBeGreaterThan(expected)
 
 
 })

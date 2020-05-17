@@ -16,6 +16,3 @@ export const rob = ({ innocent }) => {
   return innocentResources[Math.floor(Math.random() * innocentResources.length)]
 
 }
-
-
-// robTest
