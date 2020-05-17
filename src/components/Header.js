@@ -13,9 +13,7 @@ const Header = ({ logout, player, updatePlayers, syncing }) => {
 	const resetAmounts = async () => {
 
 		const sure = window.confirm('Are you sure you wanna reset? You\'ll lose everything!!!', 'testste')
-		const myWindow = window.open("", "", "width=100, height=100");
-		myWindow.resizeBy(250, 250);
-		myWindow.focus();
+
 		if (sure) {
 			const resetAmounts = { brick: 0, wood: 0, grain: 0, rock: 0, sheep: 0 }
 			await api.updatePlayer(player._id, resetAmounts)
