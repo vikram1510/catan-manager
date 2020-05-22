@@ -39,9 +39,14 @@ const Timer = ({ action, player }) => {
       stopInterval()
     }
     if (isTimerOn && count === 0) {
-      action().then(() => setTimerState(false))
+      if (editable) {
+        action()
+      } else {
+        setEditable(true)
+      }
+      setTimerState(false)
     }
-  }, [count, isTimerOn, action])
+  }, [count, isTimerOn, action, editable])
 
   const stopInterval = () => {
     clearInterval(interval.current)
