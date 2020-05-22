@@ -80,7 +80,7 @@ const TimerSpan = styled.span`
   position: relative;
   text-align: center;
   border-radius: 3px;
-  border:  ${({ editable }) => editable ? '0px' : '1.5px solid #fcba03'};
+  border:  ${({ editable }) => editable ? '0px' : '1.5px solid #fc033d'};
   
 
   > div.bottom {
