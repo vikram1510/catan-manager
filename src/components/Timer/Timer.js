@@ -10,6 +10,7 @@ const Timer = ({ action, player }) => {
   const [count, setCount] = useState(end);
   const [isTimerOn, setTimerState] = useState(false);
   const [editable, setEditable] = useState(true);
+  const [creator, setCreator] = useState('')
   const interval = useRef(null)
 
   const playerName = player.name
@@ -19,6 +20,7 @@ const Timer = ({ action, player }) => {
     socket.on('updateTimer', ({ playerName: socketPlayerName, timerState }) => {
       console.log('update recieved', socketPlayerName, timerState)
       setTimerState(timerState)
+      setCreator(socketPlayerName)
       if (socketPlayerName !== playerName & timerState === true) {
         setEditable(false)
         console.log('timer locked')
@@ -64,7 +66,7 @@ const Timer = ({ action, player }) => {
     <TimerSpan onClick={() => updateTimer()} count={count} isTimerOn={isTimerOn} editable={editable}>
       <div className='top'></div>
       <div className='bottom'></div>
-      <p>{isTimerOn ? count : 'Timer'}</p>
+      <p>{isTimerOn ? count + ' ' + creator.substr(0, 2) : 'Timer'}</p>
     </TimerSpan>
   )
 }
