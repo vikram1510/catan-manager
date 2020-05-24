@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { socket } from '../../lib/sockets';
 
-const end = 60;
+const end = 3;
 const warningCount = end * 0.2;
 
-const Timer = ({ action, player }) => {
+const Timer = ({ action, playerName }) => {
 
   const [count, setCount] = useState(end);
   const [isTimerOn, setTimerState] = useState(false);
@@ -13,20 +13,14 @@ const Timer = ({ action, player }) => {
   const [creator, setCreator] = useState('')
   const interval = useRef(null)
 
-  const playerName = player.name
-
-
   useEffect(() => {
-    socket.on('updateTimer', ({ playerName: socketPlayerName, timerState }) => {
-      console.log('update recieved', socketPlayerName, timerState)
+    socket.on('updateTimer', ({ playerName: timerCreatorName, timerState }) => {
       setTimerState(timerState)
-      setCreator(socketPlayerName)
-      if (socketPlayerName !== playerName & timerState === true) {
+      setCreator(timerCreatorName)
+      if (timerCreatorName !== playerName & timerState === true) {
         setEditable(false)
-        console.log('timer locked')
       } else {
         setEditable(true)
-        console.log('timer not locked')
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,8 +51,9 @@ const Timer = ({ action, player }) => {
 
   const updateTimer = () => {
     if (editable) {
-      socket.emit('updateTimerLocal', { playerName: player.name, timerState: !isTimerOn })
+      socket.emit('updateTimerLocal', { playerName: playerName, timerState: !isTimerOn })
       setTimerState(!isTimerOn)
+      setCreator('')
     }
   }
 

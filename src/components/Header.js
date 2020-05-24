@@ -41,7 +41,7 @@ const Header = ({ logout, player, updatePlayers, syncing }) => {
 				<img src={assets.logo} alt='Catan Logo'></img>
 			</div>
 			<div className="game-buttons">
-				<Timer action={addTimerEndEvent} player={player} />
+				<Timer action={addTimerEndEvent} playerName={player.name} />
 				<GameButton className="refresh" disabled={syncing} onClick={() => updatePlayers()}>
 					<i className={`fas fa-sync ${syncing ? 'fa-spin' : ''}`}></i>
 				</GameButton>
