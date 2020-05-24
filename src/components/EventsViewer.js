@@ -198,7 +198,7 @@ const Event = styled.div`
   font-family: 'Roboto Condensed', sans-serif;
 
   background-color: ${col.default};
-  color: ${col.text};
+  color: #ffffff;
   padding:2px 8px;
   font-size:0.7rem;
   font-weight:700;
