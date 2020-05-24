@@ -73,6 +73,8 @@ const TimerSpan = styled.span`
   color: white;
   font-weight:700;
   display: flex;
+  align-self: center;
+  font-size: 1rem;
   flex-direction: column-reverse;
   position: relative;
   text-align: center;

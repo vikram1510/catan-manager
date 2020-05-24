@@ -24,12 +24,10 @@ const Dashboard = ({ player, setPlayer }) => {
 }
 
 const Wrapper = styled.div`
-padding: 0px 10px 4px;
+padding: 2px 10px 4px;
 border-radius: 5px;
 border: 1px solid #980b0b;
--webkit-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
--moz-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
-box-shadow: 7px 10px 14px -10px rgba(128,128,128,1);
+
 background-color: white;
 font-weight: 800;
 margin-bottom:10px; 

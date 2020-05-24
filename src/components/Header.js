@@ -70,19 +70,19 @@ align-items: center;
 
 .game-buttons{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 `
 
 export const GameButton = styled.button`
-background-color: ${(props) => props.syncing ? '#aaafff' : '#772020'};
+background-color: ${(props) => props.disabled ? '#bf3232' : '#701c1c'};
 color: white;
 border-radius: 3px;
 border: 1px solid #772020;
 padding: 8px;
 font-weight:700;
-align-self: flex-end;
-margin-left: 10px;
+font-size: 0.75rem;
+margin-left: 5px;
   
 
 &.refresh {

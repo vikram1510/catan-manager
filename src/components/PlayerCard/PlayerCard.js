@@ -134,9 +134,10 @@ font-size: 1rem;
 display:flex;
 
 .player-avatar {
-background-color: #962716;
+background-color: #980b0b;
 color: white;
 border-radius: 5px 0px 0px 5px;
+// border: 1px solid  #210909;
 padding: 10px;
 min-width: 50px;
 }
@@ -156,6 +157,8 @@ min-width: 50px;
 }
 
 .resource-area {
+
+border: 1px solid  #980b0b;
 border-radius: 0px 5px 5px 0px;
 background-color: #fefefe;
 padding:10px;
