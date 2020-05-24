@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 import api from '../lib/api';
 import { socket } from '../lib/sockets'
+import colors from '../lib/colors'
 
 import Timer from './Timer/Timer';
 
@@ -75,10 +76,10 @@ align-items: center;
 `
 
 export const GameButton = styled.button`
-background-color: ${(props) => props.disabled ? '#bf3232' : '#701c1c'};
-color: white;
+background-color: ${(props) => props.disabled ? colors.buttonHighlight : colors.button};
+color: ${colors.buttonText};
 border-radius: 3px;
-border: 1px solid #772020;
+border: 1px solid ${colors.buttonBorder};
 padding: 8px;
 font-weight:700;
 font-size: 0.75rem;

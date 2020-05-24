@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import assets from '../../lib/assets'
+import colors from '../../lib/colors'
 
 const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount }) => {
 
@@ -68,7 +69,7 @@ const ResourceWrapper = styled.div`
   }
 
   .fa-plus-square {
-    color:green;
+    color:${colors.greenButton};
     opacity: ${({ watchAmount }) => ((watchAmount !== null) && (watchAmount <= 0)) ? '0.3' : '1'};
   }
 
@@ -77,7 +78,7 @@ const ResourceWrapper = styled.div`
     }
 
   .fa-minus-square {
-    color:#d82828;
+    color:${colors.redButton};
     opacity: ${({ amount }) => amount <= 0 ? '0.3' : '1'};
   }
 

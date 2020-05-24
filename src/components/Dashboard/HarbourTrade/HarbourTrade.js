@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { resourceArray } from "../../../lib/config";
-
 import QuickTrader from '../../QuickTrader'
+
+import { resourceArray } from "../../../lib/config";
 import api from '../../../lib/api';
 import { socket } from '../../../lib/sockets';
+import colors from '../../../lib/colors'
 
 
 const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTrade, setShowCard, setAmounts }) => {
@@ -29,13 +30,10 @@ const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTra
       loseQuantity = item[item.length - 1]
     }
 
-    // console.log(`${amounts.name} traded ${loseQuantity} ${lose} for ${gainItem} with ${item}`)
-
     api.addToHistory({
       text: `${amounts.name} traded ${loseQuantity} ${lose} for ${gainItem} with ${item}`,
       type: 'HARBOUR'
     })
-
 
     api.bank({
       playerId: amounts._id, amounts: {
@@ -66,18 +64,14 @@ const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTra
     </Item>
   )
 
-
-
 }
 
 
 const Item = styled.div`
 font-weight:700;
 border-radius: 3px;
-/* border: 1px solid ${({ disabled }) => disabled ? '#2d4290' : '#dcdcdc'}; */
-/* background-color: ${({ disabled }) => disabled ? '#3754e0' : '#acacac'}; */
-padding: 0 16px;
 margin-bottom: 3px;
+margin-right: 2px;
 color: white;
 display: flex;
 
@@ -97,12 +91,12 @@ input {
 img {
     height: 40px;
     width: 40px;
-    opacity: ${({ disabled }) => disabled ? '1' : '0.5'};
+    opacity: ${({ disabled, editMode }) => disabled || editMode ? '1' : '0.5'};
   }
 
 input:checked + label {
-  background-color: ${({ editMode }) => editMode ? '#239adf' : 'transparent'};;
-  border-radius: 60%;
+  background-color: ${({ editMode }) => editMode ? colors.greenButton : 'transparent'};;
+  border-radius: 6px;
 }
 
 `

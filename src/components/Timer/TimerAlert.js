@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import api from '../../lib/api'
 import Auth from '../../lib/auth'
 import { socket } from '../../lib/sockets'
+import colors from '../../lib/colors'
 
 const TimerAlert = ({ gameEvents }) => {
   const [createdBy, setCreatedBy] = useState(null)
@@ -41,7 +42,7 @@ const Wrapper = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.9);
   z-index: 1000;
   color: white;
   text-align: center;
@@ -49,10 +50,10 @@ const Wrapper = styled.div`
 
   button {
     padding: 8px;
-    background-color: #0bba0b;
+    background-color: ${colors.greenButton};
     border: 0;
     border-radius: 8px;
-    color: white;
+    color: ${colors.greenButtonText};
   }
 
 `

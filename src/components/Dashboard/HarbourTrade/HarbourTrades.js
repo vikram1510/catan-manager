@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { resourceArray } from '../../../lib/config'
+import colors from '../../../lib/colors'
 import HarbourTrade from './HarbourTrade'
 
-// const APIHarbourTrades = ['brick','any4','wood','any3']
 
 const availableTrades = ['any-4', 'any-3', 'brick', 'wood', 'rock', 'sheep', 'grain']
 
@@ -49,15 +49,6 @@ const canDo = (tradeType, playerAmounts) => {
 
 }
 
-
-// const createResourceMap = (resources, polarity=1) => {
-//   return resources.reduce((final, resource) => {
-//     if (!(resource in final)) final[resource] = 0
-//     final[resource] = final[resource] + (1 * polarity) 
-//     return final
-//   }, {})
-// }
-
 const renderHarbourTrades = (availableTrades, harborTrades, modifyHarborTrade, setShowCard, amounts, setAmounts, editMode, setEditMode) => (
   <>
     <Header onClick={() => setShowCard(false)}>
@@ -101,68 +92,38 @@ const renderCollapsedCard = ({ setShowCard }) => (
   </Header>
 )
 
-
-
-// const BuyButton = styled.div`
-//   padding: 2px 4px;
-//   width: 30px;
-//   background-color: ${props => props.canBuy ? '#50b350' : '#50b350'};
-//   text-align: center;
-//   font-size: 0.9rem;
-//   margin: auto;
-//   border: 1px solid ${props => props.canBuy ? '#50b350' : '#50b350'};
-//   opacity: ${props => props.canBuy ? '1' : '0.3'};
-//   color: white;
-//   flex-grow: 2;
-// `
-
 const Header = styled.div`
 display: flex;
 justify-content: space-between;
 
 i {
   margin-top: 5px;
+  color: ${colors.dividerBox}
 }
 `
 
 const Wrapper = styled.div`
 padding: 0px 10px 4px;
 border-radius: 5px;
-border: 1px solid lightgray;
-background-color: white;
+border: 1px solid ${colors.dividerBox};
+background-color: ${colors.cardBG2};
+color: ${colors.text2};
 font-weight: 500;
 margin-bottom: 4px;
 margin-top: 2px;
 
 button {
   padding: 2px 4px; 
-  background-color: #50b350;
+  background-color: ${colors.greenButton};
   text-align: center;
   font-size: 0.9rem;
   margin: auto;
   margin-top: 5px;
-  border: 1px solid #50b350;
-  color: white;
+  border: 1px solid ${colors.greenButton};
+  color: ${colors.greenButtonText};
   border-radius: 3px;
 }
  `
-// const ResourceWraper = styled.div`
-// display: flex;
-// width:80%;
-// font-weight:800;
-// flex-grow: 7;
-// `
-
-// const Resource = styled.div`
-// width: 30px;
-// height: 30px;
-// padding: 0px 4px;
-
-//   img {
-//     height: auto;
-//     width: 100%;
-//   }
-// `
 
 const HarbourTradesWrapper = styled.div`
   display: flex;

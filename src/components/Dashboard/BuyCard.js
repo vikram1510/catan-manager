@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import assets from '../../lib/assets'
 import api from '../../lib/api'
 import { socket } from '../../lib/sockets'
+import colors from '../../lib/colors'
 
 const items = [
   {
@@ -78,7 +79,7 @@ const renderBuyCard = (items, setShowCard, buyItem) => (
   <>
     <Header onClick={() => setShowCard(false)}>
       <span>{''}</span>
-      <i style={{ margin: 'right' }} className="fas fa-chevron-up"></i>
+      <i className="fas fa-chevron-up"></i>
     </Header>
     {items.map(item =>
       <Item key={item.itemName}>
@@ -102,12 +103,13 @@ const renderBuyCard = (items, setShowCard, buyItem) => (
 const renderCollapsedCard = ({ setShowCard }) => (
   <Header onClick={() => setShowCard(true)}>
     <span style={{ marginTop: '1px' }}>{'Buy Card'}</span>
-    <i style={{ margin: 'right' }} className="fas fa-chevron-down"></i>
+    <i className="fas fa-chevron-down"></i>
   </Header>
 )
 
 const Item = styled.div`
 font-weight:700;
+color: ${colors.text2};
 
 hr {
  margin: 0.2rem;
@@ -117,13 +119,13 @@ hr {
 const BuyButton = styled.div`
   padding: 2px 4px;
   width: 30px;
-  background-color: ${props => props.canBuy ? '#50b350' : '#50b350'};
+  background-color: ${colors.greenButton};
   text-align: center;
   font-size: 0.9rem;
   margin: auto;
-  border: 1px solid ${props => props.canBuy ? '#50b350' : '#50b350'};
+  border: 1px solid ${colors.greenButton};
+  color: ${colors.greenButtonText};
   opacity: ${props => props.canBuy ? '1' : '0.3'};
-  color: white;
   flex-grow: 2;
 `
 
@@ -133,14 +135,16 @@ justify-content: space-between;
 
 i {
   margin-top: 5px;
+  color: ${colors.dividerBox}
 }
 `
 
 const Wrapper = styled.div`
 padding: 0px 10px 4px;
 border-radius: 5px;
-border: 1px solid lightgray;
-background-color: white;
+border: 1px solid ${colors.dividerBox};
+background-color: ${colors.cardBG2};
+color: ${colors.text2};
 font-weight: 500;
 margin-bottom: 4px;
 margin-top: 2px;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { socket } from '../../lib/sockets';
+import colors from '../../lib/colors';
 
-const end = 3;
+const end = 60;
 const warningCount = end * 0.2;
 
 const Timer = ({ action, playerName }) => {
@@ -69,8 +70,8 @@ const Timer = ({ action, playerName }) => {
 const TimerSpan = styled.span`
   height: 30px;
   width: 54px;
-  background-color: #772020;
-  color: white;
+  background-color: ${colors.button};
+  color: ${colors.buttonText};
   font-weight:700;
   display: flex;
   align-self: center;
@@ -84,7 +85,7 @@ const TimerSpan = styled.span`
 
   > div.bottom {
     flex-grow: ${({ count, isTimerOn }) => isTimerOn ? count / end : 0};
-    background-color: ${({ count }) => count <= warningCount ? '#d70202' : 'black'};
+    background-color: ${({ count }) => count <= warningCount ? colors.redButton : colors.black};
     width: 100%;
     transition: background-color 3s;
   }
@@ -93,7 +94,7 @@ const TimerSpan = styled.span`
     position: absolute;
     width: 100%;
     height: 100%;
-    color: white;
+    color: ${colors.buttonText};
     left: 0;
   }
 `
