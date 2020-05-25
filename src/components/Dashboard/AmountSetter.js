@@ -6,7 +6,7 @@ import ResourceSetter from './ResourceSetter'
 import { resourceArray } from '../../lib/config'
 import api from '../../lib/api'
 
-const AmountSetter = ({ amounts, setAmounts, watchAmounts = null }) => {
+const AmountSetter = ({ amounts, setAmounts, watchAmounts = null, show }) => {
 
   const changeResourceAmount = async (resource, amount) => {
     const newAmounts = await api.bank({ playerId: amounts._id, amounts: { [resource]: amount } })
@@ -30,6 +30,7 @@ const AmountSetter = ({ amounts, setAmounts, watchAmounts = null }) => {
     <WrapperDiv className="amount-setter-wrapper">
       {resourceArray.map(resource => (
         <ResourceSetter
+          show={show}
           key={resource}
           resourceName={resource}
           amount={amounts[resource]}

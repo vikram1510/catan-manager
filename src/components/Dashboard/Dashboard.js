@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import AmountSetter from './AmountSetter'
@@ -9,6 +9,8 @@ import colors from '../../lib/colors'
 
 const Dashboard = ({ player, setPlayer }) => {
 
+  const [show, setShow] = useState()
+
   let total = 0;
   resourceArray.forEach((resource) => {
     total += player?.[resource]
@@ -16,8 +18,9 @@ const Dashboard = ({ player, setPlayer }) => {
 
   return (
     <Wrapper>
-      <div>{player.name} <span className='total'>({total})</span></div>
-      <AmountSetter amounts={player} setAmounts={setPlayer} />
+      <div className='header'><div>{player.name} <span className='total'>({total})</span></div>
+        <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'}</button></div>
+      <AmountSetter amounts={player} setAmounts={setPlayer} show={show} />
       <BuyCard amounts={player} setAmounts={setPlayer} />
       <HarbourTrades amounts={player} setAmounts={setPlayer} />
     </Wrapper>
@@ -36,6 +39,11 @@ margin-bottom:10px;
 
 .total {
   color: ${colors.text2};
+}
+
+.header {
+  display:flex;
+  justify-content: space-between;
 }
 `
 

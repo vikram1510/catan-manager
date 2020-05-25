@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import assets from '../../lib/assets'
 import colors from '../../lib/colors'
 
-const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount }) => {
+const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmount, show }) => {
 
   const checkAmountsAndChange = (by) => {
 
@@ -40,13 +40,13 @@ const ResourceSetter = ({ resourceName, amount, changeResourceAmount, watchAmoun
 
   return (
 
-    <ResourceWrapper amount={amount} watchAmount={watchAmount}>
+    <ResourceWrapper amount={amount} watchAmount={watchAmount} show={show}>
       <i className="fas fa-plus-square" onClick={() => checkAmountsAndChange(1)}></i>
       <div className="resource-image-wrapper">
         <img src={assets[resourceName]} alt={resourceName}></img>
       </div>
       <i className="fas fa-minus-square" onClick={() => checkAmountsAndChange(-1)}></i>
-      <p>{amount}</p>
+      <p>{show ? amount : 'X'}</p>
     </ResourceWrapper>
   )
 
@@ -79,7 +79,7 @@ const ResourceWrapper = styled.div`
 
   .fa-minus-square {
     color:${colors.redButton};
-    opacity: ${({ amount }) => amount <= 0 ? '0.3' : '1'};
+    opacity: ${({ amount, show }) => !show || amount > 0 ? '1' : '0.3'};
   }
 
   .resource-image-wrapper{
