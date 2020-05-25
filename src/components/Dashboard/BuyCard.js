@@ -93,7 +93,6 @@ const renderBuyCard = (items, setShowCard, buyItem) => (
           </ResourceWraper>
           <BuyButton canBuy={item.canBuy} onClick={() => buyItem(item.itemName)}>Buy</BuyButton>
         </div>
-        <hr />
       </Item>
     )
     }

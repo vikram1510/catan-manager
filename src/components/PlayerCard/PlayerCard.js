@@ -156,7 +156,7 @@ min-width: 50px;
 
 .resource-area {
 
-border: 1px solid ${colors.playerCardBG};
+border: 1px solid ${colors.borderCol};
 border-radius: 0px 5px 5px 0px;
 background-color: ${colors.cardBG};
 padding:10px;

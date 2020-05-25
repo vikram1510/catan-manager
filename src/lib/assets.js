@@ -1,24 +1,26 @@
 const { PUBLIC_URL } = process.env
 
+const RESOURCE_FOLDER = PUBLIC_URL + '/resource/'
+const HARBOUR_FOLDER = PUBLIC_URL + '/harbour/'
+
 const assets = {
-  brick: PUBLIC_URL + '/NewBricksCatan.png',
-  sheep: PUBLIC_URL + '/NewSheepCatan.png',
-  wood: PUBLIC_URL + '/NewTreeCatan.png',
-  grain: PUBLIC_URL + '/NewWheatCatan.png',
-  rock: PUBLIC_URL + '/NewRocksCatan.png',
+  brick: RESOURCE_FOLDER + '/NewBricksCatan.png',
+  sheep: RESOURCE_FOLDER + '/NewSheepCatan.png',
+  wood: RESOURCE_FOLDER + '/NewTreeCatan.png',
+  grain: RESOURCE_FOLDER + '/NewWheatCatan.png',
+  rock: RESOURCE_FOLDER + '/NewRocksCatan.png',
   bg: PUBLIC_URL + '/bg.jpg',
   logo: PUBLIC_URL + '/catanlogo.png',
 }
 
-
 export const harborAssets = {
-  brick: PUBLIC_URL + '/21BricksScroll.png',
-  sheep: PUBLIC_URL + '/21SheepScroll.png',
-  wood: PUBLIC_URL + '/21TreeScroll.png',
-  grain: PUBLIC_URL + '/21WheatScroll.png',
-  rock: PUBLIC_URL + '/21RocksScroll.png',
-  any3: PUBLIC_URL + '/31CatanQ.png',
-  any4: PUBLIC_URL + '/41CatanQ.png',
+  brick: HARBOUR_FOLDER + '/harbour_brick.png',
+  sheep: HARBOUR_FOLDER + '/harbour_sheep.png',
+  wood: HARBOUR_FOLDER + '/harbour_wood.png',
+  grain: HARBOUR_FOLDER + '/harbour_grain.png',
+  rock: HARBOUR_FOLDER + '/harbour_rock.png',
+  "any-3": HARBOUR_FOLDER + '/harbour_any-3.png',
+  "any-4": HARBOUR_FOLDER + '/harbour_any-4.png',
 }
 
 export default assets
