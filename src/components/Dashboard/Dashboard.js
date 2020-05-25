@@ -47,6 +47,10 @@ margin-bottom:10px;
   margin-bottom:10px;
   margin-top:3px;
 }
+
+button {
+  width:130px;
+}
 `
 
 export default Dashboard
