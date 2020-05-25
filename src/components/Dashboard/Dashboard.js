@@ -9,7 +9,7 @@ import colors from '../../lib/colors'
 
 const Dashboard = ({ player, setPlayer }) => {
 
-  const [show, setShow] = useState()
+  const [show, setShow] = useState(true)
 
   let total = 0;
   resourceArray.forEach((resource) => {
