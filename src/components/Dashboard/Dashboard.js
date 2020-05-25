@@ -44,6 +44,8 @@ margin-bottom:10px;
 .header {
   display:flex;
   justify-content: space-between;
+  margin-bottom:10px;
+  margin-top:3px;
 }
 `
 
