@@ -17,9 +17,9 @@ const Dashboard = ({ player, setPlayer }) => {
   })
 
   return (
-    <Wrapper>
+    <Wrapper show={show}>
       <div className='header'><div>{player.name} <span className='total'>({total})</span></div>
-        <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'}</button></div>
+        <button onClick={() => setShow(!show)}>{show ? 'Hide Resources' : 'Show Resources'}</button></div>
       <AmountSetter amounts={player} setAmounts={setPlayer} show={show} />
       <BuyCard amounts={player} setAmounts={setPlayer} />
       <HarbourTrades amounts={player} setAmounts={setPlayer} />
@@ -49,7 +49,13 @@ margin-bottom:10px;
 }
 
 button {
-  width:130px;
+   display:inline-block;
+   border-radius: 3px;
+   border: 1px solid ${({ show }) => show ? colors.redButton : colors.greenButton} ;
+   color:${colors.redButtonText};
+   background-color:${({ show }) => show ? colors.redButton : colors.greenButton};
+   text-align:center;
+   transition: all 0.2s;
 }
 `
 
