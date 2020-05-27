@@ -62,7 +62,8 @@ const Timer = ({ action, playerName }) => {
     <TimerSpan onClick={() => updateTimer()} count={count} isTimerOn={isTimerOn} editable={editable}>
       <div className='top'></div>
       <div className='bottom'></div>
-      <p>{isTimerOn ? count + ' ' + creator.substr(0, 2) : 'Timer'}</p>
+      <p className='time'>{isTimerOn ? count : 'Timer'}</p>
+      <p className='creator'>{creator.substr(0, 9)}</p>
     </TimerSpan>
   )
 }
@@ -90,12 +91,21 @@ const TimerSpan = styled.span`
     transition: background-color 3s;
   }
 
-  p {
+  .time {
     position: absolute;
     width: 100%;
     height: 100%;
-    color: ${colors.buttonText};
+    color: ${colors.playerCardText};
     left: 0;
+  }
+  
+  .creator {
+    position: absolute;
+    top:15px;
+    font-size: 0.7rem;
+    width: 100%;
+    height: 100%;
+    color: ${colors.playerCardText2};
   }
 `
 

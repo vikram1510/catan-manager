@@ -52,8 +52,8 @@ button {
    display:inline-block;
    border-radius: 3px;
    border: 1px solid ${({ show }) => show ? colors.redButton : colors.greenButton} ;
-   color:${colors.redButtonText};
-   background-color:${({ show }) => show ? colors.redButton : colors.greenButton};
+   color:${({ show }) => show ? colors.redButton : colors.greenButton};
+   background-color:${({ show }) => show ? colors.redButtonText : colors.greenButtonText};
    text-align:center;
    transition: all 0.2s;
 }
