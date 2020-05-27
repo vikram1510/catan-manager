@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { socket } from '../../lib/sockets';
 import colors from '../../lib/colors';
 
-const end = 3;
+const end = 60;
 const warningCount = end * 0.2;
 
 const Timer = ({ action, playerName }) => {
