@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { socket } from '../../lib/sockets';
 import colors from '../../lib/colors';
 
-const end = 60;
+const end = 3;
 const warningCount = end * 0.2;
 
 const Timer = ({ action, playerName }) => {
@@ -63,7 +63,7 @@ const Timer = ({ action, playerName }) => {
       <div className='top'></div>
       <div className='bottom'></div>
       <p className='time'>{isTimerOn ? count : 'Timer'}</p>
-      <p className='creator'>{creator.substr(0, 9)}</p>
+      <p className='creator'>{isTimerOn ? creator.substr(0, 9) : ''}</p>
     </TimerSpan>
   )
 }
