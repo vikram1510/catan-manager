@@ -54,7 +54,7 @@ const Timer = ({ action, playerName }) => {
     if (editable) {
       socket.emit('updateTimerLocal', { playerName: playerName, timerState: !isTimerOn })
       setTimerState(!isTimerOn)
-      setCreator('')
+      setCreator(playerName)
     }
   }
 
