@@ -5,7 +5,6 @@ import AmountSetter from './AmountSetter'
 import BuyCard from './BuyCard'
 import HarbourTrades from './HarbourTrade/HarbourTrades'
 import { resourceArray } from '../../lib/config'
-import colors from '../../lib/colors'
 
 const Dashboard = ({ player, setPlayer }) => {
 
@@ -30,15 +29,15 @@ const Dashboard = ({ player, setPlayer }) => {
 const Wrapper = styled.div`
 padding: 2px 10px 4px;
 border-radius: 5px;
-border: 1px solid ${colors.borderCol};
+border: 1px solid ${props => props.theme.borderCol};
 
-background-color: ${colors.cardBG};
-color: ${colors.text};
+background-color: ${props => props.theme.cardBG};
+color: ${props => props.theme.text};
 font-weight: 800;
 margin-bottom:10px; 
 
 .total {
-  color: ${colors.text2};
+  color: ${props => props.theme.text2};
 }
 
 .header {
@@ -51,9 +50,9 @@ margin-bottom:10px;
 button {
    display:inline-block;
    border-radius: 3px;
-   border: 1px solid ${({ show }) => show ? colors.redButton : colors.greenButton} ;
-   color:${({ show }) => show ? colors.redButton : colors.greenButton};
-   background-color:${({ show }) => show ? colors.redButtonText : colors.greenButtonText};
+   border: 1px solid ${({ show, theme }) => show ? theme.redButton : theme.greenButton} ;
+   color:${({ show, theme }) => show ? theme.redButton : theme.greenButton};
+   background-color:${({ show, theme }) => show ? theme.redGhostButtonBg : theme.greenGhostButtonBg};
    text-align:center;
    transition: all 0.2s;
 }

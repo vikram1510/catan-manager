@@ -7,7 +7,6 @@ import { resourceArray } from "../../../lib/config";
 import api from '../../../lib/api';
 import { harborAssets } from '../../../lib/assets';
 import { socket } from '../../../lib/sockets';
-import colors from '../../../lib/colors'
 
 
 const HarbourTrade = ({ amounts, item, editMode, checked, canDo, modifyHarborTrade, setShowCard, setAmounts }) => {
@@ -96,7 +95,7 @@ img {
   }
 
 input:checked + label {
-  background-color: ${({ editMode }) => editMode ? colors.greenButton : 'transparent'};;
+  background-color: ${({ editMode, theme }) => editMode ? theme.greenButton : 'transparent'};;
   border-radius: 6px;
 }
 

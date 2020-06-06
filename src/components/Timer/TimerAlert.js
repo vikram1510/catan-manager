@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import api from '../../lib/api'
 import Auth from '../../lib/auth'
 import { socket } from '../../lib/sockets'
-import colors from '../../lib/colors'
 
 const TimerAlert = ({ gameEvents }) => {
   const [createdBy, setCreatedBy] = useState(null)
@@ -50,10 +49,10 @@ const Wrapper = styled.div`
 
   button {
     padding: 8px;
-    background-color: ${colors.greenButton};
+    background-color: ${props => props.theme.greenButton};
     border: 0;
     border-radius: 8px;
-    color: ${colors.greenButtonText};
+    color: ${props => props.theme.greenButtonText};
   }
 
 `

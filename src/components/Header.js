@@ -4,11 +4,10 @@ import styled from 'styled-components'
 import assets from '../lib/assets'
 import api from '../lib/api';
 import { socket } from '../lib/sockets'
-import colors from '../lib/colors'
 
 import Timer from './Timer/Timer';
 
-const Header = ({ logout, player, updatePlayers, syncing }) => {
+const Header = ({ logout, player, updatePlayers, syncing, toggleTheme }) => {
 
 
 	const resetAmounts = async () => {
@@ -35,7 +34,6 @@ const Header = ({ logout, player, updatePlayers, syncing }) => {
 		socket.emit('apiUpdateLocal')
 	}
 
-
 	return (
 		<Wrapper>
 			<div className="logo-img-wrapper animated shake">
@@ -48,6 +46,9 @@ const Header = ({ logout, player, updatePlayers, syncing }) => {
 				</GameButton>
 				<GameButton onClick={resetAmounts}>Reset</GameButton>
 				<GameButton onClick={logout}>Log out</GameButton>
+				<GameButton onClick={toggleTheme}>
+					Theme
+				</GameButton>
 			</div>
 		</Wrapper>
 	)
@@ -76,10 +77,10 @@ align-items: center;
 `
 
 export const GameButton = styled.button`
-background-color: ${(props) => props.disabled ? colors.buttonHighlight : colors.button};
-color: ${colors.buttonText};
+background-color: ${(props) => props.disabled ? props.theme.buttonHighlight : props.theme.button};
+color: ${props => props.theme.buttonText};
 border-radius: 3px;
-border: 1px solid ${colors.buttonBorder};
+border: 1px solid ${props => props.theme.buttonBorder};
 padding: 8px;
 font-weight:700;
 font-size: 0.75rem;

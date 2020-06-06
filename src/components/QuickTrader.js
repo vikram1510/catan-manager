@@ -34,8 +34,8 @@ const QuickTrader = ({ placeholder, mainPlayer, player, performTrade, trading, m
 }
 
 const Wrapper = styled.div`
-color: gray;
-background-color: #ececec;
+color: ${props => props.theme.text3};
+background-color: ${props => props.theme.cardBG3};
 transform: translate(0px, -5px);
 display:flex;
 flex-direction:row;

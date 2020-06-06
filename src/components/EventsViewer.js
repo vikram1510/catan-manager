@@ -5,7 +5,6 @@ import assets from '../lib/assets'
 import api from '../lib/api'
 import { socket } from '../lib/sockets'
 import moment from 'moment'
-import colors from '../lib/colors'
 
 moment.updateLocale('en', {
   relativeTime: {
@@ -17,20 +16,19 @@ moment.updateLocale('en', {
   }
 });
 
-const col = colors.history
-
-const EVENT_TYPE = {
-  'TRADE': col.trade,
-  'COLLECT': col.collect,
-  'RETURN': col.return,
-  'BUY': col.buy,
-  'ROB': col.rob,
-  'RESET': col.reset,
-  'HARBOUR': col.harbour,
-}
 
 
 const EventsViewer = ({ player, events, listCapacity = 100, updateHistory }) => {
+
+  // const EVENT_TYPE = {
+  //   'TRADE': theme.history.trade,
+  //   'COLLECT': theme.history.collect,
+  //   'RETURN': theme.history.return,
+  //   'BUY': theme.history.buy,
+  //   'ROB': theme.history.rob,
+  //   'RESET': theme.history.reset,
+  //   'HARBOUR': theme.history.harbour,
+  // }
 
   const [showTime, setShowTime] = useState(false)
 
@@ -83,18 +81,19 @@ const EventsViewer = ({ player, events, listCapacity = 100, updateHistory }) => 
       <h3>History <span>{`(${events.length})`}</span></h3>
       <div onClick={() => setShowTime(!showTime)} className='event-scrolView'>
         {filterEvents.map((event, key) =>
-          <Event key={key} mine={event.text.includes(player.name)} className='event'>
-            <span className='eventType' style={{ backgroundColor: EVENT_TYPE[event.type] }}>{event.type} </span>
+          <Event key={key} mine={event.text.includes(player.name)} eventType={event.type.toLowerCase()} className='event' >
+            <span className='eventType'>{event.type} </span>
             {`${event.text}`}
             <Resource
               className="resource-image-wrapper animated bounceIn">
               <img src={assets[resourcesToRender[key]]} alt={resourcesToRender[key]}></img>
             </Resource>
             {showTime ? <span className='timeStamp animated slideInRight'> {moment(event.createdAt).fromNow()}</span> : null}
-          </Event>)}
-      </div>
+          </Event>)
+        }
+      </div >
       <button onClick={deleteHistory}>Clear History</button>
-    </Wrapper>
+    </Wrapper >
   )
 }
 
@@ -132,36 +131,21 @@ const combineEvents = (events) => {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const Wrapper = styled.div`
-background-color: ${colors.cardBG};
+background-color: ${props => props.theme.cardBG};
 border-radius: 5px;
-border: 1px solid ${colors.borderCol};
+border: 1px solid ${props => props.theme.borderCol};
 padding: 0px 10px 10px 10px;
 margin-bottom:10px;
 
 h3 {
   margin:0px;
-  color: ${col.text};
+  color: ${props => props.theme.history.text};
 
   span {
     font-size:0.9rem;
     margin-left:5px;
-    color: ${col.text2};
+    color: ${props => props.theme.history.text2};
   }
 }
 
@@ -176,17 +160,17 @@ button {
   width: 100%;
   margin-top:10px;
   padding: 5px;
-  background-color: ${colors.cardBG};
+  background-color: ${props => props.theme.cardBG};
   border-radius: 5px;
-  border: 1px solid ${colors.button};
-  color:${colors.button};
+  border: 1px solid ${props => props.theme.button};
+  color:${props => props.theme.button};
 }
 `
 
 const Event = styled.div`
 
   margin: -10px;
-  color:${props => props.mine ? col.text : col.text2};
+  color:${props => props.mine ? props => props.theme.history.text : props => props.theme.history.text2};
   padding: 5px 0px 5px 0px;
   font-size:0.9rem;
   font-weight:600;
@@ -197,8 +181,8 @@ const Event = styled.div`
 
   font-family: 'Roboto Condensed', sans-serif;
 
-  background-color: ${col.default};
-  color: #ffffff;
+  background-color: ${props => props.theme.history[props.eventType]};
+  color: ${props => props.theme.history.text3};
   padding:2px 8px;
   font-size:0.7rem;
   font-weight:700;

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import Auth from '../lib/auth'
 import api from '../lib/api';
 import { socket } from '../lib/sockets'
+import colors from '../lib/colors'
 
 import TimerAlert from '../components/Timer/TimerAlert'
 import Header from '../components/Header'
@@ -11,7 +12,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import PlayerCards from "../components/PlayerCard/PlayerCards";
 import EventsViewer from '../components/EventsViewer';
 
-const Game = ({ history }) => {
+const Game = ({ history, theme, toggleTheme }) => {
 
   const [players, setPlayers] = useState(null)
   const [player, setPlayer] = useState(undefined)
@@ -69,7 +70,7 @@ const Game = ({ history }) => {
   if (!(players && player)) return null
 
   return (
-    <>
+    <ThemeProvider theme={colors[theme]}>
       <TimerAlert gameEvents={gameEvents} />
       <Wrapper>
         <Header
@@ -77,12 +78,13 @@ const Game = ({ history }) => {
           player={player}
           updatePlayers={updatePlayers}
           syncing={syncing}
+          toggleTheme={toggleTheme}
         />
         <Dashboard player={player} setPlayer={setPlayer} />
         <PlayerCards players={players} updatePlayers={updatePlayers} player={player} />
         <EventsViewer player={player} events={events} updateHistory={updateHistory} />
       </Wrapper>
-    </>
+    </ThemeProvider >
   )
 }
 

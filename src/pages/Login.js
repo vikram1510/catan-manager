@@ -4,7 +4,7 @@ import Auth from '../lib/auth'
 import api from '../lib/api'
 import { socket } from '../lib/sockets'
 
-const Login = ({ history }) => {
+const Login = ({ history, theme }) => {
 
   const [playerName, setPlayerName] = useState('')
   const [showError, setShowError] = useState('')

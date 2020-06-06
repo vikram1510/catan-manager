@@ -7,7 +7,6 @@ import QuickTrader from '../QuickTrader'
 import { rob } from '../../lib/rob'
 import { socket } from '../../lib/sockets'
 import api from '../../lib/api';
-import colors from '../../lib/colors'
 
 const PlayerCard = ({
   mainPlayer, player, updatePlayers, showTrade, setTradePlayerId }) => {
@@ -113,14 +112,14 @@ const doQuickTrade = async (resource, toPlayer, player, setTrading, updatePlayer
 
 const RobButton = styled.div`
 
-  background: ${colors.redButton};
+  background: ${props => props.theme.redButton};
   border-radius: 4px;
   margin:auto;
   text-align: center;
-  color: ${colors.redButtonText};
+  color: ${props => props.theme.redButtonText};
   
   &:active {
-    background: ${colors.redButtonHighlight};
+    background: ${props => props.theme.redButtonHighlight};
   }
 `
 
@@ -134,7 +133,7 @@ font-size: 1rem;
 display:flex;
 
 .player-avatar {
-background-color: ${colors.playerCardBG};
+background-color: ${props => props.theme.playerCardBG};
 color: white;
 border-radius: 5px 0px 0px 5px;
 padding: 10px;
@@ -142,23 +141,23 @@ min-width: 50px;
 }
 
 .player-name {
-  color: ${colors.playerCardText};
+  color: ${props => props.theme.playerCardText};
   font-weight: 600;
   text-align: center;
   margin: auto;
 }
 
 .player-total {
-  color: ${colors.playerCardText2};
+  color: ${props => props.theme.playerCardText2};
   font-weight: 1000;
   text-align: center;
 }
 
 .resource-area {
 
-border: 1px solid ${colors.borderCol};
+border: 1px solid ${props => props.theme.borderCol};
 border-radius: 0px 5px 5px 0px;
-background-color: ${colors.cardBG};
+background-color: ${props => props.theme.cardBG};
 padding:10px;
 flex-grow: 1;
 }

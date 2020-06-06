@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import assets from '../../lib/assets'
 import api from '../../lib/api'
 import { socket } from '../../lib/sockets'
-import colors from '../../lib/colors'
 
 const items = [
   {
@@ -108,7 +107,7 @@ const renderCollapsedCard = ({ setShowCard }) => (
 
 const Item = styled.div`
 font-weight:700;
-color: ${colors.text2};
+color: ${props => props.theme.text2};
 
 hr {
  margin: 0.2rem;
@@ -118,12 +117,12 @@ hr {
 const BuyButton = styled.div`
   padding: 2px 4px;
   width: 30px;
-  background-color: ${colors.greenButton};
+  background-color: ${props => props.theme.greenButton};
   text-align: center;
   font-size: 0.9rem;
   margin: auto;
-  border: 1px solid ${colors.greenButton};
-  color: ${colors.greenButtonText};
+  border: 1px solid ${props => props.theme.greenButton};
+  color: ${props => props.theme.greenButtonText};
   opacity: ${props => props.canBuy ? '1' : '0.3'};
   flex-grow: 2;
 `
@@ -134,16 +133,16 @@ justify-content: space-between;
 
 i {
   margin-top: 5px;
-  color: ${colors.dividerBox}
+  color: ${props => props.theme.dividerBox}
 }
 `
 
 const Wrapper = styled.div`
 padding: 0px 10px 4px;
 border-radius: 5px;
-border: 1px solid ${colors.dividerBox};
-background-color: ${colors.cardBG2};
-color: ${colors.text2};
+border: 1px solid ${props => props.theme.dividerBox};
+background-color: ${props => props.theme.cardBG2};
+color: ${props => props.theme.text2};
 font-weight: 500;
 margin-bottom: 4px;
 margin-top: 2px;
