@@ -47,7 +47,7 @@ const Header = ({ logout, player, updatePlayers, syncing, toggleTheme }) => {
 				<GameButton onClick={resetAmounts}>Reset</GameButton>
 				<GameButton onClick={logout}>Log out</GameButton>
 				<GameButton onClick={toggleTheme}>
-					Theme
+					<i className="fas fa-moon"></i>
 				</GameButton>
 			</div>
 		</Wrapper>
