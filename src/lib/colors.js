@@ -1,7 +1,7 @@
 const lightColors = {
   cardBG: '#ffffff',
   cardBG2: '#efefef',
-  cardBG3: '#1e1e1e',
+  cardBG3: '#e9e9e9',
   borderCol: '#980b0b',
   dividerBox: '#d3d3d3',
   text: '#000000',
