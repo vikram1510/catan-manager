@@ -9,10 +9,9 @@ import { socket } from '../../lib/sockets'
 import api from '../../lib/api';
 
 const PlayerCard = ({
-  mainPlayer, player, updatePlayers, showTrade, setTradePlayerId }) => {
+  mainPlayer, player, updatePlayers, showTrade, setTradePlayerId, theme }) => {
 
   const [trading, setTrading] = useState(false)
-
 
   let total = 0;
   const resourceListKey = []
@@ -57,7 +56,7 @@ const PlayerCard = ({
                 <Resource
                   key={key}
                   className="resource-image-wrapper">
-                  <img src={'/question-mark.png'} alt={resource}></img>
+                  <img src={`/question-mark-${theme}.png`} alt={resource}></img>
                 </Resource>
               )}
             </div>

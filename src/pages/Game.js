@@ -81,7 +81,7 @@ const Game = ({ history, theme, toggleTheme }) => {
           toggleTheme={toggleTheme}
         />
         <Dashboard player={player} setPlayer={setPlayer} />
-        <PlayerCards players={players} updatePlayers={updatePlayers} player={player} />
+        <PlayerCards players={players} updatePlayers={updatePlayers} player={player} theme={theme} />
         <EventsViewer player={player} events={events} updateHistory={updateHistory} />
       </Wrapper>
     </ThemeProvider >

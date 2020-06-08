@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import PlayerCard from './PlayerCard'
 
-const PlayerCards = ({ players, player: mainPlayer, updatePlayers }) => {
+const PlayerCards = ({ players, player: mainPlayer, updatePlayers, theme }) => {
 
 	const [tradePlayerId, setTradePlayerId] = useState(null)
 	const otherPlayers = players.filter((pl) => pl._id !== mainPlayer._id)
@@ -17,6 +17,7 @@ const PlayerCards = ({ players, player: mainPlayer, updatePlayers }) => {
 					showTrade={player._id === tradePlayerId}
 					setTradePlayerId={setTradePlayerId}
 					updatePlayers={updatePlayers}
+					theme={theme}
 				/>
 			</PlayerCardWrapper>)
 	)

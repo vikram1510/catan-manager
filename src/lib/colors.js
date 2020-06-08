@@ -1,4 +1,5 @@
 const lightColors = {
+  name: 'light',
   cardBG: '#ffffff',
   cardBG2: '#efefef',
   cardBG3: '#e9e9e9',
@@ -40,12 +41,13 @@ const lightColors = {
 
 // Dark Mode
 const darkColors = {
+  name: 'dark',
   background: '#131313',
-  cardBG: '#1a1a1a',
+  cardBG: '#202020',
   cardBG2: '#1e1e1e',
   cardBG3: '#252525',
-  borderCol: '#1c1c1b',
-  dividerBox: '#2f2f2f',
+  borderCol: '#2a2a2a',
+  dividerBox: '#575757',
   text: '#949691',
   text2: '#727272',
   text3: '#4e4e4e',
