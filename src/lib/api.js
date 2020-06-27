@@ -167,6 +167,27 @@ const deleteEvents = () => {
 
 }
 
+
+const addToRobSheet = ({ robber, innocent, robbedItem }) => {
+
+  return instance
+    .post('/rob', { values: [robber, innocent, robbedItem] })
+    .then(res => res.data)
+    .catch(err => console.log('Error in adding rob event', err))
+
+}
+
+const newRobSheet = () => {
+
+  let date = new Date().toLocaleString()
+
+  return instance
+    .post('/rob', { values: ["NEW GAME", date] })
+    .then(res => res.data)
+    .catch(err => console.log('Error in adding rob event', err))
+
+}
+
 const api = {
   getAllPlayers,
   getPlayerByName,
@@ -182,6 +203,8 @@ const api = {
   getEvents,
   addToEvents,
   deleteEvents,
+  addToRobSheet,
+  newRobSheet
 }
 
 export default api

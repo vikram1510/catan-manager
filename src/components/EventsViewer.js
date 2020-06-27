@@ -63,10 +63,11 @@ const EventsViewer = ({ player, events, listCapacity = 100, updateHistory }) => 
 
   const deleteHistory = async () => {
 
-    const confirmAnswer = window.confirm('You are about to delete the game history. This process is irreversible. Are you sure?')
+    const confirmAnswer = window.confirm('Starting a new game will delete current game history. This process is irreversible. Are you sure?')
 
     if (confirmAnswer) {
       api.deleteHistory()
+      api.newRobSheet()
       socket.emit('apiUpdateLocal')
       // Make sure history is deleted before updating
       setTimeout(() => { updateHistory() }, 100);
@@ -92,7 +93,7 @@ const EventsViewer = ({ player, events, listCapacity = 100, updateHistory }) => 
           </Event>)
         }
       </div >
-      <button onClick={deleteHistory}>Clear History</button>
+      <button onClick={deleteHistory}>Delete History/Start new game</button>
     </Wrapper >
   )
 }
@@ -162,8 +163,8 @@ button {
   padding: 5px;
   background-color: ${props => props.theme.cardBG};
   border-radius: 5px;
-  border: 1px solid ${props => props.theme.button};
-  color:${props => props.theme.button};
+  border: 1px solid ${props => props.theme.history.text2};
+  color:${props => props.theme.history.text2};
 }
 `
 

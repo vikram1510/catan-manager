@@ -82,6 +82,11 @@ const robPlayer = async (innocent, player) => {
       text: `${player.name} stole a ${robbedItem} from ${innocent.name}`,
       type: 'ROB'
     })
+    await api.addToRobSheet({
+      robber: player.name,
+      innocent: innocent.name,
+      robbedItem: robbedItem
+    })
 
     socket.emit('apiUpdateLocal')
   } else {
